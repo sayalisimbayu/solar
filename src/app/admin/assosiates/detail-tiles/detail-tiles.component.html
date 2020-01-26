@@ -1,0 +1,10 @@
+<div class="card overflowhidden number-chart">
+  <div class="body">
+    <div class="number">
+      <h6>{{ title | uppercase }}</h6>
+      <span>{{ value }}</span>
+    </div>
+    <small class="text-muted">{{ details }}</small>
+  </div>
+  <div echarts [options]="chartOptions" class="echart-line-chart-area" [autoResize]="autoResize"></div>
+</div>

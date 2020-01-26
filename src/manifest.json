@@ -1,0 +1,11 @@
+{
+  "name": "Solar",
+  "short_name": "Solar",
+  "theme_color": "#488aff",
+  "background_color": "#488aff",
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+  ]
+}

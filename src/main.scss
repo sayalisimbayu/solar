@@ -1,0 +1,51 @@
+/*
+ * Entry point of global application style.
+ * Component-specific style should not go here and be included directly as part of the components.
+ */
+
+// Theme variables, must be included before the libraries to allow overriding defaults
+@import "theme/theme-variables";
+
+// 3rd party libraries
+@import "~bootstrap/scss/bootstrap";
+
+
+// Theme customization
+@import "theme/theme";
+
+/* You can add global styles to this file, and also import other style files */
+.echart-line-chart {
+    height: 3em;
+    width: 8em;
+}
+.echart-line-chart-area {
+    height: 50px;
+}
+.fix-h-292{
+    height:292px !important;
+}
+.echart-doughnut { width:150px;height:150px;margin:0 auto;}
+
+.cwidget-scroll{
+    height: 260px;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sidebar {
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+}
+.sidebar::-webkit-scrollbar, .cwidget-scroll::-webkit-scrollbar { /* WebKit */
+    width: 0px;
+}
+.parsley-errors-list {
+    list-style-type: none;    
+    line-height: 0.9em;
+    padding-left: 5px;
+}
+.form-control,.custom-file-input{
+    height:auto;
+}

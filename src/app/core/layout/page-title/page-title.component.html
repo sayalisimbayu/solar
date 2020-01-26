@@ -1,0 +1,23 @@
+<div class="block-header">
+  <div class="row">
+    <div class="col-lg-5 col-md-8 col-sm-12">
+      <h2>
+        <a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth" (click)="toggleFullWidth()">
+          <i class="fa fa-arrow-left" *ngIf="sidebarVisible"></i>
+          <i class="fa fa-arrow-right" *ngIf="!sidebarVisible"></i>
+        </a>
+        {{ config != undefined ? config.pageTitle : '' }}
+      </h2>
+      <ul class="breadcrumb" *ngIf="config != undefined">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/admin']"><i class="icon-home"></i></a>
+        </li>
+        <li class="breadcrumb-item" *ngFor="let item of config.breadCrumb">{{ item.title }}</li>
+      </ul>
+    </div>
+
+    <div class="col-lg-7 col-md-4 col-sm-12 text-right">
+      <ng-template #container></ng-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+﻿.appliances-grp {
+  .body {
+    clear: both;
+    overflow: hidden;
+    min-height: 115px;
+  }
+  .icon {
+    float: left;
+    width: 40px;
+    margin-right: 15px;
+    img {
+      max-width: 100%;
+    }
+  }
+  .content {
+    float: right;
+    width: calc(100% - 60px);
+
+    h6 {
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: 500;
+
+      span {
+        float: right;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+      }
+    }
+    p {
+      font-size: 13px;
+      line-height: 20px;
+      font-weight: 400;
+      margin-bottom: 5px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      span {
+        float: right;
+      }
+    }
+  }
+}
