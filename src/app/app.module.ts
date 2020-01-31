@@ -12,6 +12,11 @@ import { SimpleStoreManagerModule } from './shared/storemanager/storemanager.mod
 import { LazyLoaderService } from './shared/services/lazy-loader.service';
 import { LAZY_WIDGETS } from './shared/services/tokens';
 import { lazyArrayToObj } from './shared/services/lazy-widgets';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './shell/auth/authIntercepter';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from '@angular/router';
+import { AuthService } from './shell/auth/auth.service';
+import { LoginActivate } from './shared/other/authGuard';
 // import { AuthenticationModule } from './authentication/authentication.module';
 
 export class CustomHammerConfig extends HammerGestureConfig {
@@ -33,14 +38,20 @@ export class CustomHammerConfig extends HammerGestureConfig {
     RichTextEditorAllModule,
     LeafletModule.forRoot(),
     NgxGalleryModule,
-    SimpleStoreManagerModule
+    SimpleStoreManagerModule,
+    HttpClientModule,
     // AuthenticationModule
   ],
   providers: [
     LazyLoaderService,
+    AuthService,
+    LoginActivate,
     { provide: LAZY_WIDGETS, useFactory: lazyArrayToObj },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule{
+  constructor(private router: Router, private authsrv: AuthService) { }
+}

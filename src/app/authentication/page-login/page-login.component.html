@@ -10,14 +10,16 @@
             <p class="lead">Login to your account</p>
           </div>
           <div class="body">
-            <form class="form-auth-small" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+            <form class="form-auth-small" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
               <div class="form-group">
                 <label for="signin-email" class="control-label sr-only">Email</label>
                 <input
                   type="email"
                   class="form-control"
                   id="signin-email"
+                  name="email"
                   value="user@domain.com"
+                  ngModel
                   placeholder="Email"
                 />
               </div>
@@ -27,7 +29,9 @@
                   type="password"
                   class="form-control"
                   id="signin-password"
+                  name="password"
                   value="thisisthepassword"
+                  ngModel
                   placeholder="Password"
                 />
               </div>
