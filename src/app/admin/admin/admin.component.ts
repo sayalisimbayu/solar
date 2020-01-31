@@ -26,7 +26,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
 
   constructor(
-    private sidebarService: SidebarService,
+    public sidebarService: SidebarService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private themeService: ThemeService,

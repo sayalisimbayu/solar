@@ -10,6 +10,11 @@ export const routes: Routes = [
     canActivate: [LoginActivate]
   },
   {
+    path: 'mercury',
+    loadChildren: () => import('./mercury/mercury.module').then(m => m.MercuryModule),
+    canActivate: [LoginActivate]
+  },
+  {
     path: 'authentication',
     loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
   }
