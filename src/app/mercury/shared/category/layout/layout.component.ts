@@ -9,6 +9,8 @@ import { EChartOption } from 'echarts';
 import { IPageFrameConfig } from '@app/core/layout/page-frame/model/page-frame.config.interface';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
+import { filter, map } from 'rxjs/operators';
+import { StoreEvent } from '@app/shared/storemanager/models/storeEvent.model';
 
 @Component({
     selector: 'app-cat-layout',
@@ -18,6 +20,7 @@ import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager
 export class CLayoutComponent implements OnInit, AfterViewInit {
     @ViewChild('pageframe', { read: ViewContainerRef, static: true })
     pageFrame: ViewContainerRef;
+    public pagebody$: any;
     public visitorsOptions: EChartOption = {};
     public visitsOptions: EChartOption = {};
     public sidebarVisible = true;
@@ -26,6 +29,15 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
         private lazyLoader: LazyLoaderService,
         private store: SimpleStoreManagerService
     ) {
+        // this.pagebody$ = this.store.$store
+        // .pipe(filter((se: { key: string }) => se.key === 'category-form-path'))
+        // .pipe(
+        //   map((el: StoreEvent) => {
+        //     // this.store.setIn('categorypageconfig', ['pageHeading'], el.store.value.pageTitle);
+        //     // this.store.setIn('categorypageconfig', ['pageBodyUrl'], el.store.value.pageBodyUrl);
+        //   })
+        // )
+        // .subscribe();
     }
 
     ngOnInit() { }
@@ -34,31 +46,27 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
         // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
         // Add 'implements AfterViewInit' to the class.
         this.PageFrameConfig = {
-            pageBodyUrl: 'page-header-chart',
-            pageHeading: 'Blank Page',
+            pageBodyUrl: 'app-category-grid',
+            pageHeading: 'Category Grid',
             pageTitle: {
                 breadCrumb: [{
-                    title: 'Blank Page',
-                    url: '',
+                    title: 'Dashboard',
+                    url: 'admin/dashboard/index',
                     clickable: false
                 }, {
-                    title: 'Blank Page',
+                    title: 'Category',
                     url: '',
                     clickable: false
                 }],
                 leftComponentUrl: 'page-header-chart',
-                pageTitle: 'Blank Page'
+                pageTitle: 'Category'
             }
         };
         this.pageFrame.clear();
-        this.lazyLoader.load('page-frame', this.pageFrame, 'blankpageconfig', (cmpRef: any) => {
-            this.store.add('blankpageconfig', this.PageFrameConfig);
+        this.lazyLoader.load('page-frame', this.pageFrame, 'categorypageconfig', (cmpRef: any) => {
+            this.store.add('categorypageconfig', this.PageFrameConfig);
             cmpRef.changeDetectorRef.detectChanges();
         });
-        setTimeout(() => {
-            that.PageFrameConfig.pageTitle.pageTitle = 'Updated';
-            that.store.setIn('blankpageconfig', ['pageTitle', 'pageTitle'], 'Updated');
-        }, 3000);
     }
 
 }
