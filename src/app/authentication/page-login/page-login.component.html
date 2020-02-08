@@ -19,7 +19,7 @@
                   id="signin-email"
                   name="email"
                   value="user@domain.com"
-                  ngModel
+                  [(ngModel)]="user.email"
                   placeholder="Email"
                 />
               </div>
@@ -31,16 +31,23 @@
                   id="signin-password"
                   name="password"
                   value="thisisthepassword"
-                  ngModel
+                  [(ngModel)]="user.password"
                   placeholder="Password"
                 />
               </div>
-              <div class="form-group clearfix">
+              <div class="form-group">
                 <label class="fancy-checkbox element-left">
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    checked
+                    [(ngModel)]="user.rememberme"
+                    id="signin-rememberme"
+                    name="rememberme"
+                  />
                   <span>Remember me</span>
                 </label>
               </div>
+
               <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
               <div class="bottom">
                 <span class="helper-text m-b-10"

@@ -14,9 +14,10 @@ import { LAZY_WIDGETS } from './shared/services/tokens';
 import { lazyArrayToObj } from './shared/services/lazy-widgets';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './shell/auth/authIntercepter';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from './shell/auth/auth.service';
 import { LoginActivate } from './shared/other/authGuard';
+import { CryptService } from './shared/services/crypt.service';
 // import { AuthenticationModule } from './authentication/authentication.module';
 
 export class CustomHammerConfig extends HammerGestureConfig {
@@ -46,6 +47,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     LazyLoaderService,
     AuthService,
     LoginActivate,
+    CryptService,
     { provide: LAZY_WIDGETS, useFactory: lazyArrayToObj },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }

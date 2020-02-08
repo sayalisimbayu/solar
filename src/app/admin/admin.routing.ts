@@ -17,6 +17,11 @@ const routes: Routes = [
             data: { title: ':: Lucid Angular :: Dashboard :: Analytical ::' }
           }
         ]
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+        data: { title: ':: Lucid Angular :: Profile ::' }
       }
     ]
   }
