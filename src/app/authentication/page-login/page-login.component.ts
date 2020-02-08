@@ -20,11 +20,8 @@ export class PageLoginComponent implements OnInit {
   public user: any = { email: '', password: '' };
   showMessages: any = {};
   messages: any = [];
-  constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private authSvc: AuthService,
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authSvc: AuthService) {
     private cryptSvc: CryptService,
-  ) {
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
     if (this.authSvc.isLoggedIn()) {
       this.router.navigate([this.returnUrl]);
@@ -38,29 +35,32 @@ export class PageLoginComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   onSubmit(loginForm: NgForm) {
     this.errors = [];
     if (!this.authSvc.isLoggedIn()) {
-      this.authSvc.login(this.user).subscribe(items => {
-        if (this.authSvc.isLoggedIn()) {
+      this.authSvc.login(this.user).subscribe(
+        items => {
+          if (this.authSvc.isLoggedIn()) {
           if (this.user.rememberme != undefined && this.user.rememberme != '' && this.user.rememberme === true) {
             localStorage.setItem('rememberme', this.cryptSvc.set('simbayu$#@$^@ERF', JSON.stringify(this.user)));
           }
-          this.getPermissions(this.user.email).subscribe(permissions => {
-            this.router.navigate([this.returnUrl]);
-          });
+            this.getPermissions(this.user.email).subscribe(permissions => {
+              this.router.navigate([this.returnUrl]);
+            });
+          }
+        },
+        error => {
+          if (error.status === 401) {
+            this.errors.push('Invalid Credentials.');
+            this.showMessages = { error: this.errors, message: this.messages };
+          } else {
+            this.errors.push(error.message);
+            this.showMessages = { error: this.errors, message: this.messages };
+          }
         }
-      }, (error => {
-        if (error.status === 401) {
-          this.errors.push('Invalid Credentials.');
-          this.showMessages = { error: this.errors, message: this.messages };
-        } else {
-          this.errors.push(error.message);
-          this.showMessages = { error: this.errors, message: this.messages };
-        }
-      }));
+      );
     }
   }
   getPermissions(username: string): Observable<AppPermission[]> {
