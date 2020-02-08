@@ -11,10 +11,58 @@ export class CategoryGridComponent implements AfterViewInit {
   @ViewChild('pageGrid', { read: ViewContainerRef, static: true })
   pageGrid: ViewContainerRef;
   private pageGridConfig: ICGridConfig;
+  public selector: string = '.scrollable-container';
+
+  throttle = 50;
+  scrollDistance = 1;
+  scrollUpDistance = 2;
+
   constructor(private store: SimpleStoreManagerService, private lazyLoader: LazyLoaderService) {
     this.pageGridConfig = {
-      items: ['test'],
-      isCheckbox: true,
+      items: [
+        {
+          heading: 'Document_2017.doc',
+          subHeading: 'Size: 42KB',
+          description: 'Nov 02, 2017'
+        },
+        {
+          heading: 'Document_2018.doc',
+          subHeading: 'Size: 42KB',
+          description: 'Nov 02, 2018'
+        },
+        {
+          heading: 'Document_2019.doc',
+          subHeading: 'Size: 42KB',
+          description: 'Nov 02, 2019'
+        },
+        {
+          heading: 'Document_2020.doc',
+          subHeading: 'Size: 42KB',
+          description: 'Nov 02, 2020'
+        },
+        {
+          heading: 'Document_2017.doc',
+          subHeading: 'Size: 42KB',
+          description: 'Nov 02, 2017'
+        },
+        {
+          heading: 'Document_2018.doc',
+          subHeading: 'Size: 42KB',
+          description: 'Nov 02, 2018'
+        },
+        {
+          heading: 'Document_2019.doc',
+          subHeading: 'Size: 42KB',
+          description: 'Nov 02, 2019'
+        },
+        {
+          heading: 'Document_2020.doc',
+          subHeading: 'Size: 42KB',
+          description: 'Nov 02, 2020'
+        }
+      ],
+      isCheckbox: false,
+      isDelete: true,
       functions: {
         onDelete: this.onDelete,
         onSelect: this.onSelect
@@ -26,6 +74,37 @@ export class CategoryGridComponent implements AfterViewInit {
   }
   onSelect(event: any) {
     alert('navigating');
+  }
+  onScroll(): void {
+    this.getLatestPage();
+  }
+
+  getLatestPage(): void {
+    let items = [];
+    items = [
+      {
+        heading: 'Document_2017.doc',
+        subHeading: 'Size: 42KB',
+        description: 'Nov 02, 2017'
+      },
+      {
+        heading: 'Document_2018.doc',
+        subHeading: 'Size: 42KB',
+        description: 'Nov 02, 2018'
+      },
+      {
+        heading: 'Document_2019.doc',
+        subHeading: 'Size: 42KB',
+        description: 'Nov 02, 2019'
+      },
+      {
+        heading: 'Document_2020.doc',
+        subHeading: 'Size: 42KB',
+        description: 'Nov 02, 2020'
+      }
+    ];
+    this.pageGridConfig.items.push(...items);
+    this.store.setIn('categorypagegridconfig', ['items'], this.pageGridConfig.items);
   }
   ngAfterViewInit(): void {
     this.pageGrid.clear();

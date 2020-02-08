@@ -23,8 +23,7 @@ export class PageLoginComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authSvc: AuthService,
-    private cryptSvc: CryptService
+    private authSvc: AuthService
   ) {
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
     if (this.authSvc.isLoggedIn()) {

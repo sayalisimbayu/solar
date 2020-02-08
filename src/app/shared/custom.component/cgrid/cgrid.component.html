@@ -5,12 +5,26 @@
       <div class="card" *ngIf="config != undefined">
         <div class="file" *ngFor="let item of config.items">
           <a href="javascript:void(0);">
-            <div class="hover">
-              <ng-container #button></ng-container>
+            <div class="hover" [ngSwitch]="true">
+              <label class="fancy-checkbox" *ngSwitchCase="config.isCheckbox">
+                <input type="checkbox" name="checkbox" />
+                <!-- <span>Option 3</span> -->
+              </label>
+              <button
+                type="button"
+                (click)="delete($event)"
+                class="btn btn-icon btn-danger"
+                *ngSwitchCase="config.isDelete"
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+              <p *ngSwitchDefault></p>
             </div>
             <div class="file-name" (click)="navigate($event)">
-              <p class="m-b-5 text-muted">Document_2017.doc</p>
-              <small>Size: 42KB <span class="date text-muted">Nov 02, 2017</span></small>
+              <p class="m-b-5 text-muted">{{ item.heading }}</p>
+              <small
+                >{{ item.subHeading }}<span class="date text-muted">{{ item.description }}</span></small
+              >
             </div>
           </a>
         </div>
