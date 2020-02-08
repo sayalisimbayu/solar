@@ -1,8 +1,8 @@
 export interface ICGridConfig {
-    items: any[],
-    isCheckbox: boolean,
-    functions: {
-        onDelete: Function,
-        onSelect: Function
-    }
+  items: any[];
+  isCheckbox: boolean;
+  functions: {
+    onDelete: Function;
+    onSelect: Function;
+  };
 }

@@ -18,12 +18,11 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSettingDropMenuEvent = new EventEmitter();
   @Output() toggleNotificationDropMenuEvent = new EventEmitter();
 
-  constructor(private config: NgbDropdownConfig, private themeService: ThemeService,
-    private router: Router) {
+  constructor(private config: NgbDropdownConfig, private themeService: ThemeService, private router: Router) {
     config.placement = 'bottom-right';
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public logout() {
     localStorage.removeItem('expires_at');

@@ -5,7 +5,7 @@
       <div class="dropdown" ngbDropdown>
         <span>Welcome,</span>
         <a href="javascript:void(0);" class="dropdown-toggle user-name" ngbDropdownToggle
-          ><strong>{{username}}</strong></a
+          ><strong>{{ username }}</strong></a
         >
         <ul class="dropdown-menu dropdown-menu-right account" ngbDropdownMenu>
           <li>
@@ -88,7 +88,9 @@
               [routerLinkActiveOptions]="{ exact: true }"
               [ngClass]="{ active: currentActiveMenu == 'master' }"
             >
-              <a class="has-arrow" (click)="activeInactiveMenu('master')"><i class="icon-grid"></i> <span>Master</span></a>
+              <a class="has-arrow" (click)="activeInactiveMenu('master')"
+                ><i class="icon-grid"></i> <span>Master</span></a
+              >
               <ul *ngIf="currentActiveMenu == 'master'">
                 <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <a [routerLink]="['/mercury/category']">Category</a>

@@ -1,7 +1,8 @@
 <div class="container-fluid file_manager">
   <div class="row clearfix">
-    <div class="col-lg-3 col-md-4 col-sm-12">T
-      <div class="card" *ngIf="config!=undefined">
+    <div class="col-lg-3 col-md-4 col-sm-12">
+      T
+      <div class="card" *ngIf="config != undefined">
         <div class="file" *ngFor="let item of config.items">
           <a href="javascript:void(0);">
             <div class="hover">
@@ -20,7 +21,7 @@
         </ng-template>
         <ng-template #checkboxTemplate>
           <label class="fancy-checkbox">
-            <input type="checkbox" name="checkbox">
+            <input type="checkbox" name="checkbox" />
             <span>Option 3</span>
           </label>
         </ng-template>

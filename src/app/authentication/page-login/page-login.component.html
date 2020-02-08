@@ -13,25 +13,48 @@
             <form class="form-auth-small" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
               <div class="form-group">
                 <label for="signin-email" class="control-label sr-only">Email</label>
-                <input type="email" class="form-control" id="signin-email" name="email" value="user@domain.com"
-                  [(ngModel)]="user.email" placeholder="Email" />
+                <input
+                  type="email"
+                  class="form-control"
+                  id="signin-email"
+                  name="email"
+                  value="user@domain.com"
+                  [(ngModel)]="user.email"
+                  placeholder="Email"
+                />
               </div>
               <div class="form-group">
                 <label for="signin-password" class="control-label sr-only">Password</label>
-                <input type="password" class="form-control" id="signin-password" name="password"
-                  value="thisisthepassword" [(ngModel)]="user.password" placeholder="Password" />
+                <input
+                  type="password"
+                  class="form-control"
+                  id="signin-password"
+                  name="password"
+                  value="thisisthepassword"
+                  [(ngModel)]="user.password"
+                  placeholder="Password"
+                />
               </div>
               <div class="form-group">
                 <label class="fancy-checkbox element-left">
-                  <input type="checkbox" checked [(ngModel)]="user.rememberme" id="signin-rememberme" name="rememberme" />
+                  <input
+                    type="checkbox"
+                    checked
+                    [(ngModel)]="user.rememberme"
+                    id="signin-rememberme"
+                    name="rememberme"
+                  />
                   <span>Remember me</span>
                 </label>
               </div>
 
               <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
               <div class="bottom">
-                <span class="helper-text m-b-10"><i class="fa fa-lock"></i>&nbsp;<a
-                    [routerLink]="['/authentication/page-forgot-password']">Forgot password?</a></span>
+                <span class="helper-text m-b-10"
+                  ><i class="fa fa-lock"></i>&nbsp;<a [routerLink]="['/authentication/page-forgot-password']"
+                    >Forgot password?</a
+                  ></span
+                >
                 <span>Don't have an account? <a [routerLink]="['/authentication/page-register']">Register</a></span>
               </div>
             </form>
