@@ -39,7 +39,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     LeafletModule.forRoot(),
     NgxGalleryModule,
     SimpleStoreManagerModule,
-    HttpClientModule,
+    HttpClientModule
     // AuthenticationModule
   ],
   providers: [
@@ -52,6 +52,6 @@ export class CustomHammerConfig extends HammerGestureConfig {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule{
-  constructor(private router: Router, private authsrv: AuthService) { }
+export class AppModule {
+  constructor(private router: Router, private authsrv: AuthService) {}
 }

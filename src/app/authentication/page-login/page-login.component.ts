@@ -19,36 +19,36 @@ export class PageLoginComponent implements OnInit {
   public user: any = { email: '', password: '' };
   showMessages: any = {};
   messages: any = [];
-  constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private authSvc: AuthService,
-  ) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authSvc: AuthService) {
     this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   onSubmit(loginForm: NgForm) {
     this.errors = [];
     console.log(loginForm.value);
     this.user = loginForm.value;
     if (!this.authSvc.isLoggedIn()) {
-      this.authSvc.login(this.user).subscribe(items => {
-        console.info(items);
-        if (this.authSvc.isLoggedIn()) {
-          this.getPermissions(this.user.email).subscribe(permissions => {
-            this.router.navigate([this.returnUrl]);
-          });
+      this.authSvc.login(this.user).subscribe(
+        items => {
+          console.info(items);
+          if (this.authSvc.isLoggedIn()) {
+            this.getPermissions(this.user.email).subscribe(permissions => {
+              this.router.navigate([this.returnUrl]);
+            });
+          }
+        },
+        error => {
+          if (error.status === 401) {
+            this.errors.push('Invalid Credentials.');
+            this.showMessages = { error: this.errors, message: this.messages };
+          } else {
+            this.errors.push(error.message);
+            this.showMessages = { error: this.errors, message: this.messages };
+          }
         }
-      }, (error => {
-        if (error.status === 401) {
-          this.errors.push('Invalid Credentials.');
-          this.showMessages = { error: this.errors, message: this.messages };
-        } else {
-          this.errors.push(error.message);
-          this.showMessages = { error: this.errors, message: this.messages };
-        }
-      }));
+      );
     }
   }
   getPermissions(username: string): Observable<AppPermission[]> {
