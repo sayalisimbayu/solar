@@ -9,8 +9,6 @@ import { EChartOption } from 'echarts';
 import { IPageFrameConfig } from '@app/core/layout/page-frame/model/page-frame.config.interface';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
-import { filter, map } from 'rxjs/operators';
-import { StoreEvent } from '@app/shared/storemanager/models/storeEvent.model';
 
 @Component({
     selector: 'app-cat-layout',

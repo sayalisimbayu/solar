@@ -5,11 +5,11 @@
       <div class="dropdown" ngbDropdown>
         <span>Welcome,</span>
         <a href="javascript:void(0);" class="dropdown-toggle user-name" ngbDropdownToggle
-          ><strong>Alizee Thomas</strong></a
+          ><strong>{{username}}</strong></a
         >
         <ul class="dropdown-menu dropdown-menu-right account" ngbDropdownMenu>
           <li>
-            <a [routerLink]="['/admin/pages/page-profile2']"><i class="icon-user"></i>My Profile</a>
+            <a [routerLink]="['/admin/profile']"><i class="icon-user"></i>My Profile</a>
           </li>
           <li>
             <a [routerLink]="['/admin/app/app-inbox']"><i class="icon-envelope-open"></i>Messages</a>
@@ -86,12 +86,12 @@
             <li
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
-              [ngClass]="{ active: currentActiveMenu == 'app' }"
+              [ngClass]="{ active: currentActiveMenu == 'master' }"
             >
-              <a class="has-arrow" (click)="activeInactiveMenu('app')"><i class="icon-grid"></i> <span>App</span></a>
-              <ul *ngIf="currentActiveMenu == 'app'">
+              <a class="has-arrow" (click)="activeInactiveMenu('master')"><i class="icon-grid"></i> <span>Master</span></a>
+              <ul *ngIf="currentActiveMenu == 'master'">
                 <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <a [routerLink]="['/admin/app/app-inbox']">Inbox</a>
+                  <a [routerLink]="['/mercury/category']">Category</a>
                 </li>
                 <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <a [routerLink]="['/admin/app/app-chat']">Chat</a>

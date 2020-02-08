@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ThemeService } from '@app/shared/services/theme.service';
+import { AuthService } from '@app/shell/auth/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,15 +18,18 @@ export class SidebarComponent implements OnDestroy {
   @Output() activeInactiveMenuEvent = new EventEmitter();
   public themeClass: string = 'theme-cyan';
   public darkClass: string = '';
+  public username: string='';
+  public displayImage: string='';
   private ngUnsubscribe = new Subject();
 
-  constructor(private themeService: ThemeService) {
+  constructor(private themeService: ThemeService, private authSrv: AuthService) {
     this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: string) => {
       this.themeClass = themeClass;
     });
     this.themeService.darkClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((darkClass: string) => {
       this.darkClass = darkClass;
     });
+    this.username=this.authSrv.getSysUserData().displayname;
   }
 
   ngOnDestroy() {
