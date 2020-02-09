@@ -15,7 +15,6 @@ import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-@AutoUnsubscribe()
 export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
   public title = 'lucid';
   public isStopLoading: boolean = false;
@@ -28,6 +27,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
   public smallScreenMenu = '';
   public darkClass: string = '';
   private ngUnsubscribe = new Subject();
+  private timerSubscribed: any;
 
   constructor(
     public sidebarService: SidebarService,
@@ -72,11 +72,12 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(mergeMap(route => route.data))
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(event => this.titleService.setTitle(event['title']));
-    this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
-      if(isTimedOut)
-      {
-        console.log('session expired');  
-        this.authSrv.lockScreen();
+    this.timerSubscribed = this.bnIdle.startWatching(60);
+    this.timerSubscribed.subscribe((isTimedOut: boolean) => {
+      if (isTimedOut) {
+        console.log('session expired');
+        that.bnIdle.stopTimer();
+        that.authSrv.lockScreen();
       }
     });
   }
