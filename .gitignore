@@ -30,7 +30,7 @@
 .settings/
 xcuserdata/
 *.sublime-workspace
-
+*-lock.json
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

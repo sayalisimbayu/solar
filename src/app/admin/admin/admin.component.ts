@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 
 import { SidebarService } from '@app/shared/services/sidebar.service';
 import { ThemeService } from '@app/shared/services/theme.service';
+import { AuthService } from '@app/shell/auth/auth.service';
+import { BnNgIdleService } from 'bn-ng-idle';
 
 @Component({
   selector: 'app-admin',
@@ -30,7 +32,9 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private themeService: ThemeService,
-    private titleService: Title
+    private titleService: Title,
+    private authSrv: AuthService,
+    private bnIdle: BnNgIdleService
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {
       this.isStopLoading = false;
@@ -66,6 +70,13 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(mergeMap(route => route.data))
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(event => this.titleService.setTitle(event['title']));
+    this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
+      if(isTimedOut)
+      {
+        console.log('session expired');  
+        this.authSrv.lockScreen();
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -83,7 +94,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
     let that = this;
-    setTimeout(function() {
+    setTimeout(function () {
       that.isStopLoading = true;
     }, 1000);
   }

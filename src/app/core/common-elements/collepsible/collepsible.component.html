@@ -1,0 +1,14 @@
+<div *ngFor="let option of options;let i = index;">
+    <div class="card-header" id="headingOne" (click)="showItem(i)">
+        <h5 class="mb-0">
+            <button class="btn btn-link">
+              {{ option.title }}
+            </button>
+        </h5>
+    </div>                                
+    <div class="collapse show" [ngClass]="{'show': visible && i == (visible-1)}">
+        <div class="card-body">
+            {{ option.message }}
+        </div>
+    </div>
+</div>

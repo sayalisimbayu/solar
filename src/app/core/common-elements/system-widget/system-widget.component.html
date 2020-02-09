@@ -1,0 +1,15 @@
+<div class="card">
+    <div class="body">
+        <div class="clearfix">
+            <div class="pull-left">
+                <h6 class="mb-0">{{options.title}}</h6>
+                <small class="text-success" [ngClass]="{'d-none':!options.status}">{{options.onMessage}}</small>
+                <small class="text-danger" [ngClass]="{'d-none':options.status}">{{options.offMessage}}</small>
+            </div>
+            <div class="pull-right">
+                <button type="button" class="btn btn-outline-danger" [ngClass]="{'d-none':!options.status}" (click)="onToggle()">{{options.offButton}}</button>
+                <button type="button" class="btn btn-outline-success" [ngClass]="{'d-none':options.status}" (click)="onToggle()">{{options.onButton}}</button>
+            </div>
+        </div>
+    </div>
+</div>
