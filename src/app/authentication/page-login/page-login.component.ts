@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '@app/shell/auth/auth.service';
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { CryptService } from '@app/shared/services/crypt.service';
   templateUrl: './page-login.component.html',
   styleUrls: ['./page-login.component.css']
 })
-export class PageLoginComponent implements OnInit {
+export class PageLoginComponent implements OnInit, OnDestroy {
   returnUrl: string;
   errors: any = [];
   public loginForm: any;
@@ -29,12 +29,13 @@ export class PageLoginComponent implements OnInit {
       this.router.navigate([this.returnUrl]);
     }
     this.user = this.authSvc.getRememberedCredentials();
-    if(this.user==null){
-      this.user= { email: '', password: '' };
+    if (this.user == null) {
+      this.user = { email: '', password: '' };
     }
   }
 
   ngOnInit() { }
+  ngOnDestroy() { }
 
   onSubmit(loginForm: NgForm) {
     this.errors = [];

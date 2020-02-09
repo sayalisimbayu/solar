@@ -8,12 +8,14 @@ import { SidebarService } from '@app/shared/services/sidebar.service';
 import { ThemeService } from '@app/shared/services/theme.service';
 import { AuthService } from '@app/shell/auth/auth.service';
 import { BnNgIdleService } from 'bn-ng-idle';
+import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
+@AutoUnsubscribe()
 export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
   public title = 'lucid';
   public isStopLoading: boolean = false;
