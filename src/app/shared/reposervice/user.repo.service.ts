@@ -52,4 +52,15 @@ export class UserRepoService {
       })
     );
   }
+    saveUserInfo(user: UserInfo) {
+        return this.http.post<DataResponse>('user/save', user).pipe(map((el: DataResponse) => {
+            let response: UserInfo;
+            if (el.code === 0) {
+                console.error(el);
+                return;
+            }
+            response = el.data;
+            return response;
+        }));
+    }
 }

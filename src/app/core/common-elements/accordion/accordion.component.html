@@ -1,0 +1,34 @@
+<p>
+    <ng-container *ngFor="let button of options.buttons">
+        <a class="btn btn-{{button.type}} mr-1" href="javascript:void();" role="button" *ngIf="button.link" (click)="toggleTarget(button.target)">
+            {{button.title}}
+        </a>
+        <button class="btn btn-{{button.type}} mr-1" type="button" *ngIf="!button.link" (click)="toggleTarget(button.target)">
+            {{button.title}}
+        </button>
+    </ng-container>
+</p>
+<ng-container *ngIf="!options.multiple">
+    <ng-container *ngFor="let content of options.contents;let i = index;">
+        <div class="collapse" [ngClass]="{ 'show': (target && i == (target-1)) || target == 'all'}">
+            <div class="card card-body">
+                {{ content.message }}
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
+<ng-container *ngIf="options.multiple">
+    <div class="row">
+        <div class="col" *ngFor="let content of options.contents;let i = index;">
+            <div class="collapse multi-collapse" [ngClass]="{ 'show': (target && i == (target-1)) || target == 'all'}">
+              <div class="card card-body">
+                  {{ content.message }}
+              </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+
+
