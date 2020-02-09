@@ -12,3 +12,4 @@ export interface ICGridComponentConfig {
   heading: string;
   subHeading: string;
   description: string;
+}

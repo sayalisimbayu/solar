@@ -20,11 +20,7 @@ export class PageLoginComponent implements OnInit {
   public user: any = { email: '', password: '' };
   showMessages: any = {};
   messages: any = [];
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private authSvc: AuthService
-  ) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authSvc: AuthService, private cryptSvc: CryptService) {
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
     if (this.authSvc.isLoggedIn()) {
       this.router.navigate([this.returnUrl]);
