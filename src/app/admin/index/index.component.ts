@@ -88,10 +88,10 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(filter((se: { key: string }) => se.key === 'totalEarnings'))
       .pipe(
         map((el: StoreEvent) => {
-          this.toastr.info('Hello, Total Earnings are changed to:' + el.store.value, undefined, {
-            closeButton: true,
-            positionClass: 'toast-top-right'
-          });
+          // this.toastr.info('Hello, Total Earnings are changed to:' + el.store.value, undefined, {
+          //   closeButton: true,
+          //   positionClass: 'toast-top-right'
+          // });
         })
       )
       .subscribe();

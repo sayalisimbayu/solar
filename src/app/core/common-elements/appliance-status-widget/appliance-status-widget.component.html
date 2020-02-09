@@ -1,0 +1,9 @@
+<div class="card appliances-grp" *ngIf="options">
+    <div class="body clearfix">
+        <div class="icon"><img src="{{options.image}}" alt=""></div>
+        <div class="content">
+            <h6>{{options.title}} <span class="{{options.statusClass}}">{{options.status}}</span></h6>
+            <p *ngFor="let detail of options.details">{{detail.title}} <span class="{{detail.statusClass}}">{{detail.status}}</span></p>
+        </div>
+    </div>
+</div>

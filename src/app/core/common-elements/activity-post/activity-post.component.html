@@ -1,0 +1,20 @@
+<div class="timeline-item" ngClass='{{post.class}}' [attr.date-is]="post.date">
+    <h5>{{ post.header }}</h5>
+    <span><a href="javascript:void(0);">{{post.user}}</a> {{post.location}}</span>
+    <div class="msg">
+        <p>{{ post.message }}</p>
+        <a href="javascript:void(0);" class="m-r-20"><i class="icon-heart"></i> Like</a>
+        <a  href="javascript:void(0);" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" (click)="toggleComment()"><i class="icon-bubbles"></i> Comment</a>
+        <div class=" m-t-10" id="collapseExample" [ngClass]="{'collapse':!showComment}">
+            <div class="well">
+                <form>
+                    <div class="form-group">
+                        <textarea rows="2" class="form-control no-resize" placeholder="Enter here for tweet..."></textarea>
+                    </div>
+                    <button class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -17,24 +17,20 @@ export class PageLoginComponent implements OnInit {
   public loginForm: any;
   public userEmail = 'abc';
   public passWrod = '';
-  public user: any = { email: '', password: '' };
+  public user: any;
   showMessages: any = {};
   messages: any = [];
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
     private authSvc: AuthService,
-    private cryptSvc: CryptService,
   ) {
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
     if (this.authSvc.isLoggedIn()) {
       this.router.navigate([this.returnUrl]);
     }
-    if (localStorage.getItem('rememberme') && localStorage.getItem('rememberme') !== '') {
-      debugger;
-      const lcRememberme = this.cryptSvc.get('simbayu$#@$^@ERF', localStorage.getItem('rememberme'));
-      if (lcRememberme != '') {
-        this.user = JSON.parse(lcRememberme);
-      }
+    this.user = this.authSvc.getRememberedCredentials();
+    if(this.user==null){
+      this.user= { email: '', password: '' };
     }
   }
 
@@ -46,7 +42,7 @@ export class PageLoginComponent implements OnInit {
       this.authSvc.login(this.user).subscribe(items => {
         if (this.authSvc.isLoggedIn()) {
           if (this.user.rememberme != undefined && this.user.rememberme != '' && this.user.rememberme === true) {
-            localStorage.setItem('rememberme', this.cryptSvc.set('simbayu$#@$^@ERF', JSON.stringify(this.user)));
+            this.authSvc.rememberCredentials(this.user);
           }
           this.getPermissions(this.user.email).subscribe(permissions => {
             this.router.navigate([this.returnUrl]);

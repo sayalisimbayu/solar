@@ -1,0 +1,4 @@
+<div class="alert alert-{{options.type}}" role="alert" *ngIf="showElement">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" *ngIf="options.showClose" (click)="toggleElement()"><span aria-hidden="true">&times;</span></button>
+    <i class="fa {{options.icon}}" *ngIf="options.icon"></i>&nbsp;<span innerHTML="{{ options.message }}"></span>
+</div>

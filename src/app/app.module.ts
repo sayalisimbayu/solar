@@ -18,6 +18,8 @@ import { Router } from '@angular/router';
 import { AuthService } from './shell/auth/auth.service';
 import { LoginActivate } from './shared/other/authGuard';
 import { CryptService } from './shared/services/crypt.service';
+import { BnNgIdleService } from 'bn-ng-idle';
+import { UserRepoService } from './shared/reposervice/user.repo.service';
 // import { AuthenticationModule } from './authentication/authentication.module';
 
 export class CustomHammerConfig extends HammerGestureConfig {
@@ -48,12 +50,14 @@ export class CustomHammerConfig extends HammerGestureConfig {
     AuthService,
     LoginActivate,
     CryptService,
+    BnNgIdleService,
+    UserRepoService,
     { provide: LAZY_WIDGETS, useFactory: lazyArrayToObj },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule{
+export class AppModule {
   constructor(private router: Router, private authsrv: AuthService) { }
 }

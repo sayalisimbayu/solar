@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeService } from '@app/shared/services/theme.service';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/shell/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -19,19 +20,14 @@ export class HeaderComponent implements OnInit {
   @Output() toggleNotificationDropMenuEvent = new EventEmitter();
 
   constructor(private config: NgbDropdownConfig, private themeService: ThemeService,
-    private router: Router) {
+    private router: Router, private authSvc: AuthService) {
     config.placement = 'bottom-right';
   }
 
   ngOnInit() { }
 
   public logout() {
-    localStorage.removeItem('expires_at');
-    localStorage.removeItem('sysuserdata');
-    localStorage.removeItem('appsettings');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('apppermission');
-    this.router.navigate(['/authentication/page-login']);
+    this.authSvc.logout();
   }
 
   toggleSettingDropMenu() {
