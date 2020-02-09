@@ -21,8 +21,6 @@ export class PageLoginComponent implements OnInit, OnDestroy {
   showMessages: any = {};
   messages: any = [];
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private authSvc: AuthService, private cryptSvc: CryptService) {
-    private authSvc: AuthService,
-  ) {
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
     if (this.authSvc.isLoggedIn()) {
       this.router.navigate([this.returnUrl]);
