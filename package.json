@@ -32,6 +32,7 @@
     "@angular/service-worker": "^8.1.0",
     "@ng-bootstrap/ng-bootstrap": "^5.0.0-rc.1",
     "@ngx-translate/core": "^11.0.1",
+    "ngx-infinite-scroll": "^8.0.0",
     "@types/crypto-js": "^3.1.43",
     "@types/echarts": "^4.4.2",
     "angular-font-awesome": "^3.1.2",
@@ -105,10 +106,5 @@
         }
       }
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }
