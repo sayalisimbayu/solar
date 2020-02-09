@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/shell/auth/auth.service';
+import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 
 @Component({
   selector: 'app-page-lockscreen',
   templateUrl: './page-lockscreen.component.html',
   styleUrls: ['./page-lockscreen.component.css']
 })
-export class PageLockscreenComponent implements OnInit {
+@AutoUnsubscribe()
+export class PageLockscreenComponent implements OnInit, OnDestroy {
   public loggedUser: string;
   public loggedUserEmail: string;
   public password = '';
@@ -21,6 +23,7 @@ export class PageLockscreenComponent implements OnInit {
     }
   }
   ngOnInit() { }
+  ngOnDestroy() { }
 
   onSubmit() {
     if (this.password != undefined && this.password != '') {
