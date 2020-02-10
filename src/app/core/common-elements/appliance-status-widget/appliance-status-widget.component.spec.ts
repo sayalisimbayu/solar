@@ -8,9 +8,8 @@ describe('ApplianceStatusWidgetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ApplianceStatusWidgetComponent ]
-    })
-    .compileComponents();
+      declarations: [ApplianceStatusWidgetComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

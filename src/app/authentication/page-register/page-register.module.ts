@@ -16,4 +16,4 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes), FormsModule, LayoutModule, NgbModule, CommonElementsModule],
   declarations: [PageRegisterComponent]
 })
-export class PageRegisterModule { }
+export class PageRegisterModule {}

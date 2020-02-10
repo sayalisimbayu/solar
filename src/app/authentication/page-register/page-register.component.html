@@ -16,28 +16,53 @@
             <form class="form-auth-small" #registrationForm="ngForm" (ngSubmit)="onSubmit(registrationForm)">
               <div class="form-group">
                 <label for="signup-display" class="control-label sr-only">Name</label>
-                <input type="email" class="form-control" [(ngModel)]="user.displayName" name="displayName"
-                  id="signup-display" placeholder="Name" />
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="user.displayName"
+                  name="displayName"
+                  id="signup-display"
+                  placeholder="Name"
+                />
               </div>
               <div class="form-group">
                 <label for="signup-email" class="control-label sr-only">Email</label>
-                <input type="email" class="form-control" [(ngModel)]="user.username" name="username" id="signup-email"
-                  placeholder="Your email" />
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="user.username"
+                  name="username"
+                  id="signup-email"
+                  placeholder="Your email"
+                />
               </div>
               <div class="form-group">
                 <label for="signup-password" class="control-label sr-only">Password</label>
-                <input type="password" class="form-control" [(ngModel)]="user.password" name="password"
-                  id="signup-password" placeholder="Password" />
+                <input
+                  type="password"
+                  class="form-control"
+                  [(ngModel)]="user.password"
+                  name="password"
+                  id="signup-password"
+                  placeholder="Password"
+                />
               </div>
               <div class="form-group">
                 <label for="signup-password" class="control-label sr-only">Confirm Password</label>
-                <input type="password" class="form-control" [(ngModel)]="user.confirmPassword" name="confirmPassword"
-                  id="signup-confirm-password" placeholder="Confirm Password" />
+                <input
+                  type="password"
+                  class="form-control"
+                  [(ngModel)]="user.confirmPassword"
+                  name="confirmPassword"
+                  id="signup-confirm-password"
+                  placeholder="Confirm Password"
+                />
               </div>
               <button type="submit" class="btn btn-primary btn-lg btn-block">REGISTER</button>
               <div class="bottom">
-                <span class="helper-text">Already have an account? <a
-                    [routerLink]="['/authentication/page-login']">Login</a></span>
+                <span class="helper-text"
+                  >Already have an account? <a [routerLink]="['/authentication/page-login']">Login</a></span
+                >
               </div>
             </form>
           </div>

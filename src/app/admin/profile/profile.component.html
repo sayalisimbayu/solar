@@ -39,7 +39,7 @@
         </div>
         <div class="body">
           <small class="text-muted">Address: </small>
-          <p>795 Folsom Ave, Suite 600 San Francisco, 94107</p>
+          <p>{{userInfo.addresslinE1}},{{userInfo.addresslinE2}},{{userInfo.city}},{{userInfo.ustate}}</p>
           <div>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1923731.7533500232!2d-120.39098936853455!3d37.63767091877441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan+Francisco%2C+CA%2C+USA!5e0!3m2!1sen!2sin!4v1522391841133"
@@ -52,13 +52,13 @@
           </div>
           <hr />
           <small class="text-muted">Email address: </small>
-          <p>michael@gmail.com</p>
+          <p>{{user.email}}</p>
           <hr />
           <small class="text-muted">Mobile: </small>
-          <p>+ 202-555-2828</p>
+          <p>{{userInfo.mobile}}</p>
           <hr />
           <small class="text-muted">Birth Date: </small>
-          <p class="m-b-0">October 22th, 1990</p>
+          <p class="m-b-0">{{userInfo.birthdate | date}}</p>
           <hr />
           <small class="text-muted">Social: </small>
           <p><i class="fa fa-twitter m-r-5"></i> twitter.com/example</p>
@@ -182,24 +182,24 @@
         <div class="tab-pane" [ngClass]="{ active: activeTab == 'Settings' }">
           <div class="card">
             <div class="body">
-              <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <form [formGroup]="basicInformation" (ngSubmit)="onSubmit(basicInformation.value)">
                 <h6>Basic Information</h6>
                 <div class="row clearfix">
                   <div class="col-lg-12 col-md-12">
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" />
+                      <input type="text" class="form-control" placeholder="First Name" formControlName="firstname" />
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" />
+                      <input type="text" class="form-control" placeholder="Last Name" formControlName="lastname" />
                     </div>
                     <div class="form-group">
                       <div>
                         <label class="fancy-radio">
-                          <input name="gender" value="true" type="radio" formControlName="gender" checked />
+                          <input name="gender" value = 'true' type="radio" formControlName="gender" checked />
                           <span><i></i>Male</span>
                         </label>
                         <label class="fancy-radio">
-                          <input name="gender" value="false" type="radio" formControlName="gender" />
+                          <input name="gender" value = 'false' type="radio" formControlName="gender" />
                           <span><i></i>Female</span>
                         </label>
                       </div>
@@ -214,7 +214,7 @@
                           data-date-autoclose="true"
                           class="form-control"
                           placeholder="Birthdate"
-                          formControlName="birthDate"
+                          formControlName="birthdate"
                         />
                       </div>
                     </div>
@@ -228,7 +228,7 @@
                         type="text"
                         class="form-control"
                         placeholder="Address Line 1"
-                        formControlName="addressLine1"
+                        formControlName="addresslinE1"
                       />
                     </div>
                     <div class="form-group">
@@ -236,7 +236,7 @@
                         type="text"
                         class="form-control"
                         placeholder="Address Line 2"
-                        formControlName="addressLine2"
+                        formControlName="addresslinE2"
                       />
                     </div>
                     <div class="form-group">
@@ -246,7 +246,7 @@
                       <input type="text" class="form-control" placeholder="State/Province" formControlName="ustate" />
                     </div>
                     <div class="form-group">
-                      <select class="form-control" formControlName="countryCode">
+                      <select class="form-control" formControlName="countrycode">
                         <option value="">-- Select Country --</option>
                         <option value="AF">Afghanistan</option>
                         <option value="AX">Åland Islands</option>
@@ -509,6 +509,7 @@
 
           <div class="card">
             <div class="body">
+              <form [formGroup]="accountData" (ngSubmit)="onSubmit(accountData.value)">
               <div class="row clearfix">
                 <div class="col-lg-12 col-md-12">
                   <h6>Account Data</h6>
@@ -517,34 +518,35 @@
                       type="text"
                       #email
                       class="form-control"
-                      value="alizeethomas"
                       disabled
                       placeholder="Username"
+                      formControlName="username"
                     />
                   </div>
                   <div class="form-group">
-                    <input type="email" class="form-control" value="alizee.info@yourdomain.com" placeholder="Email" />
+                    <input type="email" class="form-control" placeholder="Email" formControlName="email"/>
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Phone Number" />
+                    <input type="text" class="form-control" placeholder="Phone Number" formControlName="mobile"/>
                   </div>
                 </div>
 
                 <div class="col-lg-12 col-md-12">
                   <h6>Change Password</h6>
                   <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Current Password" />
+                    <input type="password" class="form-control" placeholder="Current Password" formControlName="currentpassword"/>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control" placeholder="New Password" />
+                    <input type="password" class="form-control" placeholder="New Password" formControlName="newpassword"/>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Confirm New Password" />
+                    <input type="password" class="form-control" placeholder="Confirm New Password" formControlName="confirmnewpassword"/>
                   </div>
                 </div>
               </div>
-              <button type="button" class="btn btn-primary">Update</button> &nbsp;&nbsp;
+              <button type="submit" class="btn btn-primary">Update</button> &nbsp;&nbsp;
               <button class="btn btn-default">Cancel</button>
+              </form>
             </div>
           </div>
 

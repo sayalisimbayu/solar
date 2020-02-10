@@ -6,17 +6,15 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./accordion.component.css']
 })
 export class AccordionComponent implements OnInit {
+  @Input() options: any;
+  public target: string;
 
-  @Input() options:any;
-  public target:string;
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
-  toggleTarget(target:string){
-    if(this.target && target == this.target){
+  toggleTarget(target: string) {
+    if (this.target && target == this.target) {
       this.target = undefined;
     } else {
       this.target = target;

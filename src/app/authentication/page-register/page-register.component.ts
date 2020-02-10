@@ -13,14 +13,14 @@ import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 export class PageRegisterComponent implements OnInit, OnDestroy {
   public user: any = { displayName: '', email: '', password: '', confirmPassword: '' };
   public erros: any[] = [];
-  constructor(private router: Router, private userSrv: UserRepoService, private toastr: ToastrService) { }
+  constructor(private router: Router, private userSrv: UserRepoService, private toastr: ToastrService) {}
 
-  ngOnInit() { }
-  ngOnDestroy() { }
+  ngOnInit() {}
+  ngOnDestroy() {}
 
   onSubmit(registrationForm: any) {
     if (registrationForm.value.password === registrationForm.value.confirmPassword) {
-      this.userSrv.saveUserInfo(registrationForm.value).subscribe((el) => {
+      this.userSrv.saveUserInfo(registrationForm.value).subscribe(el => {
         this.toastr.info('Please try to login.', 'Registered sucessfully', {
           closeButton: true,
           positionClass: 'toast-top-right'

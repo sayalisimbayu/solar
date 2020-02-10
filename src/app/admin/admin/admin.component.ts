@@ -73,9 +73,8 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(event => this.titleService.setTitle(event['title']));
     this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
-      if(isTimedOut)
-      {
-        console.log('session expired');  
+      if (isTimedOut) {
+        console.log('session expired');
         this.authSrv.lockScreen();
       }
     });
@@ -96,7 +95,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
     let that = this;
-    setTimeout(function () {
+    setTimeout(function() {
       that.isStopLoading = true;
     }, 1000);
   }

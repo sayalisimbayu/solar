@@ -6,21 +6,18 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./collepsible.component.css']
 })
 export class CollepsibleComponent implements OnInit {
+  @Input() options: any = {};
+  @Input() visible: number;
 
-  @Input() options:any = {};
-  @Input() visible:number;
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
-  showItem(index:number){
-    if(index == (this.visible - 1)){
+  showItem(index: number) {
+    if (index == this.visible - 1) {
       this.visible = undefined;
     } else {
-      this.visible = (index+1);
+      this.visible = index + 1;
     }
   }
-
 }

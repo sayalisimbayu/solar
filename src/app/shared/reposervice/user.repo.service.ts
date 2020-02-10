@@ -39,28 +39,33 @@ export class UserRepoService {
   }
 
   saveUserinfo(userInfo: UserInfo): Observable<UserInfo> {
-    'https://localhost:44341/api/User/User';
-    return this.http.get<DataResponse>(`user/user`).pipe(
+    debugger
+    return this.http.post<DataResponse>(`user/save`, userInfo).pipe(
       map((el: DataResponse) => {
+        debugger;
         let userInfoResponse: UserInfo;
         if (el.code === 0) {
+          debugger;
           console.error(el);
           return;
         }
+        debugger
         userInfoResponse = el.data;
         return userInfoResponse;
       })
     );
   }
-    saveUserInfo(user: UserInfo) {
-        return this.http.post<DataResponse>('user/save', user).pipe(map((el: DataResponse) => {
-            let response: UserInfo;
-            if (el.code === 0) {
-                console.error(el);
-                return;
-            }
-            response = el.data;
-            return response;
-        }));
-    }
+  saveUserInfo(user: UserInfo) {
+    return this.http.post<DataResponse>('user/save', user).pipe(
+      map((el: DataResponse) => {
+        let response: UserInfo;
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        response = el.data;
+        return response;
+      })
+    );
+  }
 }
