@@ -9,6 +9,8 @@ import { UserInfo } from '@app/shell/models/user.info.model';
 import { UserSetting } from '@app/shell/models/user.setting.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Control } from 'leaflet';
+import { forkJoin } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -59,42 +61,70 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     //Add 'implements OnDestroy' to the class.
   }
   ngOnInit() {
-    // Form Builder
-    this.basicInformation = this.setBasicInformationFormBuilder();
-    this.accountData = this.setaccountDataFormBuilder();
+    // set empty user info as on load user info is undefine or implement resolver
+    this.userInfo = this.setEmptyUserInfo();
+   
     // getUserInfo
     this.getUserInfo();
+
+     // Form Builder
+     this.basicInformation = this.setBasicInformationFormBuilder();
+     this.accountData = this.setaccountDataFormBuilder();
+     debugger
   }
   ngAfterViewInit(): void {
     this.loadPageTitle();
-   
+   debugger
     this.userRepoService.getUserSetting().subscribe(el => {
+      debugger
       alert('got setting');
       console.log(el);
       this.userSetting = el;
     });
   }
+  setEmptyUserInfo(): UserInfo {
+    return {
+      id: 0,
+      usid: 0,
+      firstname: '',
+      lastname: '',
+      gender: false,
+      mobile: '',
+      social: '',
+      birthdate: this.birthDate,
+      addresslinE1: '',
+      addresslinE2: '',
+      city: '',
+      ustate: '',
+      countrycode: '',
+    }
+  }
   getUserInfo() {
+    debugger;
     this.userRepoService.getUserInfo().subscribe(el => {
+      debugger
       alert('got info');
       console.log(el);
+      this.userInfo = el;
+      this.basicInformation.controls['id'].setValue(el.id);
+      this.basicInformation.controls['usid'].setValue(el.usid);
       debugger
       // set userInfo this.userInfo = el
-      this.userInfo = {
-        id: 0,
-        usid: 0,
-        firstname: 'Amar',
-        lastname: 'Barge',
-        mobile: '8082071188',
-        gender: true,
-        birthdate: this.birthDate,
-        social: 'amar.fb',
-        addresslinE1: 'Address1',
-        addresslinE2: 'Address2',
-        city: 'cotton green',
-        ustate: 'maharashtra',
-        countrycode: 'IN',
-      }
+      // this.userInfo = {
+      //   id: 0,
+      //   usid: 0,
+      //   firstname: 'Amar',
+      //   lastname: 'Barge',
+      //   mobile: '8082071188',
+      //   gender: true,
+      //   birthdate: this.birthDate,
+      //   social: 'amar.fb',
+      //   addresslinE1: 'Address1',
+      //   addresslinE2: 'Address2',
+      //   city: 'cotton green',
+      //   ustate: 'maharashtra',
+      //   countrycode: 'IN',
+      // }
 
       // set user
       debugger
@@ -109,11 +139,12 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   setBasicInformationFormBuilder(): FormGroup {
       return this.formBuilder.group({
-      id:[0],
-      usid: [1],
+      id:[],
+      usid: [],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       username: [''],
+      displayname: [`${this.userInfo.firstname} ${this.userInfo.lastname}`],
       email: [''],
       gender: ['true', Validators.required],
       mobile: [''],
@@ -125,8 +156,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       ustate: ['', Validators.required],
       countrycode: ['', Validators.required],
       currentpassword:[''],
-      newpassword: [''],
-      confirmnewpassword: ['']
+      password: [''],
+      confirmnewpassword: [''],
     });
   }
   setaccountDataFormBuilder(): FormGroup {
@@ -136,6 +167,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       username: [''],
+      displayname: [`${this.userInfo.firstname} ${this.userInfo.lastname}`],
       email: [''],
       gender: ['', Validators.required],
       mobile: [''],
@@ -147,8 +179,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       ustate: ['', Validators.required],
       countrycode: ['', Validators.required],
       currentpassword:[''],
-      newpassword: [''],
-      confirmnewpassword: ['']
+      password: [''],
+      confirmnewpassword: [''],
     });
   }
   setUpdatedaccountData(userInfo: UserInfo, user: User) {
@@ -170,7 +202,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       ustate: userInfo.ustate,
       countrycode: userInfo.countrycode,
       currentpassword:'',
-      newpassword: '',
+      password: '',
       confirmnewpassword: ''
     }
   }
@@ -195,7 +227,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.basicInformation.value['gender'] = this.basicInformation.value['gender']
     .toString().toLowerCase() === 'true' ? true : false;
-
+    // appuserinfo
     this.userRepoService.saveUserinfo(data).subscribe(el => {
       debugger;
       alert('user saved successfully');
@@ -208,12 +240,28 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
       // set form builder
       this.basicInformation.setValue(el);
-      this.accountData.setValue(el);
       (el.gender) ? this.basicInformation.controls['gender'].setValue('true') :
-      this.basicInformation.controls['gender'].setValue('false')
-      // this.userInfo = el;
+      this.basicInformation.controls['gender'].setValue('false');
     });
     console.log('userInfo',this.basicInformation.value);
+  }
+
+  onSubmitAccountData(data: any) {
+    this.userRepoService.saveUserInfo(data).pipe(
+      mergeMap(el => this.userRepoService.saveUserinfo(data).pipe(
+        map(el => {
+          alert('Passowrd Change successfully, mobile name updated successfully');
+        })
+      ))
+    ).subscribe();
+    // forkJoin(
+    //   this.userRepoService.saveUserInfo(data),
+    //   this.userRepoService.saveUserinfo(data)
+    // ).pipe(map(([appUser, userInfo]) => {
+    //   debugger;
+    //   alert('Passowrd Change successfully, mobile name updated successfully');
+    // })
+    // ).subscribe();
   }
   setUser(userInfo: UserInfo): User {
     return {

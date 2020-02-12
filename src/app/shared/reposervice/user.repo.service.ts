@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 export class UserRepoService {
   constructor(@Inject(HttpClient) private http: HttpClient, private authSrv: AuthService) {}
   getUserInfo(): Observable<UserInfo> {
+    debugger
     const userId = this.authSrv.getSysUserData().id;
     return this.http.get<DataResponse>('user/' + userId + '/userinfo').pipe(
       map((el: DataResponse) => {
@@ -40,7 +41,7 @@ export class UserRepoService {
 
   saveUserinfo(userInfo: UserInfo): Observable<UserInfo> {
     debugger
-    return this.http.post<DataResponse>(`user/save`, userInfo).pipe(
+    return this.http.post<DataResponse>(`user/saveuserinfo`, userInfo).pipe(
       map((el: DataResponse) => {
         debugger;
         let userInfoResponse: UserInfo;
@@ -55,7 +56,7 @@ export class UserRepoService {
       })
     );
   }
-  saveUserInfo(user: UserInfo) {
+  saveUserInfo(user: any) {
     return this.http.post<DataResponse>('user/save', user).pipe(
       map((el: DataResponse) => {
         let response: UserInfo;
