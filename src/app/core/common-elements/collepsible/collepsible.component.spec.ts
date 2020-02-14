@@ -8,9 +8,8 @@ describe('CollepsibleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CollepsibleComponent ]
-    })
-    .compileComponents();
+      declarations: [CollepsibleComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

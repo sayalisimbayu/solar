@@ -1,23 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-	selector: 'app-activity-post',
-	templateUrl: './activity-post.component.html',
-	styleUrls: ['./activity-post.component.css']
+  selector: 'app-activity-post',
+  templateUrl: './activity-post.component.html',
+  styleUrls: ['./activity-post.component.css']
 })
 export class ActivityPostComponent implements OnInit {
+  @Input() post: any = {};
 
-	@Input() post: any = {};
+  public showComment: boolean = false;
 
-	public showComment: boolean = false;
+  constructor() {}
 
-	constructor() { }
+  ngOnInit() {}
 
-	ngOnInit() {
-	}
-
-	toggleComment() {
-		this.showComment = !this.showComment;
-	}
-
+  toggleComment() {
+    this.showComment = !this.showComment;
+  }
 }

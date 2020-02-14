@@ -56,7 +56,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(private router: Router, private authsrv: AuthService) {}

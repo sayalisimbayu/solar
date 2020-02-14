@@ -11,11 +11,26 @@ import { AppliancesWidgetComponent } from './appliances-widget/appliances-widget
 import { ApplianceStatusWidgetComponent } from './appliance-status-widget/appliance-status-widget.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NgbModule
+  imports: [CommonModule, NgbModule],
+  declarations: [
+    ProgressbarDefaultComponent,
+    ActivityPostComponent,
+    AlertMessageComponent,
+    CollepsibleComponent,
+    AccordionComponent,
+    SystemWidgetComponent,
+    AppliancesWidgetComponent,
+    ApplianceStatusWidgetComponent
   ],
-  declarations: [ProgressbarDefaultComponent, ActivityPostComponent, AlertMessageComponent, CollepsibleComponent, AccordionComponent, SystemWidgetComponent, AppliancesWidgetComponent, ApplianceStatusWidgetComponent],
-    exports: [ProgressbarDefaultComponent, ActivityPostComponent, AlertMessageComponent, CollepsibleComponent, AccordionComponent, SystemWidgetComponent, AppliancesWidgetComponent, ApplianceStatusWidgetComponent]
+  exports: [
+    ProgressbarDefaultComponent,
+    ActivityPostComponent,
+    AlertMessageComponent,
+    CollepsibleComponent,
+    AccordionComponent,
+    SystemWidgetComponent,
+    AppliancesWidgetComponent,
+    ApplianceStatusWidgetComponent
+  ]
 })
-export class CommonElementsModule { }
+export class CommonElementsModule {}

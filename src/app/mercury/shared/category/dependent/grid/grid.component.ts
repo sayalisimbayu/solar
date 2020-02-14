@@ -103,7 +103,6 @@ export class CategoryGridComponent implements AfterViewInit {
         description: 'Nov 02, 2020'
       }
     ];
-
     this.pageGridConfig.items.push(...items);
     this.store.setIn('categorypagegridconfig', ['items'], this.pageGridConfig.items);
   }

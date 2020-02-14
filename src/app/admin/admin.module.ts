@@ -11,6 +11,6 @@ import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
 @NgModule({
   imports: [CommonModule, routing, NgxEchartsModule, LayoutModule, RichTextEditorAllModule, NgbModule],
   declarations: [AdminComponent],
-  providers: [UserRepoService],
+  providers: [UserRepoService]
 })
 export class AdminModule {}
