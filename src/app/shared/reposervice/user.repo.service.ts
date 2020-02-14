@@ -69,4 +69,22 @@ export class UserRepoService {
       })
     );
   }
+
+  saveAppUserinfo(userInfo: any): Observable<any> {
+    debugger
+    return this.http.post<DataResponse>(`user/saveappuseraddonconfig`, userInfo).pipe(
+      map((el: DataResponse) => {
+        debugger;
+        let userInfoResponse: UserInfo;
+        if (el.code === 0) {
+          debugger;
+          console.error(el);
+          return;
+        }
+        debugger
+        userInfoResponse = el.data;
+        return userInfoResponse;
+      })
+    );
+  }
 }

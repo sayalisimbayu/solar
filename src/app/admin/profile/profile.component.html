@@ -552,15 +552,15 @@
 
           <div class="card">
             <div class="body">
-              <!-- <form [formGroup]="generalInformationFormGroup" (ngSubmit)="onSubmit(accountData.value)"> -->
+              <form [formGroup]="generalInformationFormGroup" (ngSubmit)="onGeneralInformationSubmit(accountData.value)">
               <h6>General Information</h6>
               <div class="row">
                 <div class="col-lg-12 col-md-12">
+                  <!-- <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Phone Number" formControlName="mobile"/>
+                  </div> -->
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Phone Number"/>
-                  </div>
-                  <div class="form-group">
-                    <select class="form-control">
+                    <select class="form-control" formControlName="language">
                       <option>--Select Language</option>
                       <option value="en_US" lang="en">English (United States)</option>
                       <option value="ar" lang="ar">العربية</option>
@@ -648,7 +648,7 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <select class="form-control">
+                    <select class="form-control" formControlName="timezone">
                       <option>--TimeZone--</option>
                       <optgroup label="Africa">
                         <option value="Africa/Abidjan">Abidjan</option>
@@ -1150,46 +1150,41 @@
                   <div class="form-group">
                     <label>Date Format</label>
                     <div class="fancy-radio">
-                      <label
-                        ><input name="dateFormat" value="" type="radio" /><span><i></i>May 18, 2018</span></label
+                      <label><input name="dateFormat" value="May 18, 2018" type="radio" formControlName="dateFormat"/><span><i></i>May 18, 2018</span></label
                       >&nbsp;&nbsp;
-                      <label
-                        ><input name="dateFormat" value="" type="radio" /><span><i></i>2018, May, 18</span></label
+                      <label><input name="dateFormat" value="2018, May, 18" type="radio" formControlName="dateFormat"/><span><i></i>2018, May, 18</span></label
                       >&nbsp;&nbsp;
-                      <label
-                        ><input name="dateFormat" value="" type="radio" checked /><span><i></i>2018-03-10</span></label
+                      <label><input name="dateFormat" value="2018-03-10" type="radio" formControlName="dateFormat" checked /><span><i></i>2018-03-10</span></label
                       >&nbsp;&nbsp;
-                      <label
-                        ><input name="dateFormat" value="" type="radio" /><span><i></i>02/09/2018</span></label
+                      <label><input name="dateFormat" value="02/09/2018" type="radio" formControlName="dateFormat"/><span><i></i>02/09/2018</span></label
                       >&nbsp;&nbsp;
-                      <label
-                        ><input name="dateFormat" value="" type="radio" /><span><i></i>10/05/2018</span></label
+                      <label><input name="dateFormat" value="10/05/2018" type="radio" formControlName="dateFormat"/><span><i></i>10/05/2018</span></label
                       >
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-12 col-md-12">
+                <div class="col-lg-12 col-md-12 form-group">
                   <h6>Email from Lucid</h6>
                   <p>I'd like to receive the following emails:</p>
                   <ul class="list-unstyled list-email-received">
                     <li>
                       <label class="fancy-checkbox">
-                        <input type="checkbox" checked /><span>Weekly account summary</span></label
+                        <input type="checkbox" checked name="lucidnotification" formControlName="lucidnotification" value = "Weekly account summary"/><span>Weekly account summary</span></label
                       >
                     </li>
                     <li>
-                      <label class="fancy-checkbox"> <input type="checkbox" /><span>Campaign reports</span></label>
+                      <label class="fancy-checkbox"> <input type="checkbox" name="lucidnotification" formControlName="lucidnotification" value = "Campaign reports"/><span>Campaign reports</span></label>
                     </li>
                     <li>
                       <label class="fancy-checkbox">
-                        <input type="checkbox" checked /><span
+                        <input type="checkbox" checked name="lucidnotification" formControlName="lucidnotification" value = "Promotional news such as offers or discounts"/><span
                           >Promotional news such as offers or discounts</span
                         ></label
                       >
                     </li>
                     <li>
                       <label class="fancy-checkbox">
-                        <input type="checkbox" checked /><span
+                        <input type="checkbox" checked name="lucidnotification" formControlName="lucidnotification" value = "Tips for campaign setup, growth and client success stories"/><span
                           >Tips for campaign setup, growth and client success stories</span
                         ></label
                       >
@@ -1199,7 +1194,7 @@
               </div>
               <button type="submit" class="btn btn-primary">Update</button> &nbsp;&nbsp;
               <button class="btn btn-default">Cancel</button>
-            <!-- </form> -->
+            </form>
             </div>
           </div>
         </div>

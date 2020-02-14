@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   basicInformation: FormGroup;
   accountData: FormGroup;
+  generalInformationFormGroup: FormGroup;
   submitted = false;
 
   constructor(
@@ -70,6 +71,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
      // Form Builder
      this.basicInformation = this.setBasicInformationFormBuilder();
      this.accountData = this.setaccountDataFormBuilder();
+     this.generalInformationFormGroup = this.setGeneralInformationFormGroup();
      debugger
   }
   ngAfterViewInit(): void {
@@ -183,6 +185,16 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       confirmnewpassword: [''],
     });
   }
+  setGeneralInformationFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      id: [0],
+      usid: [1],
+      language: ['English (United States)'],
+      timezone: ['Abidjan'],
+      dateformat: ['May 18, 2018'],
+      lucidnotification: ["I'd like to receive the following emails"]
+    });
+  }
   setUpdatedaccountData(userInfo: UserInfo, user: User) {
     debugger
     return {
@@ -262,6 +274,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     //   alert('Passowrd Change successfully, mobile name updated successfully');
     // })
     // ).subscribe();
+  }
+  onGeneralInformationSubmit(data: any) {
+    this.userRepoService.saveAppUserinfo(data).pipe().subscribe();
   }
   setUser(userInfo: UserInfo): User {
     return {
