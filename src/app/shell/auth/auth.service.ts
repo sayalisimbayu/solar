@@ -46,8 +46,8 @@ export class AuthService {
     return null;
   }
   public lockScreen() {
-    if (this.isLoggedIn()) {
-      this.router.navigate(['/authentication/page-lockscreen']);
+    if (this.isLoggedIn() && this.router.url != '/authentication/page-lockscreen') {
+      this.router.navigate(['/authentication/page-lockscreen'], { queryParams: { returnUrl: this.router.url } });
     }
   }
   public getRememberedCredentials() {

@@ -32,19 +32,18 @@ export class CGridComponent implements OnInit, AfterViewInit, OnDestroy {
   public config: ICGridConfig;
   public pagebody$: any;
 
-  constructor(private store: SimpleStoreManagerService, private cdref: ChangeDetectorRef) {}
-  ngOnDestroy() {}
+  constructor(private store: SimpleStoreManagerService, private cdref: ChangeDetectorRef) { }
+  ngOnDestroy() { }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    this.config && this.config.gridHeight && (this.config.gridHeight = '300px');
     this.pagebody$ = this.store.$store
       .pipe(filter((se: { key: string }) => se.key === this.storeId))
       .pipe(
         map((el: StoreEvent) => {
-          debugger;
           // if (el.path.length === 0 || (el.path.length === 1 && el.path.indexOf(this.storeId) > -1)) {
           this.config = el.store.value;
-          debugger;
           this.cdref.detectChanges();
           // this.loadButtons();
           // }
@@ -58,22 +57,23 @@ export class CGridComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.loadButtons();
   }
   public loadButtons() {
-    debugger;
     // this.buttons.clear();
     if (this.config.isCheckbox) {
-      debugger;
       this.buttons.first.createEmbeddedView(this.checkboxComponent);
     } else if (this.config.isDelete) {
       this.buttons.first.createEmbeddedView(this.deleteComponent);
     }
   }
-  public delete(category: any) {
-    alert('deleting');
+  public onScroll(event: any) {
+    this.config && this.config.functions && this.config.functions.onScroll(this.config.page);
+  }
+  public delete(event: any, element: any, index: number) {
+    if (this.config && this.config.functions && this.config.functions.onDelete(event, element)) {
+      this.config.items.splice(index, 1);
+    }
   }
 
-  public navigate(category: any) {
-    alert('navigating');
-    this.store.setIn('categorypageconfig', ['pageHeading'], 'Category Form');
-    this.store.setIn('categorypageconfig', ['pageBodyUrl'], 'app-category-form');
+  public navigate(event: any, element: any) {
+    this.config && this.config.functions && this.config.functions.onSelect(event, element);
   }
 }

@@ -1,31 +1,3 @@
-<!-- <div class="container-fluid file_manager">
-  <div class="row clearfix">
-    <div class="col-lg-3 col-md-4 col-sm-12">
-      <div class="card">
-        <div class="file">
-          <a href="javascript:void(0);">
-            <div class="hover">
-              <button type="button" (click)="delete($event)" class="btn btn-icon btn-danger">
-                <i class="fa fa-trash"></i>
-              </button>
-            </div>
-            <div class="file-name" (click)="navigate($event)">
-              <p class="m-b-5 text-muted">Document_2017.doc</p>
-              <small>Size: 42KB <span class="date text-muted">Nov 02, 2017</span></small>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-<div
-  infiniteScroll
-  [infiniteScrollDistance]="scrollDistance"
-  [infiniteScrollThrottle]="throttle"
-  (scrolled)="onScroll()"
-  [scrollWindow]="false"
-  style="height: 200px; overflow: scroll;"
->
+<div>
   <ng-template #pageGrid></ng-template>
 </div>

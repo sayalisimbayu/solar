@@ -52,12 +52,29 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
         ],
         leftComponentUrl: 'page-header-chart',
         pageTitle: 'Category'
-      }
+      },
+      defaultPageAction: { action: this.createNew, title: 'Create New' },
+      pageActions: [
+        {
+          title: 'Export',
+          action: this.export
+        }
+      ]
     };
     this.pageFrame.clear();
     this.lazyLoader.load('page-frame', this.pageFrame, 'categorypageconfig', (cmpRef: any) => {
-      this.store.add('categorypageconfig', this.PageFrameConfig);
+      if (!this.store.has('categorypageconfig')) {
+        this.store.add('categorypageconfig', this.PageFrameConfig);
+      } else {
+        this.store.setIn('categorypageconfig', [], this.PageFrameConfig);
+      }
       cmpRef.changeDetectorRef.detectChanges();
     });
+  }
+  createNew() {
+    alert('create new clicked');
+  }
+  export() {
+    alert('export clicked');
   }
 }
