@@ -28,3 +28,16 @@ export interface RegisterUser {
   password: string;
   confirmPassword: string;
 }
+
+export interface UserProfile {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  birthDate: string;
+  site: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  startProvince: string;
+  country: string;
+}
