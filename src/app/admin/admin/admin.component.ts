@@ -97,7 +97,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
     let that = this;
-    setTimeout(function () {
+    setTimeout(function() {
       that.isStopLoading = true;
     }, 1000);
   }

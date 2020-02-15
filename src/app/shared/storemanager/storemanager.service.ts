@@ -25,14 +25,14 @@ export class SimpleStoreManagerService {
   public add(key: string, value: any, override: boolean = false) {
     if (!this.stores.some(storeValue => storeValue.key === key)) {
       this.stores.push({ key: key, value: value });
-      this._stores.next({
-        key: key,
-        store: this.stores[this.stores.length - 1],
-        path: [],
-        oldValue: undefined,
-        changedValue: value
-      });
     }
+    this._stores.next({
+      key: key,
+      store: this.stores[this.stores.length - 1],
+      path: [],
+      oldValue: undefined,
+      changedValue: value
+    });
   }
   public remove(key: string) {
     if (this.stores.some(storeValue => storeValue.key === key)) {

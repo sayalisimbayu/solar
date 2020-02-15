@@ -10,20 +10,19 @@ import { AuthService } from '@app/shell/auth/auth.service';
 export class PageForgotPasswordComponent implements OnInit {
   public user: any = { email: '', otp: '' };
   public isForgot = true;
-  constructor(private router: Router, private authSvc: AuthService) { }
+  constructor(private router: Router, private authSvc: AuthService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
   forgot() {
-    this.authSvc.forgot(this.user.email).subscribe((res) => {
+    this.authSvc.forgot(this.user.email).subscribe(res => {
       this.isForgot = !this.isForgot;
     });
   }
   onSubmit(lockform: any) {
-    this.authSvc.reset(this.user).subscribe((res) => {
+    this.authSvc.reset(this.user).subscribe(res => {
       if (res) {
         this.router.navigate(['/authentication/page-login']);
       }
     });
-
   }
 }

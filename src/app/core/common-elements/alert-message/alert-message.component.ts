@@ -6,18 +6,15 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./alert-message.component.css']
 })
 export class AlertMessageComponent implements OnInit {
+  @Input() options: any = {};
 
-  @Input() options:any = {};
+  public showElement: boolean = true;
 
-  public showElement:boolean = true;
-  
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  toggleElement(){
+  toggleElement() {
     this.showElement = !this.showElement;
   }
-
 }

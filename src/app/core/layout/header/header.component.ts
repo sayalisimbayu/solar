@@ -19,12 +19,16 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSettingDropMenuEvent = new EventEmitter();
   @Output() toggleNotificationDropMenuEvent = new EventEmitter();
 
-  constructor(private config: NgbDropdownConfig, private themeService: ThemeService,
-    private router: Router, private authSvc: AuthService) {
+  constructor(
+    private config: NgbDropdownConfig,
+    private themeService: ThemeService,
+    private router: Router,
+    private authSvc: AuthService
+  ) {
     config.placement = 'bottom-right';
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public logout() {
     this.authSvc.logout();

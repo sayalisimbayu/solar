@@ -8,41 +8,46 @@ import { DataResponse } from '@app/shell/models/data-response.model';
 import { map } from 'rxjs/operators';
 
 export class UserRepoService {
-    constructor(@Inject(HttpClient) private http: HttpClient,
-        private authSrv: AuthService) { }
-    getUserInfo(): Observable<UserInfo> {
-        const userId = this.authSrv.getSysUserData().id;
-        return this.http.get<DataResponse>('user/' + userId + '/userinfo').pipe(map((el: DataResponse) => {
-            let response: UserInfo;
-            if (el.code === 0) {
-                console.error(el);
-                return;
-            }
-            response = el.data;
-            return response;
-        }));
-    }
-    getUserSetting(): Observable<UserSetting> {
-        const userId = this.authSrv.getSysUserData().id;
-        return this.http.get<DataResponse>('user/' + userId + '/usersetting').pipe(map((el: DataResponse) => {
-            let response: UserSetting;
-            if (el.code === 0) {
-                console.error(el);
-                return;
-            }
-            response = el.data;
-            return response;
-        }));
-    }
-    saveUserInfo(user: UserInfo) {
-        return this.http.post<DataResponse>('user/save', user).pipe(map((el: DataResponse) => {
-            let response: UserInfo;
-            if (el.code === 0) {
-                console.error(el);
-                return;
-            }
-            response = el.data;
-            return response;
-        }));
-    }
+  constructor(@Inject(HttpClient) private http: HttpClient, private authSrv: AuthService) {}
+  getUserInfo(): Observable<UserInfo> {
+    const userId = this.authSrv.getSysUserData().id;
+    return this.http.get<DataResponse>('user/' + userId + '/userinfo').pipe(
+      map((el: DataResponse) => {
+        let response: UserInfo;
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        response = el.data;
+        return response;
+      })
+    );
+  }
+  getUserSetting(): Observable<UserSetting> {
+    const userId = this.authSrv.getSysUserData().id;
+    return this.http.get<DataResponse>('user/' + userId + '/usersetting').pipe(
+      map((el: DataResponse) => {
+        let response: UserSetting;
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        response = el.data;
+        return response;
+      })
+    );
+  }
+  saveUserInfo(user: UserInfo) {
+    return this.http.post<DataResponse>('user/save', user).pipe(
+      map((el: DataResponse) => {
+        let response: UserInfo;
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        response = el.data;
+        return response;
+      })
+    );
+  }
 }

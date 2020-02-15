@@ -9,14 +9,20 @@
           <div class="body">
             <div class="user text-center m-b-30">
               <img src="assets/images/user-small.png" class="rounded-circle" alt="Avatar" />
-              <h4 class="name m-t-10">{{loggedUser}}</h4>
-              <p>{{loggedUserEmail}}</p>
+              <h4 class="name m-t-10">{{ loggedUser }}</h4>
+              <p>{{ loggedUserEmail }}</p>
             </div>
             <form #lockForm="ngForm" (ngSubmit)="onSubmit()">
               <div class="form-group">
-                <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Enter your password ..." />
+                <input
+                  type="password"
+                  [(ngModel)]="password"
+                  name="password"
+                  class="form-control"
+                  placeholder="Enter your password ..."
+                />
               </div>
-              <button type="submit"  class="btn btn-primary btn-lg btn-block">Login</button>
+              <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
             </form>
           </div>
         </div>

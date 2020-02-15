@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { CategoryGridComponent } from './grid.component';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { CategoryGridService } from './grid.service';
 const routes: Routes = [
   {
     path: '',
@@ -11,10 +11,11 @@ const routes: Routes = [
 ];
 export const routing = RouterModule.forChild(routes);
 @NgModule({
-  imports: [CommonModule, routing, InfiniteScrollModule],
+  imports: [CommonModule, routing],
   declarations: [CategoryGridComponent],
   entryComponents: [CategoryGridComponent],
-  exports: [CategoryGridComponent]
+  exports: [CategoryGridComponent],
+  providers:[CategoryGridService]
 })
 export class CGridLayoutModule {
   static entry = CategoryGridComponent;

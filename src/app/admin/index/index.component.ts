@@ -324,13 +324,15 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private updatePagetTitle() {
     const that = this;
-    if (!that.store.has('dashboard_page_title')) {
-      if (this.pageTitle !== undefined) {
-        this.pageTitle.clear();
-      }
-      this.lazyLoader.load('page-title', this.pageTitle, 'dashboard_page_title', (_cdRef: any) => {
-        that.store.add('dashboard_page_title', this.pageTitleConfig, true);
-      });
+    if (this.pageTitle !== undefined) {
+      this.pageTitle.clear();
     }
+    this.lazyLoader.load('page-title', this.pageTitle, 'dashboard_page_title', (_cdRef: any) => {
+      if (!that.store.has('dashboard_page_title')) {
+        that.store.add('dashboard_page_title', this.pageTitleConfig, true);
+      } else {
+        that.store.setIn('dashboard_page_title', [], this.pageTitleConfig);
+      }
+    });
   }
 }

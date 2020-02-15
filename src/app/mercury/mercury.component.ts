@@ -5,6 +5,9 @@ import { Subject } from 'rxjs';
 import { SidebarService } from '@app/shared/services/sidebar.service';
 import { ThemeService } from '@app/shared/services/theme.service';
 import { Title } from '@angular/platform-browser';
+import { BnNgIdleService } from 'bn-ng-idle';
+import { AuthService } from '@app/shell/auth/auth.service';
+import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 
 @Component({
   selector: 'app-mercury',
@@ -22,13 +25,16 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
   public smallScreenMenu = '';
   public darkClass = '';
   private ngUnsubscribe = new Subject();
+  private timerSubscribed: any;
 
   constructor(
     public sidebarService: SidebarService,
     private router: Router,
+    private authSrv: AuthService,
     private activatedRoute: ActivatedRoute,
     private themeService: ThemeService,
-    private titleService: Title
+    private titleService: Title,
+    private bnIdle: BnNgIdleService
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {
       this.isStopLoading = false;
@@ -66,11 +72,20 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(mergeMap(route => route.data))
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(event => this.titleService.setTitle(event.title));
+    this.timerSubscribed = this.bnIdle.startWatching(300);
+    this.timerSubscribed.subscribe((isTimedOut: boolean) => {
+      if (isTimedOut) {
+        console.log('session expired');
+        that.bnIdle.stopTimer();
+        that.authSrv.lockScreen();
+      }
+    });
   }
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+    this.timerSubscribed.unsubscribe();
   }
 
   toggleNotificationDropMenu() {

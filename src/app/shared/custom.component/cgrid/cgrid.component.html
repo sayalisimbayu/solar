@@ -1,29 +1,27 @@
 <div class="container-fluid file_manager">
-  <div class="row clearfix">
-    <div class="col-lg-3 col-md-4 col-sm-12">
-      <div class="card" *ngIf="config != undefined">
-        <div class="file" *ngFor="let item of config.items">
+  <div class="row clearfix" infiniteScroll [infiniteScrollDistance]="config?.page?.scrollDistance"
+    [infiniteScrollThrottle]="config?.page?.throttle" (scrolled)="onScroll($event)" [scrollWindow]="false"
+    style="height: 300px; overflow-y: scroll;">
+    <div class="col-lg-3 col-md-4 col-sm-12" *ngFor="let item of config?.items; let i = index;">
+      <div class="card">
+        <div class="file">
           <a href="javascript:void(0);">
             <div class="hover" [ngSwitch]="true">
               <label class="fancy-checkbox" *ngSwitchCase="config.isCheckbox">
                 <input type="checkbox" name="checkbox" />
                 <!-- <span>Option 3</span> -->
               </label>
-              <button
-                type="button"
-                (click)="delete($event)"
-                class="btn btn-icon btn-danger"
-                *ngSwitchCase="config.isDelete"
-              >
+              <button type="button" (click)="delete($event,item,i)" class="btn btn-icon btn-danger"
+                *ngSwitchCase="config.isDelete">
                 <i class="fa fa-trash"></i>
               </button>
               <p *ngSwitchDefault></p>
             </div>
-            <div class="file-name" (click)="navigate($event)">
-              <p class="m-b-5 text-muted">{{ item.heading }}</p>
-              <small
-                >{{ item.subHeading }}<span class="date text-muted">{{ item.description }}</span></small
-              >
+            <div class="file-name" (click)="navigate($event,item)">
+              <p class="m-b-5 text-muted">{{ config.itemMapDescription.heading + item[config.itemMap.heading] }}</p>
+              <small>{{ config.itemMapDescription.subHeading + item[config.itemMap.subHeading] }}<span
+                  class="date text-muted"> {{config.itemMapDescription.description}}
+                  {{ item[config.itemMap.description] }}</span></small>
             </div>
           </a>
         </div>

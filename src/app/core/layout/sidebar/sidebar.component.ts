@@ -18,8 +18,8 @@ export class SidebarComponent implements OnDestroy {
   @Output() activeInactiveMenuEvent = new EventEmitter();
   public themeClass: string = 'theme-cyan';
   public darkClass: string = '';
-  public username: string='';
-  public displayImage: string='';
+  public username: string = '';
+  public displayImage: string = '';
   private ngUnsubscribe = new Subject();
 
   constructor(private themeService: ThemeService, private authSrv: AuthService) {
@@ -29,7 +29,7 @@ export class SidebarComponent implements OnDestroy {
     this.themeService.darkClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((darkClass: string) => {
       this.darkClass = darkClass;
     });
-    this.username=this.authSrv.getSysUserData().displayname;
+    this.username = this.authSrv.getSysUserData().displayname;
   }
 
   ngOnDestroy() {
