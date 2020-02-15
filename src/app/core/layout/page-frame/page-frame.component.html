@@ -5,24 +5,41 @@
       <div class="card planned_task">
         <div class="header">
           <h2>{{ config != null ? config.pageHeading : '' }}</h2>
-          <ul class="header-dropdown">
-            <li class="dropdown" ngbDropdown>
-              <a
-                href="javascript:void(0);"
-                class="dropdown-toggle"
-                data-toggle="dropdown"
-                role="button"
-                aria-haspopup="true"
-                aria-expanded="false"
-                ngbDropdownToggle
-              ></a>
-              <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-                <li><a href="javascript:void(0);">Action</a></li>
-                <li><a href="javascript:void(0);">Another Action</a></li>
-                <li><a href="javascript:void(0);">Something else</a></li>
-              </ul>
-            </li>
-          </ul>
+          <div class="header-dropdown">
+            <div class="input-group mb-3" *ngIf="config != undefined">
+              <div class="input-group-prepend" ngbDropdown>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  *ngIf="config.defaultPageAction != null"
+                  (click)="(config.defaultPageAction.action)"
+                >
+                  {{ config.defaultPageAction.title }}
+                </button>
+                <button
+                  type="button"
+                  *ngIf="config.pageActions != null"
+                  class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+                  ngbDropdownToggle
+                >
+                  <span class="sr-only">Form Actions</span>
+                </button>
+                <div class="dropdown-menu" ngbDropdownMenu *ngIf="config.pageActions != null">
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0);"
+                    *ngFor="let action of config.pageActions"
+                    (click)="(action.action)"
+                    >{{ action.title }}</a
+                  >
+                  <!-- <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a> -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="body">
           <ng-template #pagebody></ng-template>

@@ -4,4 +4,10 @@ export interface IPageFrameConfig {
   pageTitle: IPageTitleConfig;
   pageBodyUrl: string;
   pageHeading: string;
+  defaultPageAction?: IPageActionConfig;
+  pageActions?: IPageActionConfig[];
+}
+export interface IPageActionConfig {
+  title: string;
+  action: Function;
 }
