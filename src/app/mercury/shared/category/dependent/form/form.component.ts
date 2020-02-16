@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 })
 export class CategoryFormComponent implements OnInit {
   public category = {} as Category;
+  private formCategoryObj: any;
   constructor(private store: SimpleStoreManagerService,
     private categoryFrmSrv: CategoryFormService) {
     this.category.id = this.store.getByKey('categorynavigatingid');
@@ -25,20 +26,22 @@ export class CategoryFormComponent implements OnInit {
   ngOnInit() {
 
     if (this.category.id !== 0) {
-      this.categoryFrmSrv.get(this.category.id, this.setCatgory.bind(this));
-    }
-  }
-  setCatgory(el: Category) {
-    if (el !== null) {
-      this.category = el;
-    } else {
-      this.category = this.categoryFrmSrv.generateNew();
+      this.categoryFrmSrv.get(this.category.id, (el: Category) => {
+        this.category = el;
+      });
     }
   }
   onSubmit(form: NgForm) {
+    this.formCategoryObj = form;
     if (form.valid) {
-      this.categoryFrmSrv.save(this.category, this.setCatgory.bind(this));
-      form.resetForm();
+      this.categoryFrmSrv.save(this.category, (el: any) => {
+        if (this.category.id === 0) {
+          if (this.formCategoryObj != null) {
+            this.formCategoryObj.resetForm();
+          }
+          this.category = this.categoryFrmSrv.generateNew();
+        }
+      });
     }
     return true;
   }
