@@ -20,7 +20,8 @@ import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 
 @Component({
   selector: 'app-c-grid',
-  templateUrl: './cgrid.component.html'
+  templateUrl: './cgrid.component.html',
+  styleUrls: ['./cgrid.component.scss'],
 })
 @AutoUnsubscribe()
 export class CGridComponent implements OnInit, AfterViewInit, OnDestroy {

@@ -26,6 +26,9 @@ export class SimpleStoreManagerService {
     if (!this.stores.some(storeValue => storeValue.key === key)) {
       this.stores.push({ key: key, value: value });
     }
+    else if (override) {
+      this.setIn(key, [], value);
+    }
     this._stores.next({
       key: key,
       store: this.stores[this.stores.length - 1],
@@ -62,7 +65,14 @@ export class SimpleStoreManagerService {
   public setIn(key: string, path: string[], value: any) {
     if (this.stores.some(storeValue => storeValue.key === key)) {
       const keyIndex = this.stores.findIndex(el => el.key === key);
-      const oldValue = this.setInvalue(this.stores[keyIndex].value, path, value);
+      let oldValue: any;
+      if (path.length !== 0) {
+        oldValue = this.setInvalue(this.stores[keyIndex].value, path, value);
+      }
+      else {
+        oldValue = this.stores[keyIndex].value;
+        this.stores[keyIndex].value = value;
+      }
       this._stores.next({
         key: key,
         store: this.stores[keyIndex],
@@ -86,5 +96,6 @@ export class SimpleStoreManagerService {
         }
       }
     }
+    obj[keys[0]] = value;
   }
 }

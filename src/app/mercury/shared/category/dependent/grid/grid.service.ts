@@ -68,15 +68,12 @@ export class CategoryGridService {
             return el;
         });
     }
-    onSelect(category: any) {
-        alert('navigating');
+    onSelect(event: any, category: any) {
+        this.store.add('categorynavigatingid', category.id, true);
+        this.navigateToForm();
+    }
+    navigateToForm() {
         this.store.setIn('categorypageconfig', ['pageHeading'], 'Category Form');
         this.store.setIn('categorypageconfig', ['pageBodyUrl'], 'app-category-form');
-        if (this.store.has('categorynavigatingid')) {
-            this.store.setIn('categorypageconfig', [], category.id);
-        }
-        else {
-            this.store.add('categorypageconfig', category.id, true);
-        }
     }
 }

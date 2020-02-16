@@ -43,6 +43,7 @@ export class PageFrameComponent implements OnInit, AfterViewInit, OnDestroy {
             this.config = el.store.value as IPageFrameConfig;
             this.updateComponent();
           } else {
+
             this.config = el.store.value as IPageFrameConfig;
             if (el.path.indexOf('pageBodyUrl') > -1) {
               this.updatePageBody();

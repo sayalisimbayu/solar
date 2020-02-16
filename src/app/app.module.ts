@@ -22,6 +22,7 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { UserRepoService } from './shared/reposervice/user.repo.service';
 import { CategoryRepoService } from './shared/reposervice/category.repo.service';
 import { NotificationRepoService } from './shared/reposervice/noti.repo.service';
+import { ExportService } from './shared/services/export.service';
 // import { AuthenticationModule } from './authentication/authentication.module';
 
 export class CustomHammerConfig extends HammerGestureConfig {
@@ -56,6 +57,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     UserRepoService,
     CategoryRepoService,
     NotificationRepoService,
+    ExportService,
     { provide: LAZY_WIDGETS, useFactory: lazyArrayToObj },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
