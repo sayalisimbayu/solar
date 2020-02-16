@@ -3,6 +3,7 @@ import * as signalR from '@aspnet/signalr';
 import { environment } from '@env/environment';
 import { SimpleStoreManagerService } from '../storemanager/storemanager.service';
 import { INotification } from '@app/shell/models/noti.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,8 @@ export class SignalRService {
     };
 
     private hubConnection: signalR.HubConnection
-    constructor(private store: SimpleStoreManagerService) {
+    constructor(private store: SimpleStoreManagerService,
+        private toastr: ToastrService) {
     }
     public startConnection = () => {
         this.hubConnection = new signalR.HubConnectionBuilder()
@@ -46,8 +48,35 @@ export class SignalRService {
         else {
             notifictions.push(noti);
         }
+        this.showNotification(noti.status, noti.message);
         console.log(notifictions);
         this.store.add('appNotifications', notifictions, true);
+    }
+    public showNotification(type: string, message: string, title?: string) {
+        if (type == 'warning') {
+            this.toastr.warning(message, title ? 'System Notification' : title, {
+                closeButton: true,
+                positionClass: 'toast-top-right'
+            });
+        }
+        else if (type === 'error') {
+            this.toastr.error(message, title ? 'System Notification' : title, {
+                closeButton: true,
+                positionClass: 'toast-top-right'
+            });
+        }
+        else if (type === 'success') {
+            this.toastr.success(message, title ? 'System Notification' : title, {
+                closeButton: true,
+                positionClass: 'toast-top-right'
+            });
+        }
+        else {
+            this.toastr.info(message, title ? 'System Notification' : title, {
+                closeButton: true,
+                positionClass: 'toast-top-right'
+            });
+        }
     }
     public stopConnection = () => {
         this.hubConnection.stop();
