@@ -3,14 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '@app/shell/models/user.info.model';
 import { AuthService } from '@app/shell/auth/auth.service';
 import { UserSetting } from '@app/shell/models/user.setting.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { DataResponse } from '@app/shell/models/data-response.model';
 import { map } from 'rxjs/operators';
+import { INotification } from '@app/shell/models/noti.model';
 
 export class UserRepoService {
+  public timelineConfig: INotification[];
   constructor(@Inject(HttpClient) private http: HttpClient, private authSrv: AuthService) {}
   getUserInfo(): Observable<UserInfo> {
-    debugger
     const userId = this.authSrv.getSysUserData().id;
     return this.http.get<DataResponse>('user/' + userId + '/userinfo').pipe(
       map((el: DataResponse) => {
@@ -40,17 +41,13 @@ export class UserRepoService {
   }
 
   saveUserinfo(userInfo: UserInfo): Observable<UserInfo> {
-    debugger
     return this.http.post<DataResponse>(`user/saveuserinfo`, userInfo).pipe(
       map((el: DataResponse) => {
-        debugger;
         let userInfoResponse: UserInfo;
         if (el.code === 0) {
-          debugger;
           console.error(el);
           return;
         }
-        debugger
         userInfoResponse = el.data;
         return userInfoResponse;
       })
@@ -71,20 +68,77 @@ export class UserRepoService {
   }
 
   saveAppUserinfo(userInfo: any): Observable<any> {
-    debugger
     return this.http.post<DataResponse>(`user/saveappuseraddonconfig`, userInfo).pipe(
       map((el: DataResponse) => {
-        debugger;
         let userInfoResponse: UserInfo;
         if (el.code === 0) {
-          debugger;
           console.error(el);
           return;
         }
-        debugger
         userInfoResponse = el.data;
         return userInfoResponse;
       })
     );
   }
+
+  public getTimeLineConfig(): Observable<INotification[]> {
+    return this.http.post<DataResponse>(`communi/timeline`, {
+      "start": 0,
+      "number": 100,
+      "searchs": "",
+      "orderby": ""
+    }).pipe(
+      map((el: DataResponse) => {
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+
+       return el.data;
+      })
+    )
+  //   return of([{
+  //       id: 0,
+  //       type: 'TYPE1',
+  //       message: 'MESSAGE',
+  //       flag: true,
+  //       status: 'info', // info, primary, warning
+  //       userId: 1,
+  //       createdDate: '17/11/2020',
+  //       updatedDate: '17/11/2020',
+  //       isTemporary: true,
+  //       isRead: false,
+  //       isDeleted: false,
+  //       class: ''
+  //   },
+  //   {
+  //       id: 0,
+  //       type: 'TYPE1',
+  //       message: 'MESSAGE',
+  //       flag: true,
+  //       status: 'info', // info, primary, warning
+  //       userId: 1,
+  //       createdDate: '17/11/2020',
+  //       updatedDate: '17/11/2020',
+  //       isTemporary: true,
+  //       isRead: false,
+  //       isDeleted: false,
+  //       class: ''
+  //   },
+  //   {
+  //       id: 0,
+  //       type: 'TYPE1',
+  //       message: 'MESSAGE',
+  //       flag: true,
+  //       status: 'info', // info, primary, warning
+  //       userId: 1,
+  //       createdDate: '17/11/2020',
+  //       updatedDate: '17/11/2020',
+  //       isTemporary: true,
+  //       isRead: false,
+  //       isDeleted: false,
+  //       class: ''
+  //   }
+  // ])
+}
 }
