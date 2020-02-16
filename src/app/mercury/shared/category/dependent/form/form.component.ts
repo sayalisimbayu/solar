@@ -38,8 +38,8 @@ export class CategoryFormComponent implements OnInit {
   onSubmit(form: NgForm) {
     if (form.valid) {
       this.categoryFrmSrv.save(this.category, this.setCatgory.bind(this));
+      form.resetForm();
     }
-    form.resetForm();
     return true;
   }
   onCancel($event: any) {
