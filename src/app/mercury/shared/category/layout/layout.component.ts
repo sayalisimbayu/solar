@@ -29,7 +29,7 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
     // .subscribe();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   ngAfterViewInit(): void {
     const that = this;
     // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
@@ -53,13 +53,7 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
         leftComponentUrl: 'page-header-chart',
         pageTitle: 'Category'
       },
-      defaultPageAction: { action: this.createNew, title: 'Create New' },
-      pageActions: [
-        {
-          title: 'Export',
-          action: this.export
-        }
-      ]
+      showPageAction: true
     };
     this.pageFrame.clear();
     this.lazyLoader.load('page-frame', this.pageFrame, 'categorypageconfig', (cmpRef: any) => {
@@ -70,11 +64,5 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
       }
       cmpRef.changeDetectorRef.detectChanges();
     });
-  }
-  createNew() {
-    alert('create new clicked');
-  }
-  export() {
-    alert('export clicked');
   }
 }

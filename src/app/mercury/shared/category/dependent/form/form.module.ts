@@ -5,6 +5,7 @@ import { CategoryFormComponent } from './form.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CategoryFormService } from './form.service';
 const routes: Routes = [
   {
     path: '',
@@ -16,7 +17,8 @@ export const routing = RouterModule.forChild(routes);
   imports: [CommonModule, routing, NgMultiSelectDropDownModule, FormsModule, NgbModule],
   declarations: [CategoryFormComponent],
   entryComponents: [CategoryFormComponent],
-  exports: [CategoryFormComponent]
+  exports: [CategoryFormComponent],
+  providers:[CategoryFormService]
 })
 export class CFormLayoutModule {
   static entry = CategoryFormComponent;

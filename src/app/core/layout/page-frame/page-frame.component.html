@@ -6,32 +6,19 @@
         <div class="header">
           <h2>{{ config != null ? config.pageHeading : '' }}</h2>
           <div class="header-dropdown">
-            <div class="input-group mb-3" *ngIf="config != undefined">
+            <div class="input-group mb-3" *ngIf="config != undefined && config.showPageAction">
               <div class="input-group-prepend" ngbDropdown>
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary"
-                  *ngIf="config.defaultPageAction != null"
-                  (click)="(config.defaultPageAction.action)"
-                >
+                <button type="button" class="btn btn-outline-secondary" *ngIf="config.defaultPageAction != null"
+                  (click)="config.defaultPageAction.action($event)">
                   {{ config.defaultPageAction.title }}
                 </button>
-                <button
-                  type="button"
-                  *ngIf="config.pageActions != null"
-                  class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
-                  ngbDropdownToggle
-                >
+                <button type="button" *ngIf="config.pageActions != null"
+                  class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" ngbDropdownToggle>
                   <span class="sr-only">Form Actions</span>
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu *ngIf="config.pageActions != null">
-                  <a
-                    class="dropdown-item"
-                    href="javascript:void(0);"
-                    *ngFor="let action of config.pageActions"
-                    (click)="(action.action)"
-                    >{{ action.title }}</a
-                  >
+                  <a class="dropdown-item" href="javascript:void(0);" *ngFor="let action of config.pageActions"
+                    (click)="action.action($event)">{{ action.title }}</a>
                   <!-- <a class="dropdown-item" href="javascript:void(0);">Another action</a>
                   <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
                   <div role="separator" class="dropdown-divider"></div>
