@@ -51,7 +51,6 @@ export class PageFrameComponent implements OnInit, AfterViewInit, OnDestroy {
             if (el.path.indexOf('pageTitle') > -1) {
               this.updatePagetTitle(el.path.slice(1), el.changedValue);
             }
-            this.cdr.detectChanges();
           }
         })
       )

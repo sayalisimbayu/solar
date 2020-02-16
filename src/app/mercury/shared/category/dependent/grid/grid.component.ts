@@ -54,7 +54,6 @@ export class CategoryGridComponent implements AfterViewInit, OnInit, OnDestroy {
   export(event: any) {
     const gridConfig = this.store.getByKey('categorypagegridconfig') as ICGridConfig
     this.exportSrv.exportToCsv('Category Data.csv', gridConfig.items, ['name']);
-    alert('export');
   }
   ngOnDestroy() {
   }

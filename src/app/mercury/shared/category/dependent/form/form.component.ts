@@ -16,7 +16,7 @@ export class CategoryFormComponent implements OnInit {
     if (this.category.id === 0) {
       this.store.setIn('categorypageconfig', ['pageHeading'], 'Create Category Form');
     }
-    else{
+    else {
       this.store.setIn('categorypageconfig', ['pageHeading'], 'Edit Category Form');
     }
     this.store.setIn('categorypageconfig', ['showPageAction'], false);
@@ -35,13 +35,12 @@ export class CategoryFormComponent implements OnInit {
       this.category = this.categoryFrmSrv.generateNew();
     }
   }
-  onSubmit(categoryForm: NgForm) {
-    if (categoryForm.valid) {
+  onSubmit(form: NgForm) {
+    if (form.valid) {
       this.categoryFrmSrv.save(this.category, this.setCatgory.bind(this));
     }
-    categoryForm.form.markAsUntouched();
-    categoryForm.form.markAsPristine();
-    return categoryForm;
+    form.resetForm();
+    return true;
   }
   onCancel($event: any) {
     this.store.setIn('categorypageconfig', ['pageHeading'], 'Category Grid');
