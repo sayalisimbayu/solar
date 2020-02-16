@@ -42,6 +42,11 @@ export const lazyWidgets: {
     path: 'app-c-grid',
     loadChildren: () => import('./../custom.component/cgrid/cgrid.module').then(m => m.CGridLayoutModule),
     data: { preload: true }
+  },
+  {
+    path: 'app-timeline',
+    loadChildren: () => import('../../shared/custom.component/timeline/timeline.module').then(m=>m.TimelineModule),
+    data: { preload: true }
   }
   // {
   //   path: 'category-grid',
