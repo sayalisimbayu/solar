@@ -18,7 +18,7 @@ export class PageForgotPasswordComponent implements OnInit {
       this.isForgot = !this.isForgot;
     });
   }
-  onSubmit(lockform: any) {
+  onSubmit() {
     this.authSvc.reset(this.user).subscribe(res => {
       if (res) {
         this.router.navigate(['/authentication/page-login']);

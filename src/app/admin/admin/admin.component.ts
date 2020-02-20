@@ -7,8 +7,8 @@ import { Subject } from 'rxjs';
 import { SidebarService } from '@app/shared/services/sidebar.service';
 import { ThemeService } from '@app/shared/services/theme.service';
 import { AuthService } from '@app/shell/auth/auth.service';
-import { BnNgIdleService } from 'bn-ng-idle';
 import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
+import { UserIdleService } from 'angular-user-idle';
 
 @Component({
   selector: 'app-admin',
@@ -36,7 +36,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
     private themeService: ThemeService,
     private titleService: Title,
     private authSrv: AuthService,
-    private bnIdle: BnNgIdleService
+    private userIdle: UserIdleService
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {
       this.isStopLoading = false;
@@ -72,13 +72,14 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(mergeMap(route => route.data))
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(event => this.titleService.setTitle(event['title']));
-    this.timerSubscribed = this.bnIdle.startWatching(60);
-    this.timerSubscribed.subscribe((isTimedOut: boolean) => {
-      if (isTimedOut) {
-        console.log('session expired');
-        that.bnIdle.stopTimer();
-        that.authSrv.lockScreen();
-      }
+      //Start watching for user inactivity.
+    this.userIdle.startWatching();
+    // Start watching when user idle is starting.
+    this.userIdle.onTimerStart().subscribe(count => console.log(count));
+    // Start watch when time is up.
+    this.userIdle.onTimeout().subscribe(() => {
+      console.log('Time is up!');
+      this.authSrv.lockScreen();
     });
   }
 

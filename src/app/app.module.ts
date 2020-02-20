@@ -18,12 +18,12 @@ import { Router } from '@angular/router';
 import { AuthService } from './shell/auth/auth.service';
 import { LoginActivate } from './shared/other/authGuard';
 import { CryptService } from './shared/services/crypt.service';
-import { BnNgIdleService } from 'bn-ng-idle';
 import { UserRepoService } from './shared/reposervice/user.repo.service';
 import { CategoryRepoService } from './shared/reposervice/category.repo.service';
 import { NotificationRepoService } from './shared/reposervice/noti.repo.service';
 import { ExportService } from './shared/services/export.service';
 import { SignalRService } from './shared/services/signalr.service';
+import { UserIdleModule } from 'angular-user-idle';
 // import { AuthenticationModule } from './authentication/authentication.module';
 
 export class CustomHammerConfig extends HammerGestureConfig {
@@ -46,7 +46,11 @@ export class CustomHammerConfig extends HammerGestureConfig {
     LeafletModule.forRoot(),
     NgxGalleryModule,
     SimpleStoreManagerModule,
-    HttpClientModule
+    HttpClientModule,
+    // Optionally you can set time for `idle`, `timeout` and `ping` in seconds.
+    // Default values: `idle` is 600 (10 minutes), `timeout` is 300 (5 minutes) 
+    // and `ping` is 120 (2 minutes).
+    UserIdleModule.forRoot({idle: 5, timeout: 5, ping: 10}),
     // AuthenticationModule
   ],
   providers: [
@@ -54,7 +58,6 @@ export class CustomHammerConfig extends HammerGestureConfig {
     AuthService,
     LoginActivate,
     CryptService,
-    BnNgIdleService,
     UserRepoService,
     CategoryRepoService,
     NotificationRepoService,

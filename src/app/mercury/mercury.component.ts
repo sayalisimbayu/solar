@@ -5,9 +5,9 @@ import { Subject } from 'rxjs';
 import { SidebarService } from '@app/shared/services/sidebar.service';
 import { ThemeService } from '@app/shared/services/theme.service';
 import { Title } from '@angular/platform-browser';
-import { BnNgIdleService } from 'bn-ng-idle';
 import { AuthService } from '@app/shell/auth/auth.service';
 import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
+import { UserIdleService } from 'angular-user-idle';
 
 @Component({
   selector: 'app-mercury',
@@ -25,7 +25,6 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
   public smallScreenMenu = '';
   public darkClass = '';
   private ngUnsubscribe = new Subject();
-  private timerSubscribed: any;
 
   constructor(
     public sidebarService: SidebarService,
@@ -34,7 +33,7 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private themeService: ThemeService,
     private titleService: Title,
-    private bnIdle: BnNgIdleService
+    private userIdle: UserIdleService
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {
       this.isStopLoading = false;
@@ -72,20 +71,20 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(mergeMap(route => route.data))
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(event => this.titleService.setTitle(event.title));
-    this.timerSubscribed = this.bnIdle.startWatching(300);
-    this.timerSubscribed.subscribe((isTimedOut: boolean) => {
-      if (isTimedOut) {
-        console.log('session expired');
-        that.bnIdle.stopTimer();
-        that.authSrv.lockScreen();
-      }
+    //Start watching for user inactivity.
+    this.userIdle.startWatching();
+    // Start watching when user idle is starting.
+    this.userIdle.onTimerStart().subscribe(count => console.log(count));
+    // Start watch when time is up.
+    this.userIdle.onTimeout().subscribe(() => {
+      console.log('Time is up!');
+      this.authSrv.lockScreen();
     });
   }
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-    this.timerSubscribed.unsubscribe();
   }
 
   toggleNotificationDropMenu() {
@@ -98,9 +97,10 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
     const that = this;
+    // that.isStopLoading = true;
     setTimeout(() => {
       that.isStopLoading = true;
-    }, 1000);
+    }, 2000);
   }
 
   getActiveRoutes() {

@@ -55,8 +55,10 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
       },
       showPageAction: true
     };
+    
     this.pageFrame.clear();
     this.lazyLoader.load('page-frame', this.pageFrame, 'categorypageconfig', (cmpRef: any) => {
+      debugger;
       if (!this.store.has('categorypageconfig')) {
         this.store.add('categorypageconfig', this.PageFrameConfig);
       } else {
