@@ -12,7 +12,7 @@ export class LazyLoaderService {
     private lazyWidgets: {
       [key: string]: () => Promise<NgModuleFactory<any> | Type<any>>;
     }
-  ) {}
+  ) { }
 
   async load(name: string, container: ViewContainerRef, config?: any, callback?: Function) {
     const tempModule = await this.lazyWidgets[name]();
@@ -36,9 +36,9 @@ export class LazyLoaderService {
     if (config != null) {
       cmpRef.instance['storeId'] = config;
     }
-    cmpRef.changeDetectorRef.detectChanges();
     if (callback != null) {
       callback(cmpRef);
     }
+    cmpRef.changeDetectorRef.detectChanges();
   }
 }

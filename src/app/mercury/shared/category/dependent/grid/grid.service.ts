@@ -8,6 +8,7 @@ export class CategoryGridService {
     throttle = 50;
     scrollDistance = 1;
     scrollUpDistance = 2;
+    latestSearch: string = undefined;
     private totalRows: number = 0;
     private subscription: Subscription;
 
@@ -42,24 +43,30 @@ export class CategoryGridService {
             }
         };
     }
-    getLatestPage(event: ICPageConfig): void {
+    getLatestPage(event: ICPageConfig, search?: string): void {
         const that = this;
         if (this.totalRows >= this.pageGridConfig.items.length) {
             this.categoryRepSrv
-                .getPaged(event.currentPage, event.pagesize).subscribe((el: any) => {
-                    if (el != undefined) {
-                        that.totalRows = el.totalCount;
-                        that.pageGridConfig.items.push(...el.categories);
-                        that.store.setIn('categorypagegridconfig', ['items'], that.pageGridConfig.items);
-                        that.pageGridConfig.page.currentPage++;
-                        that.store.setIn('categorypagegridconfig',
-                            ['page', 'currentPage'], that.pageGridConfig.page.currentPage);
-                    }
-                });
+                .getPaged(
+                    {
+                        pageNumber: event.currentPage,
+                        pageSize: event.pagesize,
+                        search
+                    }).subscribe((el: any) => {
+                        if (el !== undefined) {
+                            this.latestSearch = search;
+                            that.totalRows = el.totalCount;
+                            that.pageGridConfig.items.push(...el.categories);
+                            that.store.setIn('categorypagegridconfig', ['items'], that.pageGridConfig.items);
+                            that.pageGridConfig.page.currentPage++;
+                            that.store.setIn('categorypagegridconfig',
+                                ['page', 'currentPage'], that.pageGridConfig.page.currentPage);
+                        }
+                    });
         }
     }
     onScroll(event: ICPageConfig) {
-        this.getLatestPage(event);
+        this.getLatestPage(event, this.latestSearch);
     }
     onDelete(event: any, category: any) {
         console.log(category);

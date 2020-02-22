@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { EChartOption } from 'echarts';
 import { IPageFrameConfig } from '@app/core/layout/page-frame/model/page-frame.config.interface';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
@@ -9,7 +9,7 @@ import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
-export class CLayoutComponent implements OnInit, AfterViewInit {
+export class CLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('pageframe', { read: ViewContainerRef, static: true })
   pageFrame: ViewContainerRef;
   public pagebody$: any;
@@ -37,6 +37,7 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
     this.PageFrameConfig = {
       pageBodyUrl: 'app-category-grid',
       pageHeading: 'Category Grid',
+      showSearchBar: false,
       pageTitle: {
         breadCrumb: [
           {
@@ -53,9 +54,9 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
         leftComponentUrl: 'page-header-chart',
         pageTitle: 'Category'
       },
-      showPageAction: true
+      showPageAction: false
     };
-    
+
     this.pageFrame.clear();
     this.lazyLoader.load('page-frame', this.pageFrame, 'categorypageconfig', (cmpRef: any) => {
       debugger;
@@ -66,5 +67,9 @@ export class CLayoutComponent implements OnInit, AfterViewInit {
       }
       cmpRef.changeDetectorRef.detectChanges();
     });
+  }
+  ngOnDestroy() {
+    this.store.remove('categorypageconfig');
+    this.store.remove('categorynavigatingid');
   }
 }

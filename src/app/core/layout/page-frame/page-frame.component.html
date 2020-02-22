@@ -28,14 +28,11 @@
             </div>
           </div>
         </div>
-        <div class="below-header">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">@</span>
-            </div>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-              aria-describedby="basic-addon1">
-          </div>
+        <div class="below-header" *ngIf="config!=undefined && config.showSearchBar">
+          <tag-input [ngModel]="config.searchModel" [ngModelOptions]="{standalone: true}"
+            [placeholder]="'Enter the search criteria'" [secondaryPlaceholder]="'Enter the search criteria'"
+            (onRemove)="removeSearchKeyword($event)" (onAdd)="addSearchKeyword($event)" theme='bootstrap'>
+          </tag-input>
         </div>
         <div class="body">
           <ng-template #pagebody></ng-template>

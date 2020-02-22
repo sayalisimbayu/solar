@@ -15,10 +15,10 @@ export class CategoryFormComponent implements OnInit {
     private categoryFrmSrv: CategoryFormService) {
     this.category.id = this.store.getByKey('categorynavigatingid');
     if (this.category.id === 0) {
-      this.store.setIn('categorypageconfig', ['pageHeading'], 'Create Category Form');
+      this.store.setIn('categorypageconfig', ['pageHeading'], 'Create');
     }
     else {
-      this.store.setIn('categorypageconfig', ['pageHeading'], 'Edit Category Form');
+      this.store.setIn('categorypageconfig', ['pageHeading'], 'Edit');
     }
     this.store.setIn('categorypageconfig', ['showPageAction'], false);
 
@@ -46,7 +46,6 @@ export class CategoryFormComponent implements OnInit {
     return true;
   }
   onCancel($event: any) {
-    this.store.setIn('categorypageconfig', ['pageHeading'], 'Category Grid');
     this.store.setIn('categorypageconfig', ['pageBodyUrl'], 'app-category-grid');
   }
 }

@@ -25,6 +25,7 @@ export class CategoryGridComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.store.setIn('categorypageconfig', ['showPageAction'], true);
+    this.store.setIn('categorypageconfig', ['showSearchBar'], true);
     this.pageGrid.clear();
     this.lazyLoader.load('app-c-grid', this.pageGrid, 'categorypagegridconfig', (cmpRef: any) => {
       if (this.store.has('categorypagegridconfig')) {
@@ -37,8 +38,10 @@ export class CategoryGridComponent implements AfterViewInit, OnInit, OnDestroy {
     });
   }
   ngOnInit() {
+    this.store.setIn('categorypageconfig', ['pageHeading'], 'Grid');
     this.store.setIn('categorypageconfig', ['defaultPageAction'],
       { action: this.createNew.bind(this), title: 'Create New' });
+    this.store.setIn('categorypageconfig', ['newSearchKeywordEvent'], this.searchKeyword.bind(this));
     this.store.setIn('categorypageconfig', ['pageActions'], [
       {
         title: 'Export',
@@ -55,6 +58,49 @@ export class CategoryGridComponent implements AfterViewInit, OnInit, OnDestroy {
     const gridConfig = this.store.getByKey('categorypagegridconfig') as ICGridConfig
     this.exportSrv.exportToCsv('Category Data.csv', gridConfig.items, ['name']);
   }
+  searchKeyword(event: any, keyModel: any) {
+    console.log(event);
+    let search = '';
+    // if (event.value.indexOf('Name') < 0) {
+    //   search = 'Name=\'' + event.value + '\'';
+    // } else {
+    //   search = event.value;
+    // }
+    let first = true;
+    if (keyModel !== undefined) {
+      keyModel.forEach((element: any) => {
+        const eachkeyword = element.value;
+        if (eachkeyword.indexOf('Name') < 0) {
+          if (first) {
+            search += ' Name=\'' + eachkeyword + '\'';
+          } else {
+            search += ' or Name=\'' + eachkeyword + '\'';
+          }
+        }
+        else {
+          if (first) {
+            search += eachkeyword;
+          } else {
+            search += ' or ' + eachkeyword;
+          }
+        }
+        first = false;
+      });
+    } else {
+      search = undefined;
+    }
+    this.catGridSrv.pageGridConfig.page.currentPage = 0;
+    this.catGridSrv.pageGridConfig.items = [];
+    this.catGridSrv.getLatestPage(this.catGridSrv.pageGridConfig.page, search);
+  }
   ngOnDestroy() {
+    this.store.setIn('categorypageconfig', ['showPageAction'], false);
+    this.store.setIn('categorypageconfig', ['showSearchBar'], false);
+    this.store.remove('categorypagegridconfig');
+    this.store.setIn('categorypageconfig', ['defaultPageAction'],
+      {});
+    this.store.setIn('categorypageconfig', ['newSearchKeywordEvent'], null);
+    this.store.setIn('categorypageconfig', ['pageActions'], []);
+
   }
 }

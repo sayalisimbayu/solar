@@ -78,13 +78,14 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
     // Start watch when time is up.
     this.userIdle.onTimeout().subscribe(() => {
       console.log('Time is up!');
-      this.authSrv.lockScreen();
+      // this.authSrv.lockScreen();
     });
   }
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+    this.userIdle.stopWatching();
   }
 
   toggleNotificationDropMenu() {

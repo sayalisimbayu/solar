@@ -86,6 +86,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+    this.userIdle.stopWatching();
   }
 
   toggleNotificationDropMenu() {

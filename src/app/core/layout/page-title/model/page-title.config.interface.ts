@@ -7,5 +7,5 @@ export interface IBreadCrumbConfig {
   title: string;
   url: string;
   clickable: boolean;
-  callback?: string;
+  callback?: (event: any) => void;
 }
