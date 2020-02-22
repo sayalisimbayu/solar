@@ -7,12 +7,13 @@ import { map, switchMap } from 'rxjs/operators';
 import { CategoryPage, Category } from '@app/shell/models/category.model';
 import { NotificationRepoService } from './noti.repo.service';
 import { INotification } from '@app/shell/models/noti.model';
+import { IPagedConfig } from '@app/shell/models/paged.model';
 
 export class CategoryRepoService {
     constructor(@Inject(HttpClient) private http: HttpClient, private authSrv: AuthService,
         private notiSrv: NotificationRepoService) { }
-    public getPaged(pagenumber: number, pagesize: number): Observable<CategoryPage> {
-        return this.http.get<DataResponse>('category/' + pagenumber + '/' + pagesize + '/page').pipe(
+    public getPaged(page: IPagedConfig): Observable<CategoryPage> {
+        return this.http.post<DataResponse>('category/page', page).pipe(
             map((el: DataResponse) => {
                 let response: CategoryPage;
                 if (el.code === 0) {

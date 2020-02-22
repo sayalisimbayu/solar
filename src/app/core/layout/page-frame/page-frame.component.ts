@@ -24,6 +24,25 @@ export class PageFrameComponent implements OnInit, AfterViewInit, OnDestroy {
     private lazyLoader: LazyLoaderService,
     private store: SimpleStoreManagerService
   ) { }
+  public removeSearchKeyword(removedKeyword: any) {
+    if (this.config.searchModel != undefined) {
+      if (this.config.searchModel.some(x => x.value === removedKeyword.value)) {
+        this.config.searchModel.splice(this.config.searchModel.indexOf(removedKeyword), 1);
+        this.config.newSearchKeywordEvent.call(this, removedKeyword, this.config.searchModel);
+      }
+    }
+  }
+  public addSearchKeyword(newKeyword: any) {
+    if (this.config.searchModel == undefined) {
+      this.config.searchModel = [];
+    }
+    this.config.searchModel.push(newKeyword);
+    console.log(newKeyword);
+    if (this.config.newSearchKeywordEvent !== null && this.config.newSearchKeywordEvent !== undefined) {
+      this.config.newSearchKeywordEvent.call(this, newKeyword, this.config.searchModel);
+    }
+  }
+
   ngAfterViewInit(): void {
     // this.updateComponent();
   }
@@ -48,6 +67,7 @@ export class PageFrameComponent implements OnInit, AfterViewInit, OnDestroy {
             if (el.path.indexOf('pageBodyUrl') > -1) {
               this.updatePageBody();
             }
+            debugger;
             if (el.path.indexOf('pageTitle') > -1) {
               this.updatePagetTitle(el.path.slice(1), el.changedValue);
             }
@@ -69,8 +89,13 @@ export class PageFrameComponent implements OnInit, AfterViewInit, OnDestroy {
           if (!that.store.has(that.storeId + '_page_title')) {
             that.store.add(that.storeId + '_page_title', that.config.pageTitle, true);
           } else {
-            that.store.setIn(that.storeId + '_page_title', changedConfingPath, changedValue);
+            if (changedValue !== null) {
+              that.store.setIn(that.storeId + '_page_title', changedConfingPath, changedValue);
+            } else {
+              that.store.setIn(that.storeId + '_page_title', [], that.config.pageTitle);
+            }
           }
+          this.cdr.detectChanges();
         });
       }
     }

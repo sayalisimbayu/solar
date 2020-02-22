@@ -6,7 +6,7 @@
         <div class="header">
           <h2>{{ config != null ? config.pageHeading : '' }}</h2>
           <div class="header-dropdown">
-            <div class="input-group mb-3" *ngIf="config != undefined && config.showPageAction">
+            <div class="input-group" *ngIf="config != undefined && config.showPageAction">
               <div class="input-group-prepend" ngbDropdown>
                 <button type="button" class="btn btn-outline-secondary" *ngIf="config.defaultPageAction != null"
                   (click)="config.defaultPageAction.action($event)">
@@ -27,6 +27,12 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="below-header" *ngIf="config!=undefined && config.showSearchBar">
+          <tag-input [ngModel]="config.searchModel" [ngModelOptions]="{standalone: true}"
+            [placeholder]="'Enter the search criteria'" [secondaryPlaceholder]="'Enter the search criteria'"
+            (onRemove)="removeSearchKeyword($event)" (onAdd)="addSearchKeyword($event)" theme='bootstrap'>
+          </tag-input>
         </div>
         <div class="body">
           <ng-template #pagebody></ng-template>

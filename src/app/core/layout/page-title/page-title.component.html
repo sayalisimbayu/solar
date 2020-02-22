@@ -12,7 +12,7 @@
         <li class="breadcrumb-item">
           <a [routerLink]="['/admin']"><i class="icon-home"></i></a>
         </li>
-        <li class="breadcrumb-item" *ngFor="let item of config.breadCrumb">{{ item.title }}</li>
+        <li class="breadcrumb-item" *ngFor="let item of config.breadCrumb" (click)="breadCrumbClick(item)">{{ item.title }}</li>
       </ul>
     </div>
 

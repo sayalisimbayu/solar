@@ -1,19 +1,27 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { EChartOption } from 'echarts';
+import { HighchartsService } from '@app/shared/services/highchart.service';
 
 @Component({
   selector: 'app-gc',
   templateUrl: './gc.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GCComponent implements OnInit {
+export class GCComponent implements OnInit, AfterViewInit {
   public visitorsOptions: EChartOption = {};
   public visitsOptions: EChartOption = {};
-  constructor() {
+  @ViewChild('charts', { read: ElementRef, static: true }) public chartEl: ElementRef;
+  constructor(private highChartService: HighchartsService,
+    private cdrRef: ChangeDetectorRef) {
     this.visitorsOptions = this.loadLineChartOptions([3, 5, 1, 6, 5, 4, 8, 3], '#49c5b6');
     this.visitsOptions = this.loadLineChartOptions([4, 6, 3, 2, 5, 6, 5, 4], '#f4516c');
   }
-  ngOnInit(): void {}
+  ngAfterViewInit() {
+    this.highChartService.createChart(this.chartEl.nativeElement)
+    this.cdrRef.detectChanges();
+  }
+  ngOnInit(): void {
+  }
   loadLineChartOptions(data: any[], color: string) {
     let chartOption: EChartOption;
     let xAxisData: Array<any> = new Array<any>();
@@ -35,7 +43,7 @@ export class GCComponent implements OnInit {
       },
       tooltip: {
         trigger: 'axis',
-        formatter: function(params, ticket, callback) {
+        formatter: function (params, ticket, callback) {
           return (
             '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:' +
             color +

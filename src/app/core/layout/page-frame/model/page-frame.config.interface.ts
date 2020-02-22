@@ -5,6 +5,9 @@ export interface IPageFrameConfig {
   pageBodyUrl: string;
   pageHeading: string;
   showPageAction: boolean;
+  showSearchBar: boolean;
+  searchModel?: any[];
+  newSearchKeywordEvent?: (event: any) => void;
   defaultPageAction?: IPageActionConfig;
   pageActions?: IPageActionConfig[];
 }
