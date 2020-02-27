@@ -2,7 +2,7 @@ import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { takeUntil, filter, map, mergeMap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 import { SidebarService } from '@app/shared/services/sidebar.service';
 import { ThemeService } from '@app/shared/services/theme.service';
@@ -26,8 +26,8 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
   public themeClass: string = 'theme-cyan';
   public smallScreenMenu = '';
   public darkClass: string = '';
-  private ngUnsubscribe = new Subject();
-  private timerSubscribed: any;
+  private ngUnsubscribe = new Subject();  
+  private subScription = new Subscription();
 
   constructor(
     public sidebarService: SidebarService,
@@ -72,21 +72,21 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
       .pipe(mergeMap(route => route.data))
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(event => this.titleService.setTitle(event['title']));
-      //Start watching for user inactivity.
+    //Start watching for user inactivity.
     this.userIdle.startWatching();
     // Start watching when user idle is starting.
-    this.userIdle.onTimerStart().subscribe(count => console.log(count));
+    this.subScription.add(this.userIdle.onTimerStart().subscribe(count => console.log(count)));
     // Start watch when time is up.
-    this.userIdle.onTimeout().subscribe(() => {
-      console.log('Time is up!');
+    this.subScription.add(this.userIdle.onTimeout().subscribe(() => {
       this.authSrv.lockScreen();
-    });
+      this.userIdle.stopWatching();
+    }));
   }
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-    this.userIdle.stopWatching();
+    this.subScription.unsubscribe();
   }
 
   toggleNotificationDropMenu() {
