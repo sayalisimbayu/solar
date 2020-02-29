@@ -1,3 +1,4 @@
+import { INotification } from '@app/shell/models/noti.model';
 import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
@@ -31,6 +32,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   accountData: FormGroup;
   generalInformationFormGroup: FormGroup;
   submitted = false;
+
+  // OverView
+  @ViewChild('timelineGrid', { read: ViewContainerRef, static: true })
+  timelineGrid: ViewContainerRef;
 
   constructor(
     private lazyLoader: LazyLoaderService,
@@ -72,13 +77,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
      this.basicInformation = this.setBasicInformationFormBuilder();
      this.accountData = this.setaccountDataFormBuilder();
      this.generalInformationFormGroup = this.setGeneralInformationFormGroup();
-     debugger
+     this.loadOverView();
   }
   ngAfterViewInit(): void {
     this.loadPageTitle();
-   debugger
     this.userRepoService.getUserSetting().subscribe(el => {
-      debugger
       alert('got setting');
       console.log(el);
       this.userSetting = el;
@@ -102,41 +105,33 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   getUserInfo() {
-    debugger;
     this.userRepoService.getUserInfo().subscribe(el => {
-      debugger
-      alert('got info');
-      console.log(el);
-      this.userInfo = el;
-      this.basicInformation.controls['id'].setValue(el.id);
-      this.basicInformation.controls['usid'].setValue(el.usid);
-      debugger
-      // set userInfo this.userInfo = el
-      // this.userInfo = {
-      //   id: 0,
-      //   usid: 0,
-      //   firstname: 'Amar',
-      //   lastname: 'Barge',
-      //   mobile: '8082071188',
-      //   gender: true,
-      //   birthdate: this.birthDate,
-      //   social: 'amar.fb',
-      //   addresslinE1: 'Address1',
-      //   addresslinE2: 'Address2',
-      //   city: 'cotton green',
-      //   ustate: 'maharashtra',
-      //   countrycode: 'IN',
-      // }
+      if (el) {
+        alert('got info');
+        console.log(el);
+        this.userInfo = el;
+        this.basicInformation.controls['id'].setValue(el.id);
+        this.basicInformation.controls['usid'].setValue(el.usid);
+        this.user = this.setUser(this.userInfo);
 
-      // set user
-      debugger
-      this.user = this.setUser(this.userInfo);
+        // set value for mobile
+        this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
 
-      // set value for mobile
-      this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
+        // set account data
+        this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
+      } else {
+        this.userInfo = this.setEmptyUserInfo();
+        this.basicInformation.controls['id'].setValue(this.userInfo.id);
+        this.basicInformation.controls['usid'].setValue(this.userInfo.usid);
+        this.user = this.setUser(this.userInfo);
 
-      // set account data
-      this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
+        // set value for mobile
+        this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
+
+        // set account data
+        this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
+      }
+      
     });
   }
   setBasicInformationFormBuilder(): FormGroup {
@@ -168,7 +163,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       usid: [0],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      username: [''],
+      username: [{value:'', disabled: true}],
       displayname: [`${this.userInfo.firstname} ${this.userInfo.lastname}`],
       email: [''],
       gender: ['', Validators.required],
@@ -196,13 +191,13 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
   setUpdatedaccountData(userInfo: UserInfo, user: User) {
-    debugger
     return {
       id: userInfo.id,
       usid: userInfo.usid,
       firstname: userInfo.firstname,
       lastname: userInfo.lastname,
       username: user.username,
+      displayname: `${userInfo.firstname} ${userInfo.lastname}`,
       email: user.email,
       gender: userInfo.gender,
       mobile: '',
@@ -232,7 +227,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSubmit(data: any) {
-    debugger;
     this.submitted = true;
     if (this.basicInformation.invalid) {
       return;
@@ -241,7 +235,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     .toString().toLowerCase() === 'true' ? true : false;
     // appuserinfo
     this.userRepoService.saveUserinfo(data).subscribe(el => {
-      debugger;
       alert('user saved successfully');
       console.log(el);
       // set userInfo
@@ -270,7 +263,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     //   this.userRepoService.saveUserInfo(data),
     //   this.userRepoService.saveUserinfo(data)
     // ).pipe(map(([appUser, userInfo]) => {
-    //   debugger;
     //   alert('Passowrd Change successfully, mobile name updated successfully');
     // })
     // ).subscribe();
@@ -304,5 +296,23 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       confirmPassword: '',
       notificationid: 0
     }
+  }
+
+  // OverView
+  loadOverView() {
+    // get all notification
+    this.userRepoService.getTimeLineConfig().pipe(
+      map((timeline: INotification[]) => {
+        this.timelineGrid.clear();
+      this.lazyLoader.load('app-timeline', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {
+      if (this.store.has('timelineconfig')) {
+        this.store.setIn('timelineconfig', ['timeline'], timeline);
+      } else {
+        this.store.add('timelineconfig', {timeline: timeline}, true);
+      }
+    });
+      })
+    ).subscribe()
+    
   }
 }

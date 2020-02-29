@@ -61,7 +61,7 @@ export const lazyWidgets: {
     //     import('./../pages/page-category-grid/category-grid/category-grid.module').then(m => m.CategoryGridModule),
     //   data: { preload: true }
     // }
-  ];
+];
 
 export function lazyArrayToObj() {
   const result = {};
