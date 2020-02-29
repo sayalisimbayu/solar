@@ -7,7 +7,7 @@ export class HighchartsService {
     charts: any[] = [];
     defaultOptions = {
         chart: {
-            type: 'area',
+            type: 'line',
             backgroundColor: '#f4f7f6',
             zoomType: 'x',
         },
@@ -23,12 +23,22 @@ export class HighchartsService {
         xAxis: {
             lineWidth: 0,
             minorGridLineWidth: 0,
+            gridLineWidth: 0,
             lineColor: 'transparent',
+            tickColor: 'transparent',
+            title: {
+                text: 'Visitor'
+            },
             labels: {
                 enabled: false
             }
         },
         yAxis: {
+            gridLineInterpolation: 'polygon',
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            gridLineWidth: 0,
+            lineColor: 'transparent',
             title: {
                 text: ''
             },
@@ -37,12 +47,10 @@ export class HighchartsService {
             }
         },
         legend: {
-            enabled: false
+            enabled: false,
+            layout: 'vertical',
         },
         plotOptions: {
-            series: {
-                pointStart: 0
-            }
         },
         series: [{
             marker: {
@@ -50,18 +58,6 @@ export class HighchartsService {
             },
             name: 'Installation',
             data: [0, 10, 34, 20, 56, 67, 23, 12]
-        }, {
-            marker: {
-                enabled: false
-            },
-            name: 'Manufacturing',
-            data: [45, 42, 45, 56, 12, 34, 43, 90]
-        }, {
-            marker: {
-                enabled: false
-            },
-            name: 'Sales & Distribution',
-            data: [34, 56, 76, 34, 23, 76, 45, 7]
         }]
     }
 

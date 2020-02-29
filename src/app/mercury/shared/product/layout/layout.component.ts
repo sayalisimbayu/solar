@@ -1,20 +1,16 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { EChartOption } from 'echarts';
 import { IPageFrameConfig } from '@app/core/layout/page-frame/model/page-frame.config.interface';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 
 @Component({
-  selector: 'app-cat-layout',
+  selector: 'app-prod-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
 })
-export class CLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('pageframe', { read: ViewContainerRef, static: true })
   pageFrame: ViewContainerRef;
   public pagebody$: any;
-  public visitorsOptions: EChartOption = {};
-  public visitsOptions: EChartOption = {};
   public sidebarVisible = true;
   private PageFrameConfig: IPageFrameConfig;
   constructor(private lazyLoader: LazyLoaderService, private store: SimpleStoreManagerService) {
@@ -35,8 +31,8 @@ export class CLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     // Add 'implements AfterViewInit' to the class.
     this.PageFrameConfig = {
-      pageBodyUrl: 'app-category-grid',
-      pageHeading: 'Category Grid',
+      pageBodyUrl: 'app-product-grid',
+      pageHeading: 'Product Grid',
       showSearchBar: false,
       pageTitle: {
         breadCrumb: [
@@ -46,29 +42,29 @@ export class CLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
             clickable: false
           },
           {
-            title: 'Category',
+            title: 'Product',
             url: '',
             clickable: false
           }
         ],
         leftComponentUrl: 'page-header-chart',
-        pageTitle: 'Category'
+        pageTitle: 'Product'
       },
       showPageAction: false
     };
 
     this.pageFrame.clear();
-    this.lazyLoader.load('page-frame', this.pageFrame, 'categorypageconfig', (cmpRef: any) => {
-      if (!this.store.has('categorypageconfig')) {
-        this.store.add('categorypageconfig', this.PageFrameConfig);
+    this.lazyLoader.load('page-frame', this.pageFrame, 'productpageconfig', (cmpRef: any) => {
+      if (!this.store.has('productpageconfig')) {
+        this.store.add('productpageconfig', this.PageFrameConfig);
       } else {
-        this.store.setIn('categorypageconfig', [], this.PageFrameConfig);
+        this.store.setIn('productpageconfig', [], this.PageFrameConfig);
       }
       cmpRef.changeDetectorRef.detectChanges();
     });
   }
   ngOnDestroy() {
-    this.store.remove('categorypageconfig');
-    this.store.remove('categorynavigatingid');
+    this.store.remove('productpageconfig');
+    this.store.remove('productnavigatingid');
   }
 }

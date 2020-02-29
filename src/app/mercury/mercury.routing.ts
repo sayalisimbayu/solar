@@ -16,6 +16,16 @@ const routes: Routes = [
             data: { title: ':: Simbayu :: Mercury :: Category ::' }
           }
         ]
+      },
+      {
+        path: 'product',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./shared/product/layout/layout.module').then(m => m.PLayoutModule),
+            data: { title: ':: Simbayu :: Mercury :: Product ::' }
+          }
+        ]
       }
     ]
   }

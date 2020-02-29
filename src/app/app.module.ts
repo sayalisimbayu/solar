@@ -25,6 +25,7 @@ import { ExportService } from './shared/services/export.service';
 import { SignalRService } from './shared/services/signalr.service';
 import { UserIdleModule } from 'angular-user-idle';
 import { HighchartsService } from './shared/services/highchart.service';
+import { ProductRepoService } from './shared/reposervice/product.repo.service';
 // import { AuthenticationModule } from './authentication/authentication.module';
 
 export class CustomHammerConfig extends HammerGestureConfig {
@@ -51,7 +52,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     // Optionally you can set time for `idle`, `timeout` and `ping` in seconds.
     // Default values: `idle` is 600 (10 minutes), `timeout` is 300 (5 minutes) 
     // and `ping` is 120 (2 minutes).
-    UserIdleModule.forRoot({idle: 600, timeout: 600, ping: 10}),
+    UserIdleModule.forRoot({idle: 300, timeout: 5, ping: 10}),
     // AuthenticationModule
   ],
   providers: [
@@ -61,6 +62,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     CryptService,
     UserRepoService,
     CategoryRepoService,
+    ProductRepoService,
     NotificationRepoService,
     ExportService,
     SignalRService,
