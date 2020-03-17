@@ -1,0 +1,36 @@
+<form #personaForm="ngForm" (ngSubmit)="onSubmit(personaForm);">
+  <div class="form-group">
+    <label>Name</label>
+    <input [(ngModel)]="user.fullName" class="form-control" name="name" #name="ngModel" required
+      [ngClass]="{ 'parsley-error': !name.valid && (name.touched || personaForm.submitted) }" />
+    <ul class="parsley-errors-list filled" *ngIf="!name.valid && (name.touched || personaForm.submitted)">
+      <li class="parsley-required" *ngIf="name.hasError('required')">This value is required.</li>
+    </ul>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input [(ngModel)]="user.email" class="form-control" name="email" #email="ngModel" required
+      [ngClass]="{ 'parsley-error': !email.valid && (email.touched || personaForm.submitted) }" />
+    <ul class="parsley-errors-list filled" *ngIf="!email.valid && (email.touched || personaForm.submitted)">
+      <li class="parsley-required" *ngIf="email.hasError('required')">This value is required.</li>
+    </ul>
+  </div>
+  <div class="form-group">
+    <label>Persona</label>
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center"
+        *ngFor="let permission of user.permissions">
+        <div class="col-md-12">
+          <label class="float-left" style="margin-top: 3%;">{{permission.alias}}</label>
+          <div role="group" aria-label="User Persona" class="float-right" style="width: 80%;">
+            <ng5-slider [(value)]="permission.value" [options]="options"></ng5-slider>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="form-group text-right">
+    <button type="submit" class="btn btn-primary mr-1">Submit</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel($event)">Cancel</button>
+  </div>
+</form>

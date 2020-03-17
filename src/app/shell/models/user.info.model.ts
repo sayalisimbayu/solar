@@ -13,3 +13,8 @@ export class UserInfo {
   ustate: string;
   countrycode: string;
 }
+
+export class UserInfoPage {
+  userInfos: UserInfo[];
+  totalCount: number;
+}

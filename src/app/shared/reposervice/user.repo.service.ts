@@ -5,14 +5,36 @@ import { AuthService } from '@app/shell/auth/auth.service';
 import { UserSetting } from '@app/shell/models/user.setting.model';
 import { Observable } from 'rxjs';
 import { DataResponse } from '@app/shell/models/data-response.model';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { IPagedConfig } from '@app/shell/models/paged.model';
+import { NotificationRepoService } from './noti.repo.service';
+import { INotification } from '@app/shell/models/noti.model';
+import { UserPage, AppPermission } from '@app/shell/models/user.model';
 
 export class UserRepoService {
-  constructor(@Inject(HttpClient) private http: HttpClient, private authSrv: AuthService) {}
-  getUserInfo(): Observable<UserInfo> {
-    debugger
-    const userId = this.authSrv.getSysUserData().id;
+  constructor(@Inject(HttpClient) private http: HttpClient,
+    private authSrv: AuthService, private notiSrv: NotificationRepoService) { }
+  getUserInfo(userId: number = -1): Observable<UserInfo> {
+    if (userId === -1) {
+      userId = this.authSrv.getSysUserData().id;
+    }
     return this.http.get<DataResponse>('user/' + userId + '/userinfo').pipe(
+      map((el: DataResponse) => {
+        let response: UserInfo;
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        response = el.data;
+        return response;
+      })
+    );
+  }
+  getUserInfoByUser(userId: number = -1): Observable<UserInfo> {
+    if (userId === -1) {
+      userId = this.authSrv.getSysUserData().id;
+    }
+    return this.http.get<DataResponse>('user/' + userId + '/infobyuser').pipe(
       map((el: DataResponse) => {
         let response: UserInfo;
         if (el.code === 0) {
@@ -38,7 +60,32 @@ export class UserRepoService {
       })
     );
   }
-
+  getAppPermissionsById(userId: number): Observable<AppPermission[]> {
+    return this.http.get<DataResponse>('user/' + userId + '/permissionsbyid').pipe(
+      map((el: DataResponse) => {
+        let response: AppPermission[];
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        response = el.data;
+        return response;
+      })
+    );
+  }
+  saveAppPermissions(permissions: AppPermission[]): Observable<AppPermission[]> {
+    return this.http.post<DataResponse>('user/permissions', permissions).pipe(
+      map((el: DataResponse) => {
+        let userInfoResponse: AppPermission[];
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        userInfoResponse = el.data;
+        return userInfoResponse;
+      })
+    );
+  }
   saveUserinfo(userInfo: UserInfo): Observable<UserInfo> {
     debugger
     return this.http.post<DataResponse>(`user/saveuserinfo`, userInfo).pipe(
@@ -86,5 +133,36 @@ export class UserRepoService {
         return userInfoResponse;
       })
     );
+  }
+  public getPaged(page: IPagedConfig): Observable<UserPage> {
+    return this.http.post<DataResponse>('user/page', page).pipe(
+      map((el: DataResponse) => {
+        let response: UserPage;
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        response = {
+          users: el.data.item1,
+          totalCount: el.data.item2
+        };
+        return response;
+      })
+    );
+  }
+  public delete(id: number) {
+    return this.notiSrv.save(this.notiSrv
+      .generateNoti('info', 'Deleting Data Started', 'Working')).pipe(switchMap((el: INotification) => {
+        return this.http.get<DataResponse>('user/' + id
+          + '/' + el.id + '/delete').pipe(
+            map((sel: DataResponse) => {
+              if (sel.code === 0) {
+                console.error(el);
+                return false;
+              }
+              return true;
+            })
+          );
+      }))
   }
 }

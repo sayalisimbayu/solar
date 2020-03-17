@@ -41,3 +41,8 @@ export interface UserProfile {
   startProvince: string;
   country: string;
 }
+
+export interface UserPage{
+  users: User[];
+  totalCount: number;
+}
