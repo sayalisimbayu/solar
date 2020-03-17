@@ -37,7 +37,7 @@
             </li>
           </ul>
         </div>
-        <div class="body">
+        <div class="body" *ngIf="userInfo">
           <small class="text-muted">Address: </small>
           <p>{{userInfo.addresslinE1}},{{userInfo.addresslinE2}},{{userInfo.city}},{{userInfo.ustate}}</p>
           <div>
@@ -163,16 +163,19 @@
             <div class="body">
               <div class="new_post">
                 <div class="form-group">
-                  <textarea
+                  <div>
+                    <ng-template #timelineGrid></ng-template>
+                  </div>
+                  <!-- <textarea
                     rows="4"
                     class="form-control no-resize"
                     placeholder="Please type what you want..."
-                  ></textarea>
+                  ></textarea> -->
                 </div>
                 <div class="post-toolbar-b">
-                  <button class="btn btn-warning mr-1"><i class="icon-link"></i></button>
+                  <!-- <button class="btn btn-warning mr-1"><i class="icon-link"></i></button>
                   <button class="btn btn-warning mr-1"><i class="icon-camera"></i></button>
-                  <button class="btn btn-primary">Post</button>
+                  <button class="btn btn-primary">Post</button> -->
                 </div>
               </div>
             </div>
@@ -518,7 +521,6 @@
                       type="text"
                       #email
                       class="form-control"
-                      disabled
                       placeholder="Username"
                       formControlName="username"
                     />
@@ -1150,15 +1152,15 @@
                   <div class="form-group">
                     <label>Date Format</label>
                     <div class="fancy-radio">
-                      <label><input name="dateFormat" value="May 18, 2018" type="radio" formControlName="dateFormat"/><span><i></i>May 18, 2018</span></label
+                      <label><input name="dateformat" value="May 18, 2018" type="radio" formControlName="dateformat"/><span><i></i>May 18, 2018</span></label
                       >&nbsp;&nbsp;
-                      <label><input name="dateFormat" value="2018, May, 18" type="radio" formControlName="dateFormat"/><span><i></i>2018, May, 18</span></label
+                      <label><input name="dateformat" value="2018, May, 18" type="radio" formControlName="dateformat"/><span><i></i>2018, May, 18</span></label
                       >&nbsp;&nbsp;
-                      <label><input name="dateFormat" value="2018-03-10" type="radio" formControlName="dateFormat" checked /><span><i></i>2018-03-10</span></label
+                      <label><input name="dateformat" value="2018-03-10" type="radio" formControlName="dateformat" checked /><span><i></i>2018-03-10</span></label
                       >&nbsp;&nbsp;
-                      <label><input name="dateFormat" value="02/09/2018" type="radio" formControlName="dateFormat"/><span><i></i>02/09/2018</span></label
+                      <label><input name="dateformat" value="02/09/2018" type="radio" formControlName="dateformat"/><span><i></i>02/09/2018</span></label
                       >&nbsp;&nbsp;
-                      <label><input name="dateFormat" value="10/05/2018" type="radio" formControlName="dateFormat"/><span><i></i>10/05/2018</span></label
+                      <label><input name="dateformat" value="10/05/2018" type="radio" formControlName="dateformat"/><span><i></i>10/05/2018</span></label
                       >
                     </div>
                   </div>
