@@ -30,15 +30,18 @@ export interface RegisterUser {
 }
 
 export interface UserProfile {
+  id: number;
   firstName: string;
   lastName: string;
   gender: string;
   birthDate: string;
+  displayname: string;
   site: string;
   addressLine1: string;
   addressLine2: string;
   city: string;
   startProvince: string;
+  permissions: AppPermission[];
   country: string;
 }
 

@@ -7,7 +7,6 @@ import { Observable, of } from 'rxjs';
 import { DataResponse } from '@app/shell/models/data-response.model';
 import { map, switchMap } from 'rxjs/operators';
 import { IPagedConfig } from '@app/shell/models/paged.model';
-import { INotification } from '@app/shell/models/noti.model';
 import { NotificationRepoService } from './noti.repo.service';
 import { INotification } from '@app/shell/models/noti.model';
 import { UserPage, AppPermission } from '@app/shell/models/user.model';

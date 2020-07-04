@@ -3,6 +3,7 @@ export class UserInfo {
   usid: number;
   firstname: string;
   lastname: string;
+  displayname: string;
   gender: boolean;
   mobile: string;
   social: string;

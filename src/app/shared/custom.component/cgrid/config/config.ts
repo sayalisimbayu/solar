@@ -5,6 +5,7 @@ export interface ICGridConfig {
   page: ICPageConfig;
   isCheckbox?: boolean;
   isDelete?: boolean;
+  isDefaultImage?: boolean;
   gridHeight?: string;
   functions?: {
     onDelete?: Function;
@@ -17,6 +18,7 @@ export interface ICGridComponentConfig {
   heading: string;
   subHeading: string;
   description: string;
+  image?: string;
 }
 
 export interface ICPageConfig {

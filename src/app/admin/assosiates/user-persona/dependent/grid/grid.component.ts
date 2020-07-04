@@ -4,6 +4,7 @@ import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 import { ICGridConfig } from '@app/shared/custom.component/cgrid/config/config';
 import { ExportService } from '@app/shared/services/export.service';
 import { UserPersonaGridService } from './grid.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-page-userpersona-grid',
@@ -15,25 +16,26 @@ export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestro
   pageGrid: ViewContainerRef;
 
   public selector = '.scrollable-container';
-
+  private pageSubscription: Subscription;
   constructor(private store: SimpleStoreManagerService,
     private lazyLoader: LazyLoaderService,
     private userPersonaGridSrv: UserPersonaGridService,
     private exportSrv: ExportService) {
-
+    this.pageSubscription = new Subscription();
   }
 
   ngAfterViewInit(): void {
-    this.store.setIn('userpersonapageconfig', ['showPageAction'], true);
+    this.store.setIn('userpersonapageconfig', ['showPageAction'], false);
     this.store.setIn('userpersonapageconfig', ['showSearchBar'], true);
     this.pageGrid.clear();
     this.lazyLoader.load('app-c-grid', this.pageGrid, 'userpersonapagegridconfig', (cmpRef: any) => {
+      debugger;
       if (this.store.has('userpersonapagegridconfig')) {
         this.store.setIn('userpersonapagegridconfig', [], this.userPersonaGridSrv.pageGridConfig);
-        this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page);
+        this.pageSubscription.add(this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page).subscribe());
       } else {
         this.store.add('userpersonapagegridconfig', this.userPersonaGridSrv.pageGridConfig);
-        this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page);
+        this.pageSubscription.add(this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page).subscribe());
       }
     });
   }
@@ -73,11 +75,11 @@ export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestro
     if (keyModel !== undefined) {
       keyModel.forEach((element: any) => {
         const eachkeyword = element.value;
-        if (eachkeyword.indexOf('Name') < 0) {
+        if (eachkeyword.indexOf('DISPLAYNAME') < 0) {
           if (first) {
-            search += ' Name=\'' + eachkeyword + '\'';
+            search += ' DISPLAYNAME LIKE \'%' + eachkeyword + '%\'';
           } else {
-            search += ' or Name=\'' + eachkeyword + '\'';
+            search += ' or DISPLAYNAME LIKE \'%' + eachkeyword + '%\'';
           }
         }
         else {
@@ -94,7 +96,7 @@ export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestro
     }
     this.userPersonaGridSrv.pageGridConfig.page.currentPage = 0;
     this.userPersonaGridSrv.pageGridConfig.items = [];
-    this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page, search);
+    this.pageSubscription.add(this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page, search).subscribe());
   }
   ngOnDestroy() {
     this.store.setIn('userpersonapageconfig', ['showPageAction'], false);
@@ -104,6 +106,7 @@ export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestro
       {});
     this.store.setIn('userpersonapageconfig', ['newSearchKeywordEvent'], null);
     this.store.setIn('userpersonapageconfig', ['pageActions'], []);
-
+    if (this.pageSubscription)
+      this.pageSubscription.unsubscribe();
   }
 }

@@ -1,5 +1,5 @@
 import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
-import { User, AppPermission } from '@app/shell/models/user.model';
+import { User, AppPermission, UserProfile } from '@app/shell/models/user.model';
 import { UserInfo } from '@app/shell/models/user.info.model';
 import { map } from 'rxjs/operators';
 
@@ -12,10 +12,13 @@ export class UserPersonaFormService {
         });
     }
     get(id: number, completeCallback: any) {
-        const user: User = {} as User;
+        const user: UserProfile = {} as UserProfile;
         return this.userRepoSrv.getUserInfoByUser(id).subscribe((el: UserInfo) => {
-            user.displayname = el.firstname + ' ' + el.lastname;
-            // user.email=el.email;
+            user.firstName=el.firstname;
+            user.lastName=el.lastname;
+            user.id=el.id,
+            user.displayname = el.displayname;
+            //user.email=el.email;
             return this.userRepoSrv.getAppPermissionsById(id).subscribe((sel: AppPermission[]) => {
                 user.permissions = sel;
                 completeCallback(user);

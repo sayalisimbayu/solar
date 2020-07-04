@@ -3,6 +3,7 @@ import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager
 import { Subscription } from 'rxjs';
 import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
 import { UserPage } from '@app/shell/models/user.model';
+import { map } from 'rxjs/operators';
 
 export class UserPersonaGridService {
     public pageGridConfig: ICGridConfig;
@@ -19,13 +20,15 @@ export class UserPersonaGridService {
         this.pageGridConfig = {
             itemMap: {
                 heading: 'displayname',
-                description: 'fullName',
-                subHeading: 'email'
+                description: '',
+                subHeading: 'username',
+                image: ''
             },
             itemMapDescription: {
                 heading: '',
-                description: 'Name: ',
-                subHeading: 'Email: ',
+                description: '',
+                subHeading: 'User Name: ',
+                image: ''
             },
             items: [],
             page: {
@@ -35,6 +38,7 @@ export class UserPersonaGridService {
                 scrollDistance: 1,
                 scrollUpDistance: 2,
             },
+            isDefaultImage: true,
             isCheckbox: false,
             isDelete: true,
             functions: {
@@ -44,17 +48,18 @@ export class UserPersonaGridService {
             }
         };
     }
-    getLatestPage(event: ICPageConfig, search?: string): void {
+    getLatestPage(event: ICPageConfig, search?: string) {
         const that = this;
         if (this.totalRows >= this.pageGridConfig.items.length) {
-            this.userRepSrv
+            return this.userRepSrv
                 .getPaged(
                     {
                         pageNumber: event.currentPage,
                         pageSize: event.pagesize,
                         search
-                    }).subscribe((el: UserPage) => {
+                    }).pipe(map((el: UserPage) => {
                         if (el !== undefined) {
+                            debugger;
                             this.latestSearch = search;
                             that.totalRows = el.totalCount;
                             that.pageGridConfig.items.push(...el.users);
@@ -63,7 +68,7 @@ export class UserPersonaGridService {
                             that.store.setIn('userpersonapagegridconfig',
                                 ['page', 'currentPage'], that.pageGridConfig.page.currentPage);
                         }
-                    });
+                    }));
         }
     }
     onScroll(event: ICPageConfig) {
