@@ -3,6 +3,7 @@ export class UserInfo {
   usid: number;
   firstname: string;
   lastname: string;
+  displayname: string;
   gender: boolean;
   mobile: string;
   social: string;
@@ -12,4 +13,9 @@ export class UserInfo {
   city: string;
   ustate: string;
   countrycode: string;
+}
+
+export class UserInfoPage {
+  userInfos: UserInfo[];
+  totalCount: number;
 }

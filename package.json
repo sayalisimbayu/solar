@@ -1,5 +1,5 @@
 {
-  "name": "ng-x-rocket",
+  "name": "ng-simbayu",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -7,6 +7,8 @@
     "build": "npm run env -s && ng build --prod",
     "start": "npm run env -s && ng serve --proxy-config proxy.conf.js --port 4600",
     "start:o": "npm run env -s && ng serve --proxy-config proxy.conf.js --port 4600 --open",
+    "start:prod": "npm run env -s && ng serve --prod --proxy-config proxy.conf.js --port 4600",
+    "start:prodo": "npm run env -s && ng serve --prod --proxy-config proxy.conf.js --port 4600 --open",
     "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
     "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "npm run env -s && ng test",
@@ -33,6 +35,7 @@
     "@aspnet/signalr": "^1.1.4",
     "@ng-bootstrap/ng-bootstrap": "^5.0.0-rc.1",
     "@ngx-translate/core": "^11.0.1",
+    "@nth-cloud/ng-toggle": "^5.0.1",
     "@types/crypto-js": "^3.1.43",
     "@types/echarts": "^4.4.2",
     "angular-font-awesome": "^3.1.2",
@@ -46,6 +49,7 @@
     "highcharts": "^8.0.0",
     "leaflet": "^1.6.0",
     "moment": "^2.24.0",
+    "ng5-slider": "^1.2.4",
     "ngx-chips": "^2.1.0",
     "ngx-echarts": "^4.1.0",
     "ngx-gallery": "^5.10.0",

@@ -54,7 +54,20 @@ export const lazyWidgets: {
       path: 'app-c-grid',
       loadChildren: () => import('./../custom.component/cgrid/cgrid.module').then(m => m.CGridLayoutModule),
       data: { preload: true }
-    }
+    },
+    {
+      path: 'app-page-userpersona-grid',
+      loadChildren: () =>
+        import('./../../admin/assosiates/user-persona/dependent/grid/grid.module')
+          .then(m => m.UPGridLayoutModule),
+      data: { preload: true }
+    },
+    {
+      path: 'app-page-userpersona-form',
+      loadChildren: () =>
+        import('./../../admin/assosiates/user-persona/dependent/form/form.module').then(m => m.UPFormLayoutModule),
+      data: { preload: true }
+    },
     // {
     //   path: 'category-grid',
     //   loadChildren: () =>

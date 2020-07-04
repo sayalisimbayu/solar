@@ -5,6 +5,10 @@
       <div class="card">
         <div class="file">
           <a href="javascript:void(0);">
+            <div *ngIf="config.isDefaultImage" style="margin-left: 25%;margin-top: 5%;" (click)="navigate($event,item)">
+              <img *ngIf="config.itemMap.image!=''" [src]="item[config.itemMap.image]" style="width: 100px;" />
+              <img *ngIf="config.itemMap.image==''"  src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style="width: 100px;" />
+            </div>
             <div class="hover" [ngSwitch]="true">
               <label class="fancy-checkbox" *ngSwitchCase="config.isCheckbox">
                 <input type="checkbox" name="checkbox" />

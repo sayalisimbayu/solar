@@ -113,17 +113,11 @@
             </li>
             <li [ngClass]="{ active: currentActiveMenu == 'file-manager' }">
               <a class="has-arrow" (click)="activeInactiveMenu('file-manager')"
-                ><i class="icon-folder"></i> <span>File Manager</span></a
+                ><i class="icon-lock"></i> <span>Admin</span></a
               >
               <ul *ngIf="currentActiveMenu == 'file-manager'">
                 <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <a [routerLink]="['/admin/file-manager/file-documents']">Documents</a>
-                </li>
-                <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <a [routerLink]="['/admin/file-manager/file-media']">Media</a>
-                </li>
-                <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <a [routerLink]="['/admin/file-manager/file-images']">Images</a>
+                  <a [routerLink]="['/admin/persona']">Persona</a>
                 </li>
               </ul>
             </li>

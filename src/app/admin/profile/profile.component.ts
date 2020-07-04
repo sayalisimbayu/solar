@@ -94,6 +94,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       firstname: '',
       lastname: '',
       gender: false,
+      displayname:'',
       mobile: '',
       social: '',
       birthdate: this.birthDate,
