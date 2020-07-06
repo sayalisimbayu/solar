@@ -13,4 +13,4 @@ import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
   declarations: [AdminComponent],
   providers: [UserRepoService]
 })
-export class AdminModule { }
+export class AdminModule {}

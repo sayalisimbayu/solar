@@ -14,14 +14,19 @@ const routes: Routes = [
           {
             path: 'index',
             loadChildren: () => import('./index/index.module').then(m => m.IndexModule),
-            data: { title: ':: Lucid Angular :: Dashboard :: Analytical ::' }
+            data: { title: ':: Solar :: Dashboard ::' }
           }
         ]
       },
       {
+        path: 'persona',
+        loadChildren: () => import('./assosiates/user-persona/user-persona.module').then(m => m.UserPersonaModule),
+        data: { title: ':: Solar :: Persona ::' }
+      },
+      {
         path: 'profile',
         loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
-        data: { title: ':: Lucid Angular :: Profile ::' }
+        data: { title: ':: Solar :: Profile ::' }
       }
     ]
   }

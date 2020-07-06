@@ -36,9 +36,9 @@ export class LazyLoaderService {
     if (config != null) {
       cmpRef.instance['storeId'] = config;
     }
-    cmpRef.changeDetectorRef.detectChanges();
     if (callback != null) {
       callback(cmpRef);
     }
+    cmpRef.changeDetectorRef.detectChanges();
   }
 }

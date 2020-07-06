@@ -1,0 +1,9 @@
+.header-dropdown {
+  right: 22px;
+}
+.below-header{
+    color: #444;
+    padding: 0px 20px;
+    position: relative;
+    box-shadow: none;
+}

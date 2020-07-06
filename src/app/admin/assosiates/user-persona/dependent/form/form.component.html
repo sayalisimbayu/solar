@@ -1,0 +1,53 @@
+<form #personaForm="ngForm" (ngSubmit)="onSubmit(personaForm)">
+  <div class="form-group">
+    <label>Name</label>
+    <input
+      [(ngModel)]="user.displayname"
+      class="form-control"
+      name="name"
+      #name="ngModel"
+      required
+      [ngClass]="{ 'parsley-error': !name.valid && (name.touched || personaForm.submitted) }"
+    />
+    <ul class="parsley-errors-list filled" *ngIf="!name.valid && (name.touched || personaForm.submitted)">
+      <li class="parsley-required" *ngIf="name.hasError('required')">This value is required.</li>
+    </ul>
+  </div>
+  <!-- <div class="form-group">
+    <label>Name</label>
+    <input [(ngModel)]="user.username" class="form-control" name="name" #name="ngModel" required
+      [ngClass]="{ 'parsley-error': !name.valid && (name.touched || personaForm.submitted) }" />
+    <ul class="parsley-errors-list filled" *ngIf="!name.valid && (name.touched || personaForm.submitted)">
+      <li class="parsley-required" *ngIf="name.hasError('required')">This value is required.</li>
+    </ul>
+  </div> -->
+  <div class="form-group">
+    <label>Persona</label>
+    <ul class="list-unstyled feeds_widget">
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+        *ngFor="let permission of user.permissions"
+      >
+          <label class="float-left" style="margin-top: 3%;">{{ permission.alias }}</label>
+              onColor="{{ model.onColor }}"
+              onText="{{ model.onText }}"
+              offColor="{{ model.offColor }}"
+              offText="{{ model.offText }}"
+              [disabled]="model.disabled"
+              [size]="model.size"
+              [(ngModel)]="model.value"
+            >
+            </ng-toggle>
+        </div>
+        <div class="feeds-body">
+          <h4 class="title">{{ permission.alias }}</h4>
+          <small>{{ permission.description?permission.description:' ' }}</small>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="form-group text-right">
+    <button type="submit" class="btn btn-primary mr-1">Submit</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel($event)">Cancel</button>
+  </div>
+</form>

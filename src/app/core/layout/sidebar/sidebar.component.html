@@ -5,7 +5,7 @@
       <div class="dropdown" ngbDropdown>
         <span>Welcome,</span>
         <a href="javascript:void(0);" class="dropdown-toggle user-name" ngbDropdownToggle
-          ><strong>{{username}}</strong></a
+          ><strong>{{ username }}</strong></a
         >
         <ul class="dropdown-menu dropdown-menu-right account" ngbDropdownMenu>
           <li>
@@ -88,10 +88,15 @@
               [routerLinkActiveOptions]="{ exact: true }"
               [ngClass]="{ active: currentActiveMenu == 'master' }"
             >
-              <a class="has-arrow" (click)="activeInactiveMenu('master')"><i class="icon-grid"></i> <span>Master</span></a>
+              <a class="has-arrow" (click)="activeInactiveMenu('master')"
+                ><i class="icon-grid"></i> <span>Master</span></a
+              >
               <ul *ngIf="currentActiveMenu == 'master'">
                 <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <a [routerLink]="['/mercury/category']">Category</a>
+                </li>
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <a [routerLink]="['/mercury/product']">Product</a>
                 </li>
                 <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <a [routerLink]="['/admin/app/app-chat']">Chat</a>
@@ -108,17 +113,11 @@
             </li>
             <li [ngClass]="{ active: currentActiveMenu == 'file-manager' }">
               <a class="has-arrow" (click)="activeInactiveMenu('file-manager')"
-                ><i class="icon-folder"></i> <span>File Manager</span></a
+                ><i class="icon-lock"></i> <span>Admin</span></a
               >
               <ul *ngIf="currentActiveMenu == 'file-manager'">
                 <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <a [routerLink]="['/admin/file-manager/file-documents']">Documents</a>
-                </li>
-                <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <a [routerLink]="['/admin/file-manager/file-media']">Media</a>
-                </li>
-                <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <a [routerLink]="['/admin/file-manager/file-images']">Images</a>
+                  <a [routerLink]="['/admin/persona']">Persona</a>
                 </li>
               </ul>
             </li>

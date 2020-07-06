@@ -1,5 +1,4 @@
-.fancy-checkbox input[type="checkbox"]:checked+span:before {
-    color: #494b4c;
-    background-color: #ffffff;
-  }
-  
+.fancy-checkbox input[type='checkbox']:checked + span:before {
+  color: #494b4c;
+  background-color: #ffffff;
+}

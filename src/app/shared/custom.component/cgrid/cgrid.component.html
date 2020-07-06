@@ -1,15 +1,51 @@
 <div class="container-fluid file_manager">
-  <div class="row clearfix">
-    <div class="col-lg-3 col-md-4 col-sm-12">T
-      <div class="card" *ngIf="config!=undefined">
-        <div class="file" *ngFor="let item of config.items">
+  <div
+    class="row clearfix"
+    infiniteScroll
+    [infiniteScrollDistance]="config?.page?.scrollDistance"
+    [infiniteScrollThrottle]="config?.page?.throttle"
+    (scrolled)="onScroll($event)"
+    [scrollWindow]="true"
+  >
+    <div class="col-lg-3 col-md-4 col-sm-12" *ngFor="let item of config?.items; let i = index">
+      <div class="card">
+        <div class="file">
           <a href="javascript:void(0);">
-            <div class="hover">
-              <ng-container #button></ng-container>
+            <div
+              *ngIf="config.isDefaultImage"
+              style="margin-left: 25%;margin-top: 5%;"
+              (click)="navigate($event, item)"
+            >
+              <img *ngIf="config.itemMap.image != ''" [src]="item[config.itemMap.image]" style="width: 100px;" />
+              <img
+                *ngIf="config.itemMap.image == ''"
+                src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                style="width: 100px;"
+              />
             </div>
-            <div class="file-name" (click)="navigate($event)">
-              <p class="m-b-5 text-muted">Document_2017.doc</p>
-              <small>Size: 42KB <span class="date text-muted">Nov 02, 2017</span></small>
+            <div class="hover" [ngSwitch]="true">
+              <label class="fancy-checkbox" *ngSwitchCase="config.isCheckbox">
+                <input type="checkbox" name="checkbox" />
+                <!-- <span>Option 3</span> -->
+              </label>
+              <button
+                type="button"
+                (click)="delete($event, item, i)"
+                class="btn btn-icon btn-danger"
+                *ngSwitchCase="config.isDelete"
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+              <p *ngSwitchDefault></p>
+            </div>
+            <div class="file-name" (click)="navigate($event, item)">
+              <p class="m-b-5 text-muted">{{ config.itemMapDescription.heading + item[config.itemMap.heading] }}</p>
+              <small
+                >{{ config.itemMapDescription.subHeading + item[config.itemMap.subHeading]
+                }}<span class="date text-muted">
+                  {{ config.itemMapDescription.description }} {{ item[config.itemMap.description] }}</span
+                ></small
+              >
             </div>
           </a>
         </div>
@@ -20,7 +56,7 @@
         </ng-template>
         <ng-template #checkboxTemplate>
           <label class="fancy-checkbox">
-            <input type="checkbox" name="checkbox">
+            <input type="checkbox" name="checkbox" />
             <span>Option 3</span>
           </label>
         </ng-template>

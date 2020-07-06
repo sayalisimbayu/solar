@@ -1,70 +1,20 @@
-<div class="body">
-  <form #profileForm="ngForm" (ngSubmit)="onSubmit(profileForm.valid)">
-    <div class="form-group">
-      <label>Text Input</label>
-      <input [(ngModel)]="data.text" class="form-control" name="text" #text="ngModel" required
-        [ngClass]="{'parsley-error':!text.valid && (text.touched || profileForm.submitted)}">
-      <ul class="parsley-errors-list filled" *ngIf="!text.valid && (text.touched || profileForm.submitted)">
-        <li class="parsley-required" *ngIf="text.hasError('required')">This value is required.</li>
-      </ul>
-    </div>
-    <div class="form-group">
-      <label>Email Input</label>
-      <input type="email" class="form-control" required [(ngModel)]="data.email" name="email" #email="ngModel"
-        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-        [ngClass]="{'parsley-error':!email.valid && (email.touched || profileForm.submitted)}">
-      <ul class="parsley-errors-list filled" *ngIf="!email.valid && (email.touched || profileForm.submitted)">
-        <li class="parsley-required" *ngIf="email.hasError('required')">This value is required.</li>
-        <li class="parsley-type" *ngIf="email.hasError('pattern')">This value should be a valid email.</li>
-      </ul>
-    </div>
-    <div class="form-group">
-      <label>Text Area</label>
-      <textarea class="form-control" rows="5" cols="30" [(ngModel)]="data.textarea" name="textarea" #textarea="ngModel"
-        required
-        [ngClass]="{'parsley-error':!textarea.valid && (textarea.touched || profileForm.submitted)}"></textarea>
-      <ul class="parsley-errors-list filled" *ngIf="!textarea.valid && (textarea.touched || profileForm.submitted)">
-        <li class="parsley-required" *ngIf="textarea.hasError('required')">This value is required.</li>
-      </ul>
-    </div>
-    <div class="form-group">
-      <label>Checkbox</label>
-      <br />
-      <label class="fancy-checkbox">
-        <input type="checkbox" name="checkbox">
-        <span>Option 1</span>
-      </label>
-      <label class="fancy-checkbox">
-        <input type="checkbox" name="checkbox">
-        <span>Option 2</span>
-      </label>
-      <label class="fancy-checkbox">
-        <input type="checkbox" name="checkbox">
-        <span>Option 3</span>
-      </label>
-    </div>
-    <div class="form-group">
-      <label>Radio Button</label>
-      <br />
-      <label class="fancy-radio">
-        <input type="radio" name="gender" value="male" required data-parsley-errors-container="#error-radio">
-        <span><i></i>Male</span>
-      </label>
-      <label class="fancy-radio">
-        <input type="radio" name="gender" value="female">
-        <span><i></i>Female</span>
-      </label>
-    </div>
-    <div class="form-group">
-      <label for="food">Multiselect</label>
-      <br />
-      <ng-multiselect-dropdown name="multiSelect" #multiSelect="ngModel" [placeholder]="'None Selected'"
-        [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings">
-      </ng-multiselect-dropdown>
-    </div>
-    <div class="form-group text-right">
-      <button type="submit" class="btn btn-primary mr-1">Submit</button>
-      <button type="button" class="btn btn-secondary" (click)="onCancel($event)">Cancel</button>
-    </div>
-  </form>
-</div>
+<form #categoryForm="ngForm" (ngSubmit)="onSubmit(categoryForm)">
+  <div class="form-group">
+    <label>Name</label>
+    <input
+      [(ngModel)]="category.name"
+      class="form-control"
+      name="name"
+      #name="ngModel"
+      required
+      [ngClass]="{ 'parsley-error': !name.valid && (name.touched || categoryForm.submitted) }"
+    />
+    <ul class="parsley-errors-list filled" *ngIf="!name.valid && (name.touched || categoryForm.submitted)">
+      <li class="parsley-required" *ngIf="name.hasError('required')">This value is required.</li>
+    </ul>
+  </div>
+  <div class="form-group text-right">
+    <button type="submit" class="btn btn-primary mr-1">Submit</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel($event)">Cancel</button>
+  </div>
+</form>
