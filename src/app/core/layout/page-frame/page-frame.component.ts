@@ -1,4 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef, ViewContainerRef, ViewChild, AfterViewInit, Input, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  ViewContainerRef,
+  ViewChild,
+  AfterViewInit,
+  Input,
+  OnDestroy
+} from '@angular/core';
 import { IPageFrameConfig } from './model/page-frame.config.interface';
 import { map, filter } from 'rxjs/operators';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
@@ -23,7 +32,7 @@ export class PageFrameComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private lazyLoader: LazyLoaderService,
     private store: SimpleStoreManagerService
-  ) { }
+  ) {}
   public removeSearchKeyword(removedKeyword: any) {
     if (this.config.searchModel != undefined) {
       if (this.config.searchModel.some(x => x.value === removedKeyword.value)) {
@@ -54,26 +63,27 @@ export class PageFrameComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.store.has(this.storeId)) {
       this.config = this.store.getByKey(this.storeId);
     }
-    this.subscription.add(this.store.$store
-      .pipe(filter((el: StoreEvent) => el.key === this.storeId))
-      .pipe(
-        map((el: StoreEvent) => {
-          if (el.store != undefined && el.path.length === 0) {
-            this.config = el.store.value as IPageFrameConfig;
-            this.updateComponent();
-          } else {
-
-            this.config = el.store.value as IPageFrameConfig;
-            if (el.path.indexOf('pageBodyUrl') > -1) {
-              this.updatePageBody();
+    this.subscription.add(
+      this.store.$store
+        .pipe(filter((el: StoreEvent) => el.key === this.storeId))
+        .pipe(
+          map((el: StoreEvent) => {
+            if (el.store != undefined && el.path.length === 0) {
+              this.config = el.store.value as IPageFrameConfig;
+              this.updateComponent();
+            } else {
+              this.config = el.store.value as IPageFrameConfig;
+              if (el.path.indexOf('pageBodyUrl') > -1) {
+                this.updatePageBody();
+              }
+              if (el.path.indexOf('pageTitle') > -1) {
+                this.updatePagetTitle(el.path.slice(1), el.changedValue);
+              }
             }
-            if (el.path.indexOf('pageTitle') > -1) {
-              this.updatePagetTitle(el.path.slice(1), el.changedValue);
-            }
-          }
-        })
-      )
-      .subscribe());
+          })
+        )
+        .subscribe()
+    );
   }
   private updateComponent() {
     this.updatePagetTitle();

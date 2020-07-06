@@ -15,7 +15,7 @@ export const routing = RouterModule.forChild(routes);
   declarations: [ProductGridComponent],
   entryComponents: [ProductGridComponent],
   exports: [ProductGridComponent],
-  providers:[ProductGridService]
+  providers: [ProductGridService]
 })
 export class PGridLayoutModule {
   static entry = ProductGridComponent;

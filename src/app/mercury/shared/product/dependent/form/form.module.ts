@@ -18,7 +18,7 @@ export const routing = RouterModule.forChild(routes);
   declarations: [ProductFormComponent],
   entryComponents: [ProductFormComponent],
   exports: [ProductFormComponent],
-  providers:[ProductFormService]
+  providers: [ProductFormService]
 })
 export class PFormLayoutModule {
   static entry = ProductFormComponent;

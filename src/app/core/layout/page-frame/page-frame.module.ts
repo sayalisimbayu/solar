@@ -8,9 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [PageFrameComponent],
-  imports: [CommonModule, NgbModule, RouterModule, TagInputModule, 
-    FormsModule,
-    ReactiveFormsModule],
+  imports: [CommonModule, NgbModule, RouterModule, TagInputModule, FormsModule, ReactiveFormsModule],
   exports: [],
   entryComponents: [PageFrameComponent]
 })

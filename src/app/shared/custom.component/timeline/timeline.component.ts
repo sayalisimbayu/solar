@@ -1,30 +1,38 @@
-import { OnInit, Component, AfterViewInit, OnDestroy, Input, ChangeDetectorRef, ViewChild, ViewContainerRef, ElementRef, TemplateRef } from '@angular/core';
+import {
+  OnInit,
+  Component,
+  AfterViewInit,
+  OnDestroy,
+  Input,
+  ChangeDetectorRef,
+  ViewChild,
+  ViewContainerRef,
+  ElementRef,
+  TemplateRef
+} from '@angular/core';
 import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 import { INotification } from '@app/shell/models/noti.model';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 import { filter, map } from 'rxjs/operators';
 import { StoreEvent } from '@app/shared/storemanager/models/storeEvent.model';
 @Component({
-    selector: 'app-timeline',
-    templateUrl: './timeline.component.html',
-    // styleUrls: ['./timeline.component.scss']
+  selector: 'app-timeline',
+  templateUrl: './timeline.component.html'
+  // styleUrls: ['./timeline.component.scss']
 })
 @AutoUnsubscribe()
 export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
-    @Input() storeId: string;
-    public config: INotification[];
-    public pagebody$: any;
+  @Input() storeId: string;
+  public config: INotification[];
+  public pagebody$: any;
 
-    @ViewChild('timelinecontainer', {read: ViewContainerRef, static: true}) timelineContainer: ViewContainerRef;
-    @ViewChild('timelinetemplate', {read: TemplateRef, static: true}) timelineTemplate: TemplateRef<any>;
-    constructor(
-        private store: SimpleStoreManagerService,
-        private cdref: ChangeDetectorRef
-    ) {}
-    
-    ngOnInit(): void {
-      debugger
-      console.log('storeId', this.storeId);
+  @ViewChild('timelinecontainer', { read: ViewContainerRef, static: true }) timelineContainer: ViewContainerRef;
+  @ViewChild('timelinetemplate', { read: TemplateRef, static: true }) timelineTemplate: TemplateRef<any>;
+  constructor(private store: SimpleStoreManagerService, private cdref: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    debugger;
+    console.log('storeId', this.storeId);
     this.pagebody$ = this.store.$store
       .pipe(filter((se: { key: string }) => se.key === this.storeId))
       .pipe(
@@ -34,7 +42,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cdref.detectChanges();
           this.timelineContainer.clear();
           this.config.forEach((_config: INotification) => {
-              this.loadTimeline(_config);
+            this.loadTimeline(_config);
           });
           // this.loadButtons();
           // }
@@ -43,17 +51,13 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       )
       .subscribe();
-    }
+  }
 
-    loadTimeline(config: INotification) {
-        this.timelineContainer.createEmbeddedView(this.timelineTemplate, {config});
-    }
+  loadTimeline(config: INotification) {
+    this.timelineContainer.createEmbeddedView(this.timelineTemplate, { config });
+  }
 
-    ngAfterViewInit(): void {
+  ngAfterViewInit(): void {}
 
-    }
-
-    ngOnDestroy(): void {
-
-    }
+  ngOnDestroy(): void {}
 }

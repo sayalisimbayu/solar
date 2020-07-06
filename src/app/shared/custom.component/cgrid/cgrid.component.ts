@@ -22,9 +22,8 @@ import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 @Component({
   selector: 'app-c-grid',
   templateUrl: './cgrid.component.html',
-  styleUrls: ['./cgrid.component.scss'],
+  styleUrls: ['./cgrid.component.scss']
 })
-
 @AutoUnsubscribe()
 export class CGridComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() storeId: string;
@@ -35,14 +34,14 @@ export class CGridComponent implements OnInit, AfterViewInit, OnDestroy {
   public config: ICGridConfig;
   public pagebody$: any;
 
-  constructor(private store: SimpleStoreManagerService, private cdref: ChangeDetectorRef) { }
+  constructor(private store: SimpleStoreManagerService, private cdref: ChangeDetectorRef) {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.onScroll(event);
   }
 
-  ngOnDestroy() { }
+  ngOnDestroy() {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.

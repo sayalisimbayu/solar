@@ -77,10 +77,12 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
     // Start watching when user idle is starting.
     this.subScription.add(this.userIdle.onTimerStart().subscribe(count => console.log(count)));
     // Start watch when time is up.
-    this.subScription.add(this.userIdle.onTimeout().subscribe(() => {
-      this.authSrv.lockScreen();
-      this.userIdle.stopWatching();
-    }));
+    this.subScription.add(
+      this.userIdle.onTimeout().subscribe(() => {
+        this.authSrv.lockScreen();
+        this.userIdle.stopWatching();
+      })
+    );
   }
 
   ngOnDestroy() {

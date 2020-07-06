@@ -4,6 +4,7 @@ export interface AppPermission {
   mode: string;
   alias: string;
   value: number;
+  description?: string;
   appsettingid: number;
   permission: number;
   notificationid: number;
@@ -45,7 +46,7 @@ export interface UserProfile {
   country: string;
 }
 
-export interface UserPage{
+export interface UserPage {
   users: User[];
   totalCount: number;
 }

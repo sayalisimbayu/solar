@@ -28,7 +28,8 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/leaflet/dist/leaflet.css",
-              "src/main.scss"
+              "src/main.scss",
+              "./node_modules/ngx-ui-switch/ui-switch.component.css"
             ],
             "scripts": ["node_modules/crypto-js/crypto-js.js"]
           },

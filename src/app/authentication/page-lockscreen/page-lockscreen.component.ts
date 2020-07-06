@@ -23,21 +23,23 @@ export class PageLockscreenComponent implements OnInit, OnDestroy {
       this.password = rememberedCred.password;
     }
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
-    this.subScription=new Subscription();
+    this.subScription = new Subscription();
   }
-  ngOnInit() { }
+  ngOnInit() {}
   ngOnDestroy() {
     this.subScription.unsubscribe();
   }
 
   onSubmit() {
     if (this.password != undefined && this.password != '') {
-      this.subScription.add(this.authSvc.login({ email: this.loggedUserEmail, password: this.password }).subscribe(res => {
-        if (this.authSvc.isLoggedIn()) {
-          this.password = '';
-          this.router.navigate([this.returnUrl]);
-        }
-      }));
+      this.subScription.add(
+        this.authSvc.login({ email: this.loggedUserEmail, password: this.password }).subscribe(res => {
+          if (this.authSvc.isLoggedIn()) {
+            this.password = '';
+            this.router.navigate([this.returnUrl]);
+          }
+        })
+      );
     }
     return false;
   }

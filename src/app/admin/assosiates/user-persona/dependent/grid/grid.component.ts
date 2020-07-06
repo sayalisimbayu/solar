@@ -10,17 +10,18 @@ import { Subscription } from 'rxjs';
   selector: 'app-page-userpersona-grid',
   templateUrl: './grid.component.html'
 })
-
 export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('pageGrid', { read: ViewContainerRef, static: true })
   pageGrid: ViewContainerRef;
 
   public selector = '.scrollable-container';
   private pageSubscription: Subscription;
-  constructor(private store: SimpleStoreManagerService,
+  constructor(
+    private store: SimpleStoreManagerService,
     private lazyLoader: LazyLoaderService,
     private userPersonaGridSrv: UserPersonaGridService,
-    private exportSrv: ExportService) {
+    private exportSrv: ExportService
+  ) {
     this.pageSubscription = new Subscription();
   }
 
@@ -32,10 +33,14 @@ export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestro
       debugger;
       if (this.store.has('userpersonapagegridconfig')) {
         this.store.setIn('userpersonapagegridconfig', [], this.userPersonaGridSrv.pageGridConfig);
-        this.pageSubscription.add(this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page).subscribe());
+        this.pageSubscription.add(
+          this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page).subscribe()
+        );
       } else {
         this.store.add('userpersonapagegridconfig', this.userPersonaGridSrv.pageGridConfig);
-        this.pageSubscription.add(this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page).subscribe());
+        this.pageSubscription.add(
+          this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page).subscribe()
+        );
       }
     });
   }
@@ -44,23 +49,28 @@ export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestro
       this.store.setIn('userpersonapagegridconfig', ['items'], []);
     }
     this.store.setIn('userpersonapageconfig', ['pageHeading'], 'Grid');
-    this.store.setIn('userpersonapageconfig', ['defaultPageAction'],
-      { action: this.createNew.bind(this), title: 'Create New' });
+    this.store.setIn('userpersonapageconfig', ['defaultPageAction'], {
+      action: this.createNew.bind(this),
+      title: 'Create New'
+    });
     this.store.setIn('userpersonapageconfig', ['newSearchKeywordEvent'], this.searchKeyword.bind(this));
-    this.store.setIn('userpersonapageconfig', ['pageActions'], [
-      {
-        title: 'Export',
-        action: this.export.bind(this)
-      }
-    ]);
-
+    this.store.setIn(
+      'userpersonapageconfig',
+      ['pageActions'],
+      [
+        {
+          title: 'Export',
+          action: this.export.bind(this)
+        }
+      ]
+    );
   }
   createNew(event: any) {
     this.store.add('userpersonanavigatingid', 0, true);
     this.userPersonaGridSrv.navigateToForm();
   }
   export(event: any) {
-    const gridConfig = this.store.getByKey('userpersonapagegridconfig') as ICGridConfig
+    const gridConfig = this.store.getByKey('userpersonapagegridconfig') as ICGridConfig;
     this.exportSrv.exportToCsv('Product Data.csv', gridConfig.items, ['name', 'subheader', 'price']);
   }
   searchKeyword(event: any, keyModel: any) {
@@ -77,12 +87,11 @@ export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestro
         const eachkeyword = element.value;
         if (eachkeyword.indexOf('DISPLAYNAME') < 0) {
           if (first) {
-            search += ' DISPLAYNAME LIKE \'%' + eachkeyword + '%\'';
+            search += " DISPLAYNAME LIKE '%" + eachkeyword + "%'";
           } else {
-            search += ' or DISPLAYNAME LIKE \'%' + eachkeyword + '%\'';
+            search += " or DISPLAYNAME LIKE '%" + eachkeyword + "%'";
           }
-        }
-        else {
+        } else {
           if (first) {
             search += eachkeyword;
           } else {
@@ -96,17 +105,17 @@ export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestro
     }
     this.userPersonaGridSrv.pageGridConfig.page.currentPage = 0;
     this.userPersonaGridSrv.pageGridConfig.items = [];
-    this.pageSubscription.add(this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page, search).subscribe());
+    this.pageSubscription.add(
+      this.userPersonaGridSrv.getLatestPage(this.userPersonaGridSrv.pageGridConfig.page, search).subscribe()
+    );
   }
   ngOnDestroy() {
     this.store.setIn('userpersonapageconfig', ['showPageAction'], false);
     this.store.setIn('userpersonapageconfig', ['showSearchBar'], false);
     this.store.remove('userpersonapagegridconfig');
-    this.store.setIn('userpersonapageconfig', ['defaultPageAction'],
-      {});
+    this.store.setIn('userpersonapageconfig', ['defaultPageAction'], {});
     this.store.setIn('userpersonapageconfig', ['newSearchKeywordEvent'], null);
     this.store.setIn('userpersonapageconfig', ['pageActions'], []);
-    if (this.pageSubscription)
-      this.pageSubscription.unsubscribe();
+    if (this.pageSubscription) this.pageSubscription.unsubscribe();
   }
 }

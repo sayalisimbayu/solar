@@ -11,20 +11,16 @@ import { NgForm } from '@angular/forms';
 export class CategoryFormComponent implements OnInit {
   public category = {} as Category;
   private formCategoryObj: any;
-  constructor(private store: SimpleStoreManagerService,
-    private categoryFrmSrv: CategoryFormService) {
+  constructor(private store: SimpleStoreManagerService, private categoryFrmSrv: CategoryFormService) {
     this.category.id = this.store.getByKey('categorynavigatingid');
     if (this.category.id === 0) {
       this.store.setIn('categorypageconfig', ['pageHeading'], 'Create');
-    }
-    else {
+    } else {
       this.store.setIn('categorypageconfig', ['pageHeading'], 'Edit');
     }
     this.store.setIn('categorypageconfig', ['showPageAction'], false);
-
   }
   ngOnInit() {
-
     if (this.category.id !== 0) {
       this.categoryFrmSrv.get(this.category.id, (el: Category) => {
         this.category = el;

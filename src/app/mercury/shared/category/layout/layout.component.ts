@@ -29,7 +29,7 @@ export class CLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     // .subscribe();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   ngAfterViewInit(): void {
     const that = this;
     // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.

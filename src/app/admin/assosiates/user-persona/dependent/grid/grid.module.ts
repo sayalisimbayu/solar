@@ -15,7 +15,7 @@ export const routing = RouterModule.forChild(routes);
   declarations: [UserPersonaGridComponent],
   entryComponents: [UserPersonaGridComponent],
   exports: [UserPersonaGridComponent],
-  providers:[UserPersonaGridService]
+  providers: [UserPersonaGridService]
 })
 export class UPGridLayoutModule {
   static entry = UserPersonaGridComponent;
