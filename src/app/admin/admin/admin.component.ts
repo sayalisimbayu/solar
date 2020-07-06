@@ -26,7 +26,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
   public themeClass: string = 'theme-cyan';
   public smallScreenMenu = '';
   public darkClass: string = '';
-  private ngUnsubscribe = new Subject();  
+  private ngUnsubscribe = new Subject();
   private subScription = new Subscription();
 
   constructor(
@@ -77,10 +77,12 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
     // Start watching when user idle is starting.
     this.subScription.add(this.userIdle.onTimerStart().subscribe(count => console.log(count)));
     // Start watch when time is up.
-    this.subScription.add(this.userIdle.onTimeout().subscribe(() => {
-      this.authSrv.lockScreen();
-      this.userIdle.stopWatching();
-    }));
+    this.subScription.add(
+      this.userIdle.onTimeout().subscribe(() => {
+        this.authSrv.lockScreen();
+        this.userIdle.stopWatching();
+      })
+    );
   }
 
   ngOnDestroy() {

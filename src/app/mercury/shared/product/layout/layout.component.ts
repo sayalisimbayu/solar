@@ -5,7 +5,7 @@ import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager
 
 @Component({
   selector: 'app-prod-layout',
-  templateUrl: './layout.component.html',
+  templateUrl: './layout.component.html'
 })
 export class PLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('pageframe', { read: ViewContainerRef, static: true })
@@ -25,7 +25,7 @@ export class PLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     // .subscribe();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   ngAfterViewInit(): void {
     const that = this;
     // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.

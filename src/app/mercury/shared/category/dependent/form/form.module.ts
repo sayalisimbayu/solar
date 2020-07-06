@@ -18,7 +18,7 @@ export const routing = RouterModule.forChild(routes);
   declarations: [CategoryFormComponent],
   entryComponents: [CategoryFormComponent],
   exports: [CategoryFormComponent],
-  providers:[CategoryFormService]
+  providers: [CategoryFormService]
 })
 export class CFormLayoutModule {
   static entry = CategoryFormComponent;

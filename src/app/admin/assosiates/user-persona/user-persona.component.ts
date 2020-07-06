@@ -17,11 +17,9 @@ export class UserPersonaComponent implements OnInit, AfterViewInit, OnDestroy {
   public visitsOptions: EChartOption = {};
   public sidebarVisible = true;
   private PageFrameConfig: IPageFrameConfig;
-  constructor(private lazyLoader: LazyLoaderService, private store: SimpleStoreManagerService) {
+  constructor(private lazyLoader: LazyLoaderService, private store: SimpleStoreManagerService) {}
 
-  }
-
-  ngOnInit() { }
+  ngOnInit() {}
   ngAfterViewInit(): void {
     const that = this;
     // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.

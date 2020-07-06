@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-title',
-  templateUrl: './page-title.component.html',
+  templateUrl: './page-title.component.html'
 })
 export class PageTitleComponent implements OnInit, AfterViewInit, OnDestroy {
   public sidebarVisible = true;
@@ -49,19 +49,21 @@ export class PageTitleComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.store.has(this.storeId)) {
       this.config = this.store.getByKey(this.storeId);
     }
-    this.subScription.add(this.store.$store
-      .pipe(filter((el: StoreEvent) => el.key === this.storeId))
-      .pipe(
-        map((el: StoreEvent) => {
-          this.config = el.store.value as IPageTitleConfig;
-          if (this.config !== null) {
-            if (el.path.length === 0 || el.path.indexOf('leftComponentUrl') > -1) {
-              this.loadComponent();
+    this.subScription.add(
+      this.store.$store
+        .pipe(filter((el: StoreEvent) => el.key === this.storeId))
+        .pipe(
+          map((el: StoreEvent) => {
+            this.config = el.store.value as IPageTitleConfig;
+            if (this.config !== null) {
+              if (el.path.length === 0 || el.path.indexOf('leftComponentUrl') > -1) {
+                this.loadComponent();
+              }
             }
-          }
-        })
-      )
-      .subscribe());
+          })
+        )
+        .subscribe()
+    );
   }
   public breadCrumbClick(item: IBreadCrumbConfig) {
     if (item.clickable) {

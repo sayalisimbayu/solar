@@ -12,20 +12,22 @@ export class UserPersonaFormComponent implements OnInit {
     public user: UserProfile = {} as UserProfile;
     private formProductObj: any;
     public value: number = 12;
-    constructor(private store: SimpleStoreManagerService,
-        private userPersonaFrmSrv: UserPersonaFormService) {
+    constructor(private store: SimpleStoreManagerService, private userPersonaFrmSrv: UserPersonaFormService) {
         this.user.id = this.store.getByKey('userpersonanavigatingid');
         if (this.user.id === 0) {
             this.store.setIn('userpersonapageconfig', ['pageHeading'], 'Create');
-        }
-        else {
+        } else {
             this.store.setIn('userpersonapageconfig', ['pageHeading'], 'Edit');
         }
         this.store.setIn('userpersonapageconfig', ['showPageAction'], false);
-
+    }
+    onChange(event: any, mode: string) {
+        debugger;
+        let permissionIndex = this.user.permissions.filter(x => x.mode == mode);
+        permissionIndex[0].permission = (event ? 1 : 0);
+        
     }
     ngOnInit() {
-
         if (this.user.id !== 0) {
             debugger;
             this.userPersonaFrmSrv.get(this.user.id, (el: UserProfile) => {

@@ -7,7 +7,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
   imports: [CommonModule, NgxEchartsModule],
   declarations: [GCComponent],
   entryComponents: [GCComponent],
-  providers:[]
+  providers: []
 })
 export class GCModule {
   static entry = GCComponent;

@@ -25,8 +25,7 @@ export class SimpleStoreManagerService {
   public add(key: string, value: any, override: boolean = false) {
     if (!this.stores.some(storeValue => storeValue.key === key)) {
       this.stores.push({ key: key, value: value });
-    }
-    else if (override) {
+    } else if (override) {
       this.setIn(key, [], value);
     }
     this._stores.next({
@@ -68,8 +67,7 @@ export class SimpleStoreManagerService {
       let oldValue: any;
       if (path.length !== 0) {
         oldValue = this.setInvalue(this.stores[keyIndex].value, path, value);
-      }
-      else {
+      } else {
         oldValue = this.stores[keyIndex].value;
         this.stores[keyIndex].value = value;
       }

@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserPersonaFormComponent } from './form.component';
 import { UserPersonaFormService } from './form.service';
-import { Ng5SliderModule } from 'ng5-slider';
+import { UiSwitchModule } from 'ngx-ui-switch';
+
 const routes: Routes = [
   {
     path: '',
@@ -15,11 +16,11 @@ const routes: Routes = [
 ];
 export const routing = RouterModule.forChild(routes);
 @NgModule({
-  imports: [CommonModule, routing, NgMultiSelectDropDownModule, FormsModule, NgbModule, Ng5SliderModule],
+  imports: [CommonModule, routing, NgMultiSelectDropDownModule, FormsModule, NgbModule, UiSwitchModule],
   declarations: [UserPersonaFormComponent],
   entryComponents: [UserPersonaFormComponent],
   exports: [UserPersonaFormComponent],
-  providers:[UserPersonaFormService]
+  providers: [UserPersonaFormService]
 })
 export class UPFormLayoutModule {
   static entry = UserPersonaFormComponent;

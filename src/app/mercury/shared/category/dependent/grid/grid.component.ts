@@ -9,19 +9,18 @@ import { ExportService } from '@app/shared/services/export.service';
   selector: 'app-page-category-grid',
   templateUrl: './grid.component.html'
 })
-
 export class CategoryGridComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('pageGrid', { read: ViewContainerRef, static: true })
   pageGrid: ViewContainerRef;
 
   public selector = '.scrollable-container';
 
-  constructor(private store: SimpleStoreManagerService,
+  constructor(
+    private store: SimpleStoreManagerService,
     private lazyLoader: LazyLoaderService,
     private catGridSrv: CategoryGridService,
-    private exportSrv: ExportService) {
-
-  }
+    private exportSrv: ExportService
+  ) {}
 
   ngAfterViewInit(): void {
     this.store.setIn('categorypageconfig', ['showPageAction'], true);
@@ -39,23 +38,28 @@ export class CategoryGridComponent implements AfterViewInit, OnInit, OnDestroy {
   }
   ngOnInit() {
     this.store.setIn('categorypageconfig', ['pageHeading'], 'Grid');
-    this.store.setIn('categorypageconfig', ['defaultPageAction'],
-      { action: this.createNew.bind(this), title: 'Create New' });
+    this.store.setIn('categorypageconfig', ['defaultPageAction'], {
+      action: this.createNew.bind(this),
+      title: 'Create New'
+    });
     this.store.setIn('categorypageconfig', ['newSearchKeywordEvent'], this.searchKeyword.bind(this));
-    this.store.setIn('categorypageconfig', ['pageActions'], [
-      {
-        title: 'Export',
-        action: this.export.bind(this)
-      }
-    ]);
-
+    this.store.setIn(
+      'categorypageconfig',
+      ['pageActions'],
+      [
+        {
+          title: 'Export',
+          action: this.export.bind(this)
+        }
+      ]
+    );
   }
   createNew(event: any) {
     this.store.add('categorynavigatingid', 0, true);
     this.catGridSrv.navigateToForm();
   }
   export(event: any) {
-    const gridConfig = this.store.getByKey('categorypagegridconfig') as ICGridConfig
+    const gridConfig = this.store.getByKey('categorypagegridconfig') as ICGridConfig;
     this.exportSrv.exportToCsv('Category Data.csv', gridConfig.items, ['name']);
   }
   searchKeyword(event: any, keyModel: any) {
@@ -72,12 +76,11 @@ export class CategoryGridComponent implements AfterViewInit, OnInit, OnDestroy {
         const eachkeyword = element.value;
         if (eachkeyword.indexOf('Name') < 0) {
           if (first) {
-            search += ' Name=\'' + eachkeyword + '\'';
+            search += " Name='" + eachkeyword + "'";
           } else {
-            search += ' or Name=\'' + eachkeyword + '\'';
+            search += " or Name='" + eachkeyword + "'";
           }
-        }
-        else {
+        } else {
           if (first) {
             search += eachkeyword;
           } else {
@@ -97,10 +100,8 @@ export class CategoryGridComponent implements AfterViewInit, OnInit, OnDestroy {
     this.store.setIn('categorypageconfig', ['showPageAction'], false);
     this.store.setIn('categorypageconfig', ['showSearchBar'], false);
     this.store.remove('categorypagegridconfig');
-    this.store.setIn('categorypageconfig', ['defaultPageAction'],
-      {});
+    this.store.setIn('categorypageconfig', ['defaultPageAction'], {});
     this.store.setIn('categorypageconfig', ['newSearchKeywordEvent'], null);
     this.store.setIn('categorypageconfig', ['pageActions'], []);
-
   }
 }

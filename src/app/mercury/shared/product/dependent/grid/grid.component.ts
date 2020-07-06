@@ -9,19 +9,18 @@ import { ProductGridService } from './grid.service';
   selector: 'app-page-product-grid',
   templateUrl: './grid.component.html'
 })
-
 export class ProductGridComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('pageGrid', { read: ViewContainerRef, static: true })
   pageGrid: ViewContainerRef;
 
   public selector = '.scrollable-container';
 
-  constructor(private store: SimpleStoreManagerService,
+  constructor(
+    private store: SimpleStoreManagerService,
     private lazyLoader: LazyLoaderService,
     private prodGridSrv: ProductGridService,
-    private exportSrv: ExportService) {
-
-  }
+    private exportSrv: ExportService
+  ) {}
 
   ngAfterViewInit(): void {
     this.store.setIn('productpageconfig', ['showPageAction'], true);
@@ -42,23 +41,28 @@ export class ProductGridComponent implements AfterViewInit, OnInit, OnDestroy {
       this.store.setIn('productpagegridconfig', ['items'], []);
     }
     this.store.setIn('productpageconfig', ['pageHeading'], 'Grid');
-    this.store.setIn('productpageconfig', ['defaultPageAction'],
-      { action: this.createNew.bind(this), title: 'Create New' });
+    this.store.setIn('productpageconfig', ['defaultPageAction'], {
+      action: this.createNew.bind(this),
+      title: 'Create New'
+    });
     this.store.setIn('productpageconfig', ['newSearchKeywordEvent'], this.searchKeyword.bind(this));
-    this.store.setIn('productpageconfig', ['pageActions'], [
-      {
-        title: 'Export',
-        action: this.export.bind(this)
-      }
-    ]);
-
+    this.store.setIn(
+      'productpageconfig',
+      ['pageActions'],
+      [
+        {
+          title: 'Export',
+          action: this.export.bind(this)
+        }
+      ]
+    );
   }
   createNew(event: any) {
     this.store.add('productnavigatingid', 0, true);
     this.prodGridSrv.navigateToForm();
   }
   export(event: any) {
-    const gridConfig = this.store.getByKey('productpagegridconfig') as ICGridConfig
+    const gridConfig = this.store.getByKey('productpagegridconfig') as ICGridConfig;
     this.exportSrv.exportToCsv('Product Data.csv', gridConfig.items, ['name', 'subheader', 'price']);
   }
   searchKeyword(event: any, keyModel: any) {
@@ -75,12 +79,11 @@ export class ProductGridComponent implements AfterViewInit, OnInit, OnDestroy {
         const eachkeyword = element.value;
         if (eachkeyword.indexOf('Name') < 0) {
           if (first) {
-            search += ' Name=\'' + eachkeyword + '\'';
+            search += " Name='" + eachkeyword + "'";
           } else {
-            search += ' or Name=\'' + eachkeyword + '\'';
+            search += " or Name='" + eachkeyword + "'";
           }
-        }
-        else {
+        } else {
           if (first) {
             search += eachkeyword;
           } else {
@@ -100,10 +103,8 @@ export class ProductGridComponent implements AfterViewInit, OnInit, OnDestroy {
     this.store.setIn('productpageconfig', ['showPageAction'], false);
     this.store.setIn('productpageconfig', ['showSearchBar'], false);
     this.store.remove('productpagegridconfig');
-    this.store.setIn('productpageconfig', ['defaultPageAction'],
-      {});
+    this.store.setIn('productpageconfig', ['defaultPageAction'], {});
     this.store.setIn('productpageconfig', ['newSearchKeywordEvent'], null);
     this.store.setIn('productpageconfig', ['pageActions'], []);
-
   }
 }

@@ -20,8 +20,8 @@ const routes: Routes = [
       },
       {
         path: 'persona',
-        loadChildren: () => import('./assosiates/user-persona/user-persona.module').then(m=>m.UserPersonaModule),
-        data:{ title: ':: Solar :: Persona ::' }
+        loadChildren: () => import('./assosiates/user-persona/user-persona.module').then(m => m.UserPersonaModule),
+        data: { title: ':: Solar :: Persona ::' }
       },
       {
         path: 'profile',

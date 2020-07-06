@@ -69,15 +69,15 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     // set empty user info as on load user info is undefine or implement resolver
     this.userInfo = this.setEmptyUserInfo();
-   
+
     // getUserInfo
     this.getUserInfo();
 
-     // Form Builder
-     this.basicInformation = this.setBasicInformationFormBuilder();
-     this.accountData = this.setaccountDataFormBuilder();
-     this.generalInformationFormGroup = this.setGeneralInformationFormGroup();
-     this.loadOverView();
+    // Form Builder
+    this.basicInformation = this.setBasicInformationFormBuilder();
+    this.accountData = this.setaccountDataFormBuilder();
+    this.generalInformationFormGroup = this.setGeneralInformationFormGroup();
+    this.loadOverView();
   }
   ngAfterViewInit(): void {
     this.loadPageTitle();
@@ -94,7 +94,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       firstname: '',
       lastname: '',
       gender: false,
-      displayname:'',
+      displayname: '',
       mobile: '',
       social: '',
       birthdate: this.birthDate,
@@ -102,8 +102,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       addresslinE2: '',
       city: '',
       ustate: '',
-      countrycode: '',
-    }
+      countrycode: ''
+    };
   }
   getUserInfo() {
     this.userRepoService.getUserInfo().subscribe(el => {
@@ -132,12 +132,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         // set account data
         this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
       }
-      
     });
   }
   setBasicInformationFormBuilder(): FormGroup {
-      return this.formBuilder.group({
-      id:[],
+    return this.formBuilder.group({
+      id: [],
       usid: [],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -153,18 +152,18 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       city: ['', Validators.required],
       ustate: ['', Validators.required],
       countrycode: ['', Validators.required],
-      currentpassword:[''],
+      currentpassword: [''],
       password: [''],
-      confirmnewpassword: [''],
+      confirmnewpassword: ['']
     });
   }
   setaccountDataFormBuilder(): FormGroup {
-      return this.formBuilder.group({
-      id:[0],
+    return this.formBuilder.group({
+      id: [0],
       usid: [0],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      username: [{value:'', disabled: true}],
+      username: [{ value: '', disabled: true }],
       displayname: [`${this.userInfo.firstname} ${this.userInfo.lastname}`],
       email: [''],
       gender: ['', Validators.required],
@@ -176,9 +175,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       city: ['', Validators.required],
       ustate: ['', Validators.required],
       countrycode: ['', Validators.required],
-      currentpassword:[''],
+      currentpassword: [''],
       password: [''],
-      confirmnewpassword: [''],
+      confirmnewpassword: ['']
     });
   }
   setGeneralInformationFormGroup(): FormGroup {
@@ -209,10 +208,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       city: userInfo.city,
       ustate: userInfo.ustate,
       countrycode: userInfo.countrycode,
-      currentpassword:'',
+      currentpassword: '',
       password: '',
       confirmnewpassword: ''
-    }
+    };
   }
   toggleTabs(tab: string) {
     if (tab) {
@@ -232,8 +231,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.basicInformation.invalid) {
       return;
     }
-    this.basicInformation.value['gender'] = this.basicInformation.value['gender']
-    .toString().toLowerCase() === 'true' ? true : false;
+    this.basicInformation.value['gender'] =
+      this.basicInformation.value['gender'].toString().toLowerCase() === 'true' ? true : false;
     // appuserinfo
     this.userRepoService.saveUserinfo(data).subscribe(el => {
       alert('user saved successfully');
@@ -246,20 +245,26 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
       // set form builder
       this.basicInformation.setValue(el);
-      (el.gender) ? this.basicInformation.controls['gender'].setValue('true') :
-      this.basicInformation.controls['gender'].setValue('false');
+      el.gender
+        ? this.basicInformation.controls['gender'].setValue('true')
+        : this.basicInformation.controls['gender'].setValue('false');
     });
-    console.log('userInfo',this.basicInformation.value);
+    console.log('userInfo', this.basicInformation.value);
   }
 
   onSubmitAccountData(data: any) {
-    this.userRepoService.saveUserInfo(data).pipe(
-      mergeMap(el => this.userRepoService.saveUserinfo(data).pipe(
-        map(el => {
-          alert('Passowrd Change successfully, mobile name updated successfully');
-        })
-      ))
-    ).subscribe();
+    this.userRepoService
+      .saveUserInfo(data)
+      .pipe(
+        mergeMap(el =>
+          this.userRepoService.saveUserinfo(data).pipe(
+            map(el => {
+              alert('Passowrd Change successfully, mobile name updated successfully');
+            })
+          )
+        )
+      )
+      .subscribe();
     // forkJoin(
     //   this.userRepoService.saveUserInfo(data),
     //   this.userRepoService.saveUserinfo(data)
@@ -269,7 +274,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     // ).subscribe();
   }
   onGeneralInformationSubmit(data: any) {
-    this.userRepoService.saveAppUserinfo(data).pipe().subscribe();
+    this.userRepoService
+      .saveAppUserinfo(data)
+      .pipe()
+      .subscribe();
   }
   setUser(userInfo: UserInfo): User {
     return {
@@ -290,30 +298,32 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
           value: 0,
           appsettingid: 0,
           permission: 0,
-          notificationid: 0,
+          notificationid: 0
         }
       ],
       lastLoggin: '',
       confirmPassword: '',
       notificationid: 0
-    }
+    };
   }
 
   // OverView
   loadOverView() {
     // get all notification
-    this.userRepoService.getTimeLineConfig().pipe(
-      map((timeline: INotification[]) => {
-        this.timelineGrid.clear();
-      this.lazyLoader.load('app-timeline', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {
-      if (this.store.has('timelineconfig')) {
-        this.store.setIn('timelineconfig', ['timeline'], timeline);
-      } else {
-        this.store.add('timelineconfig', {timeline: timeline}, true);
-      }
-    });
-      })
-    ).subscribe()
-    
+    this.userRepoService
+      .getTimeLineConfig()
+      .pipe(
+        map((timeline: INotification[]) => {
+          this.timelineGrid.clear();
+          this.lazyLoader.load('app-timeline', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {
+            if (this.store.has('timelineconfig')) {
+              this.store.setIn('timelineconfig', ['timeline'], timeline);
+            } else {
+              this.store.add('timelineconfig', { timeline: timeline }, true);
+            }
+          });
+        })
+      )
+      .subscribe();
   }
 }

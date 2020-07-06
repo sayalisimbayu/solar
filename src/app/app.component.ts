@@ -13,9 +13,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.signalRService.SubscribeSendNotification();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   ngOnDestroy() {
     this.signalRService.stopConnection();
   }
-
 }

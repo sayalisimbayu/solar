@@ -15,7 +15,7 @@ export const routing = RouterModule.forChild(routes);
   declarations: [CategoryGridComponent],
   entryComponents: [CategoryGridComponent],
   exports: [CategoryGridComponent],
-  providers:[CategoryGridService]
+  providers: [CategoryGridService]
 })
 export class CGridLayoutModule {
   static entry = CategoryGridComponent;
