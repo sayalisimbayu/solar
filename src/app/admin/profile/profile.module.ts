@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ImageUploaderComponent } from './image-uploader.component';
 const routes: Routes = [
   {
     path: '',
@@ -11,8 +12,8 @@ const routes: Routes = [
 ];
 export const routing = RouterModule.forChild(routes);
 @NgModule({
-  imports: [CommonModule, routing, ReactiveFormsModule],
-  declarations: [ProfileComponent],
+  imports: [CommonModule, routing, ReactiveFormsModule, FormsModule],
+  declarations: [ProfileComponent, ImageUploaderComponent],
   entryComponents: [ProfileComponent],
   exports: [ProfileComponent]
 })

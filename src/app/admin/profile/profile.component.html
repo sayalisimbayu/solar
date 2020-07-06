@@ -4,7 +4,12 @@
     <div class="col-lg-4 col-md-12">
       <div class="card profile-header">
         <div class="body">
-          <div class="profile-image"><img src="assets/images/user.png" class="rounded-circle" alt="" /></div>
+          <!-- <div class="profile-image"><img src="assets/images/user.png" class="rounded-circle" alt="" /></div> -->
+          <div class="upload" style="display: flex; justify-content: center;">
+            <form>
+              <image-uploader [activeColor]="'orangered'" [baseColor]="'lightgray'"></image-uploader>
+            </form>
+          </div>
           <div>
             <h4 class="m-b-0">{{ user.displayname }}</h4>
             <span>Washington, d.c.</span>

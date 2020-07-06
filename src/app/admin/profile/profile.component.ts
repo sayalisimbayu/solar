@@ -12,10 +12,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Control } from 'leaflet';
 import { forkJoin } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html'
+  templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   public activeTab: string = 'Overview';
@@ -108,9 +107,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   getUserInfo() {
     this.userRepoService.getUserInfo().subscribe(el => {
       if (el) {
-        alert('got info');
+        // alert('got info');
         console.log(el);
         this.userInfo = el;
+        (this.store.has('userInfo')) && (this.store.remove('userInfo'));
+        this.store.add('userInfo', this.userInfo, true);
         this.basicInformation.controls['id'].setValue(el.id);
         this.basicInformation.controls['usid'].setValue(el.usid);
         this.user = this.setUser(this.userInfo);
@@ -131,6 +132,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // set account data
         this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
+        (this.store.has('userInfo')) && (this.store.remove('userInfo'));
+        this.store.add('userInfo', this.userInfo, true);
       }
     });
   }

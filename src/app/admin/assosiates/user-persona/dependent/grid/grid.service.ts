@@ -58,7 +58,6 @@ export class UserPersonaGridService {
         .pipe(
           map((el: UserPage) => {
             if (el !== undefined) {
-              debugger;
               this.latestSearch = search;
               that.totalRows = el.totalCount;
               that.pageGridConfig.items.push(...el.users);
@@ -85,7 +84,6 @@ export class UserPersonaGridService {
     });
   }
   onSelect(event: any, userpersona: any) {
-    debugger;
     this.store.add('userpersonanavigatingid', userpersona.id, true);
     this.navigateToForm();
   }

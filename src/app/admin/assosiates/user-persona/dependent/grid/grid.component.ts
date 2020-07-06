@@ -30,7 +30,6 @@ export class UserPersonaGridComponent implements AfterViewInit, OnInit, OnDestro
     this.store.setIn('userpersonapageconfig', ['showSearchBar'], true);
     this.pageGrid.clear();
     this.lazyLoader.load('app-c-grid', this.pageGrid, 'userpersonapagegridconfig', (cmpRef: any) => {
-      debugger;
       if (this.store.has('userpersonapagegridconfig')) {
         this.store.setIn('userpersonapagegridconfig', [], this.userPersonaGridSrv.pageGridConfig);
         this.pageSubscription.add(

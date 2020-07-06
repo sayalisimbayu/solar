@@ -224,4 +224,18 @@ export class UserRepoService {
     //   }
     // ])
   }
+  // {id:number, profileimg: string}
+  public saveImage(Image:any): Observable<any>{
+    return this.http.post<DataResponse>(`user/profileImage`, Image).pipe(
+      map((el: DataResponse) => {
+        let userInfoResponse: UserInfo;
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        userInfoResponse = el.data;
+        return userInfoResponse;
+      })
+    );
+  }
 }

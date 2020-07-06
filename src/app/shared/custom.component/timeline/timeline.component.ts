@@ -31,7 +31,6 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private store: SimpleStoreManagerService, private cdref: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    debugger;
     console.log('storeId', this.storeId);
     this.pagebody$ = this.store.$store
       .pipe(filter((se: { key: string }) => se.key === this.storeId))
