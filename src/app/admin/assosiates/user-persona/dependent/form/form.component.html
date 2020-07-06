@@ -28,20 +28,16 @@
         class="list-group-item d-flex justify-content-between align-items-center"
         *ngFor="let permission of user.permissions"
       >
-          <label class="float-left" style="margin-top: 3%;">{{ permission.alias }}</label>
-              onColor="{{ model.onColor }}"
-              onText="{{ model.onText }}"
-              offColor="{{ model.offColor }}"
-              offText="{{ model.offText }}"
-              [disabled]="model.disabled"
-              [size]="model.size"
-              [(ngModel)]="model.value"
-            >
-            </ng-toggle>
+        <div class="feeds-left" style="margin-right: 10px;">
+          <ui-switch
+            size="small"
+            [checked]="permission.permission == 1"
+            (change)="onChange($event, permission.mode)"
+          ></ui-switch>
         </div>
         <div class="feeds-body">
           <h4 class="title">{{ permission.alias }}</h4>
-          <small>{{ permission.description?permission.description:' ' }}</small>
+          <small>{{ permission.description ? permission.description : ' ' }}</small>
         </div>
       </li>
     </ul>

@@ -21,6 +21,10 @@ export class UserPersonaFormComponent implements OnInit {
     }
     this.store.setIn('userpersonapageconfig', ['showPageAction'], false);
   }
+  onChange(event: any, mode: string) {
+    let permissionIndex = this.user.permissions.filter(x => x.mode == mode);
+    permissionIndex[0].permission = event ? 1 : 0;
+  }
   ngOnInit() {
     if (this.user.id !== 0) {
       this.userPersonaFrmSrv.get(this.user.id, (el: UserProfile) => {
