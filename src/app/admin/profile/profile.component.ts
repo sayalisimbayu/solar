@@ -14,7 +14,7 @@ import { forkJoin } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
+  templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   public activeTab: string = 'Overview';
@@ -81,7 +81,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.loadPageTitle();
     this.userRepoService.getUserSetting().subscribe(el => {
-      alert('got setting');
       console.log(el);
       this.userSetting = el;
     });
@@ -101,7 +100,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       addresslinE2: '',
       city: '',
       ustate: '',
-      countrycode: ''
+      countrycode: '',
+      profileimg: ''
     };
   }
   getUserInfo() {
@@ -110,7 +110,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         // alert('got info');
         console.log(el);
         this.userInfo = el;
-        (this.store.has('userInfo')) && (this.store.remove('userInfo'));
+        this.store.has('userInfo') && this.store.remove('userInfo');
         this.store.add('userInfo', this.userInfo, true);
         this.basicInformation.controls['id'].setValue(el.id);
         this.basicInformation.controls['usid'].setValue(el.usid);
@@ -132,9 +132,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // set account data
         this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
-        (this.store.has('userInfo')) && (this.store.remove('userInfo'));
-        this.store.add('userInfo', this.userInfo, true);
       }
+      this.store.has('userInfo') && this.store.remove('userInfo');
+        this.store.add('userInfo', this.userInfo, true);
     });
   }
   setBasicInformationFormBuilder(): FormGroup {

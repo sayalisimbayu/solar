@@ -225,7 +225,7 @@ export class UserRepoService {
     // ])
   }
   // {id:number, profileimg: string}
-  public saveImage(Image:any): Observable<any>{
+  public saveImage(Image: any): Observable<any> {
     return this.http.post<DataResponse>(`user/profileImage`, Image).pipe(
       map((el: DataResponse) => {
         let userInfoResponse: UserInfo;

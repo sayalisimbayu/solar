@@ -128,7 +128,7 @@ export class AuthService {
       })
     );
   }
-  private setSysUserData(user: User) {
+  public setSysUserData(user: User) {
     localStorage.removeItem('sysuserdata');
     localStorage.setItem('sysuserdata', JSON.stringify(user));
   }
