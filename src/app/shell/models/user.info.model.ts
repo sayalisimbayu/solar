@@ -13,6 +13,7 @@ export class UserInfo {
   city: string;
   ustate: string;
   countrycode: string;
+  profileimg: string;
 }
 
 export class UserInfoPage {
