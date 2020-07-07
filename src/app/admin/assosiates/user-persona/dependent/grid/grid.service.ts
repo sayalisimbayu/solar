@@ -20,7 +20,7 @@ export class UserPersonaGridService {
         heading: 'displayname',
         description: '',
         subHeading: 'username',
-        image: ''
+        image: 'profileimg'
       },
       itemMapDescription: {
         heading: '',

@@ -19,6 +19,7 @@ export class SidebarComponent implements OnDestroy {
   public themeClass: string = 'theme-cyan';
   public darkClass: string = '';
   public username: string = '';
+  public profileImage: string = 'assets/images/user.png';
   public displayImage: string = '';
   private ngUnsubscribe = new Subject();
 
@@ -29,7 +30,11 @@ export class SidebarComponent implements OnDestroy {
     this.themeService.darkClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((darkClass: string) => {
       this.darkClass = darkClass;
     });
-    this.username = this.authSrv.getSysUserData().displayname;
+    const userData = this.authSrv.getSysUserData();
+    this.username = userData.displayname;
+    if (userData.profileimg != undefined && userData.profileimg != '') {
+      this.profileImage = userData.profileimg;
+    }
   }
 
   ngOnDestroy() {
