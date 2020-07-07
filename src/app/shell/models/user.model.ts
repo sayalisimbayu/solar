@@ -20,6 +20,7 @@ export interface User {
   password: string;
   permissions: AppPermission[];
   lastLoggin: string;
+  profileimg?: string;
   confirmPassword: string;
   notificationid: number;
 }
