@@ -1,10 +1,10 @@
 import { INotification } from '@app/shell/models/noti.model';
-import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 import { IPageTitleConfig } from '@app/core/layout/page-title/model/page-title.config.interface';
 import { AuthService } from '@app/shell/auth/auth.service';
-import { User } from '@app/shell/models/user.model';
+import { User, UserProfile, AppPermission } from '@app/shell/models/user.model';
 import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
 import { UserInfo } from '@app/shell/models/user.info.model';
 import { UserSetting } from '@app/shell/models/user.setting.model';
@@ -41,7 +41,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     private store: SimpleStoreManagerService,
     private authSrv: AuthService,
     private userRepoService: UserRepoService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cdRef: ChangeDetectorRef,
   ) {
     this.user = this.authSrv.getSysUserData();
     this.pageTitleConfig = {
@@ -115,7 +116,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.basicInformation.controls['id'].setValue(el.id);
         this.basicInformation.controls['usid'].setValue(el.usid);
         this.user = this.setUser(this.userInfo);
-
+        this.cdRef.detectChanges();
         // set value for mobile
         this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
 
@@ -135,6 +136,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.store.has('userInfo') && this.store.remove('userInfo');
         this.store.add('userInfo', this.userInfo, true);
+        this.getPermissions();
     });
   }
   setBasicInformationFormBuilder(): FormGroup {
@@ -328,5 +330,15 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+
+  getPermissions() {
+    if (this.user.id !== 0) {
+      this.userRepoService.getAppPermissionsById(this.user.id).subscribe((sel: AppPermission[]) => {
+        this.user.permissions = sel;
+        this.cdRef.detectChanges();
+      });
+    }
+
   }
 }
