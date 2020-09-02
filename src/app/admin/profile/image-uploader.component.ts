@@ -33,7 +33,11 @@ import { StoreEvent } from '@app/shared/storemanager/models/storeEvent.model';
   inputs: ['activeColor', 'baseColor', 'overlayColor']
 })
 export class ImageUploaderComponent implements OnInit {
-  constructor(private userRepoService: UserRepoService, private store: SimpleStoreManagerService, private authSvc: AuthService) { }
+  constructor(
+    private userRepoService: UserRepoService,
+    private store: SimpleStoreManagerService,
+    private authSvc: AuthService
+  ) {}
 
   activeColor: string = 'green';
   baseColor: string = '#ccc';
@@ -96,12 +100,12 @@ export class ImageUploaderComponent implements OnInit {
     let payload = {
       id: userInfo.id,
       profileimg: imageSrc
-    }
+    };
     userInfo.profileimg = imageSrc;
     this.store.setIn('userInfo', ['profileimg'], userInfo.profileimg);
     let sysuserdata = this.authSvc.getSysUserData();
     sysuserdata.profileimg = userInfo.profileimg;
-    this.authSvc.setSysUserData(sysuserdata)
+    this.authSvc.setSysUserData(sysuserdata);
 
     this.userRepoService.saveImage(payload).subscribe((res: any) => {
       console.info(res);
