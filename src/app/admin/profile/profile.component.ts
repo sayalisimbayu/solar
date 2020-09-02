@@ -135,7 +135,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
       }
       this.store.has('userInfo') && this.store.remove('userInfo');
-        this.store.add('userInfo', this.userInfo, true);
+      this.store.add('userInfo', this.userInfo, true);
         this.getPermissions();
     });
   }
