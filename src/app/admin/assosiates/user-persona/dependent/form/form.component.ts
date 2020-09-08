@@ -39,7 +39,6 @@ export class UserPersonaFormComponent implements OnInit {
         this.InitializeSwitchComponent();
       });
     }
-
   }
   onSubmit(form: NgForm) {
     this.formProductObj = form;

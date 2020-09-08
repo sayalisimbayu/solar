@@ -69,10 +69,15 @@ export const lazyWidgets: {
   },
   {
     path: 'app-switch',
-    loadChildren: () =>
-      import('./../switch/switch.module').then(m => m.SwitchModule),
+    loadChildren: () => import('./../switch/switch.module').then(m => m.SwitchModule),
     data: { preload: true }
-  }
+  },
+  {
+    path: 'app-timelineChart',
+    loadChildren: () =>
+      import('./../../admin/profile/timeline/timeline.module').then(m => m.TimeLineModule),
+    data: { preload: true }
+  },
   // {
   //   path: 'category-grid',
   //   loadChildren: () =>

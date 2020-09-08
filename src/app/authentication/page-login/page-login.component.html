@@ -13,13 +13,13 @@
             <form class="form-auth-small" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
               <div>
                 <div class="alert alert-info" role="alert" *ngFor="let item of showMessages.message">
-                  <i class="fa fa-info-circle"></i> {{item}}
+                  <i class="fa fa-info-circle"></i> {{ item }}
+                </div>
               </div>
-              </div> 
               <div>
                 <div class="alert alert-danger" role="alert" *ngFor="let item of showMessages.error">
-                  <i class="fa fa-info-circle"></i> {{item}}
-              </div> 
+                  <i class="fa fa-info-circle"></i> {{ item }}
+                </div>
               </div>
               <div class="form-group">
                 <label for="signin-email" class="control-label sr-only">Email</label>

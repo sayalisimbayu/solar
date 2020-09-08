@@ -1,5 +1,13 @@
 import { INotification } from '@app/shell/models/noti.model';
-import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ViewContainerRef,
+  OnDestroy,
+  ChangeDetectorRef
+} from '@angular/core';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 import { IPageTitleConfig } from '@app/core/layout/page-title/model/page-title.config.interface';
@@ -42,7 +50,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     private authSrv: AuthService,
     private userRepoService: UserRepoService,
     private formBuilder: FormBuilder,
-    private cdRef: ChangeDetectorRef,
+    private cdRef: ChangeDetectorRef
   ) {
     this.user = this.authSrv.getSysUserData();
     this.pageTitleConfig = {
@@ -136,7 +144,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.store.has('userInfo') && this.store.remove('userInfo');
       this.store.add('userInfo', this.userInfo, true);
-        this.getPermissions();
+      this.getPermissions();
     });
   }
   setBasicInformationFormBuilder(): FormGroup {
@@ -320,7 +328,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(
         map((timeline: INotification[]) => {
           this.timelineGrid.clear();
-          this.lazyLoader.load('app-timeline', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {
+          this.lazyLoader.load('app-timelineChart', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {
             if (this.store.has('timelineconfig')) {
               this.store.setIn('timelineconfig', ['timeline'], timeline);
             } else {
@@ -339,6 +347,5 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cdRef.detectChanges();
       });
     }
-
   }
 }
