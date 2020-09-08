@@ -18,7 +18,7 @@ export class PageLoginComponent implements OnInit, OnDestroy {
   public userEmail = 'abc';
   public passWrod = '';
   public user: any;
-  showMessages: any = {};
+  public showMessages: any = {};
   messages: any = [];
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private authSvc: AuthService) {
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
