@@ -66,7 +66,18 @@ export const lazyWidgets: {
     loadChildren: () =>
       import('./../../admin/assosiates/user-persona/dependent/form/form.module').then(m => m.UPFormLayoutModule),
     data: { preload: true }
-  }
+  },
+  {
+    path: 'app-switch',
+    loadChildren: () => import('./../switch/switch.module').then(m => m.SwitchModule),
+    data: { preload: true }
+  },
+  {
+    path: 'app-timelineChart',
+    loadChildren: () =>
+      import('./../../admin/profile/timeline/timeline.module').then(m => m.TimeLineModule),
+    data: { preload: true }
+  },
   // {
   //   path: 'category-grid',
   //   loadChildren: () =>

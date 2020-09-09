@@ -1,0 +1,9 @@
+<li class="list-group-item d-flex justify-content-between align-items-center">
+  <div class="feeds-left" style="margin-right: 10px;">
+    <ui-switch size="small" [checked]="config?.isChecked" (change)="onChange($event, config?.type)"> </ui-switch>
+  </div>
+  <div class="feeds-body">
+    <h4 class="title">{{ config?.title }}</h4>
+    <small>{{ config?.title ? config?.title : ' ' }}</small>
+  </div>
+</li>

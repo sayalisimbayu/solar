@@ -164,11 +164,11 @@ export class UserRepoService {
 
   public getTimeLineConfig(): Observable<INotification[]> {
     return this.http
-      .post<DataResponse>(`communi/timeline`, {
-        start: 0,
-        number: 100,
-        searchs: '',
-        orderby: ''
+      .post<DataResponse>(`communi/page`, {
+        "pageNumber": 1,
+        "pageSize":10,
+        "search":"",
+        "orderby":""
       })
       .pipe(
         map((el: DataResponse) => {
