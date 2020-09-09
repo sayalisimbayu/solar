@@ -54,7 +54,7 @@ export class PageTitleComponent implements OnInit, AfterViewInit, OnDestroy {
         .pipe(filter((el: StoreEvent) => el.key === this.storeId))
         .pipe(
           map((el: StoreEvent) => {
-            this.config = el.store.value as IPageTitleConfig;
+            this.config = el.changedValue as IPageTitleConfig;
             if (this.config !== null) {
               if (el.path.length === 0 || el.path.indexOf('leftComponentUrl') > -1) {
                 this.loadComponent();
