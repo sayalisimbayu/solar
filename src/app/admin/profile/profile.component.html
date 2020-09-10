@@ -78,7 +78,11 @@
           <h2>Who to follow</h2>
         </div>
         <div class="body">
-          <ul class="right_chat list-unstyled">
+          <div>
+            <ng-template #userList></ng-template>
+          </div>
+          <!-- <app-user-list></app-user-list> -->
+          <!-- <ul class="right_chat list-unstyled">
             <li class="online">
               <a href="javascript:void(0);">
                 <div class="media">
@@ -139,7 +143,7 @@
                 </div>
               </a>
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
     </div>
