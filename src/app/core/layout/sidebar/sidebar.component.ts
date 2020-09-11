@@ -25,30 +25,38 @@ export class SidebarComponent implements OnDestroy {
   public displayImage: string = '';
   private ngUnsubscribe = new Subject();
   private appTheme: AppTheme;
-  constructor(private themeService: ThemeService, private authSrv: AuthService, private userRepoService: UserRepoService) {
+  private userData: any;
+  constructor(private themeService: ThemeService, private authSrv: AuthService, 
+    private userRepoService: UserRepoService) {
     this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: string) => {
       this.themeClass = themeClass;
     });
     this.themeService.darkClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((darkClass: string) => {
       this.darkClass = darkClass;
     });
-    debugger;
-    const userData = this.authSrv.getSysUserData();
-    if (userData.addonconfig && userData.addonconfig) {
-      this.themeClass = userData.addonconfig.theme != '' ? userData.addonconfig.theme : this.themeClass;
-      this.darkClass = userData.addonconfig.skin != '' ? userData.addonconfig.skin : this.darkClass;
+    this.userData = this.authSrv.getSysUserData();
+    if (this.userData.addOnConfig && this.userData.addOnConfig) {
+      this.themeClass = this.userData.addOnConfig.skin != '' ? this.userData.addOnConfig.skin : this.themeClass;
+      this.darkClass = this.userData.addOnConfig.theme != '' ? this.userData.addOnConfig.theme : this.darkClass;
+      this.appTheme = {
+        usid: this.userData.id,
+        skin: this.darkClass,
+        theme: this.themeClass
+      };
+      this.themeService.changeDarkMode(this.darkClass);
+      this.themeService.themeChange(this.themeClass);
     }
     else {
       this.appTheme = {
-        usid: userData.id,
+        usid: this.userData.id,
         skin: this.darkClass,
         theme: this.themeClass
       };
       this.userRepoService.setThemeForUser(this.appTheme).subscribe();
     }
-    this.username = userData.displayname;
-    if (userData.profileimg != undefined && userData.profileimg != '') {
-      this.profileImage = userData.profileimg;
+    this.username = this.userData.displayname;
+    if (this.userData.profileimg != undefined && this.userData.profileimg != '') {
+      this.profileImage = this.userData.profileimg;
     }
   }
 
@@ -68,12 +76,16 @@ export class SidebarComponent implements OnDestroy {
   changeTheme(theme: string) {
     this.themeService.themeChange(theme);
     this.appTheme.skin = theme;
+    this.userData.addOnConfig.skin=theme;
+    this.authSrv.setSysUserData(this.userData);
     this.userRepoService.setThemeForUser(this.appTheme).subscribe();
   }
 
   changeDarkMode(darkClass: string) {
     this.themeService.changeDarkMode(darkClass);
     this.appTheme.theme = darkClass;
+    this.userData.addOnConfig.theme=this.darkClass;
+    this.authSrv.setSysUserData(this.userData);
     this.userRepoService.setThemeForUser(this.appTheme).subscribe();
   }
 }

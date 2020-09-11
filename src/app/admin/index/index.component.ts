@@ -108,7 +108,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updatePagetTitle();
   }
   showToastr() {
-    this.toastr.info('Hello, welcome to Lucid, a unique admin Template.', undefined, {
+    this.toastr.info('Hello, welcome to Simbayu.', undefined, {
       closeButton: true,
       positionClass: 'toast-top-right'
     });
