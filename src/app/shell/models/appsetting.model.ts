@@ -7,3 +7,10 @@ export class AppSetting {
     public type: string
   ) {}
 }
+export class AppTheme{
+  constructor(
+    public usid: number,
+    public theme: string,
+    public skin: string
+  ) {}
+}
