@@ -65,7 +65,7 @@ export class UserRepoService {
     );
   }
   getAppPermissionsById(userId: number): Observable<AppPermission[]> {
-    return this.http.get<DataResponse>('user/' + userId + '/permissionsbyid').pipe(
+    return this.http.get<DataResponse>('user/' + userId + '/permissionsbyid/1').pipe(
       map((el: DataResponse) => {
         let response: AppPermission[];
         if (el.code === 0) {
@@ -165,10 +165,10 @@ export class UserRepoService {
   public getTimeLineConfig(): Observable<INotification[]> {
     return this.http
       .post<DataResponse>(`communi/page`, {
-        "pageNumber": 1,
-        "pageSize":10,
-        "search":"",
-        "orderby":""
+        pageNumber: 1,
+        pageSize: 10,
+        search: '',
+        orderby: ''
       })
       .pipe(
         map((el: DataResponse) => {

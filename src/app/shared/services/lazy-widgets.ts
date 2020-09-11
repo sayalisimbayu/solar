@@ -74,16 +74,14 @@ export const lazyWidgets: {
   },
   {
     path: 'app-timelineChart',
-    loadChildren: () =>
-      import('./../../admin/profile/timeline/timeline.module').then(m => m.TimeLineModule),
+    loadChildren: () => import('./../../admin/profile/timeline/timeline.module').then(m => m.TimeLineModule),
     data: { preload: true }
   },
   {
     path: 'app-user-list',
-    loadChildren: () =>
-      import('./../../admin/profile/user-list/user-list.module').then(m => m.UserListModule),
+    loadChildren: () => import('./../../admin/profile/user-list/user-list.module').then(m => m.UserListModule),
     data: { preload: true }
-  },
+  }
   // {
   //   path: 'category-grid',
   //   loadChildren: () =>

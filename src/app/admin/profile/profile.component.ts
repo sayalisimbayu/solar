@@ -351,27 +351,27 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  getUserPage(){
-    debugger;
+  getUserPage() {
     let payload = {
-      "pageNumber": 0,
-      "pageSize":10,
-      "search":"",
-      "orderby":""
-  }
-    this.userRepoService.getPaged(payload).pipe(
-      map((user: UserPage) => {
-        this.userList.clear();
-        this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {
-          debugger;
-          if (this.store.has('userpage')) {
-            debugger
-            this.store.setIn('userpage', ['userpage'], user);
-          } else {
-            this.store.add('userpage', { userpage: user }, true);
-          }
-        });
-      })
-    ).subscribe();
+      pageNumber: 0,
+      pageSize: 10,
+      search: '',
+      orderby: ''
+    };
+    this.userRepoService
+      .getPaged(payload)
+      .pipe(
+        map((user: UserPage) => {
+          this.userList.clear();
+          this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {
+            if (this.store.has('userpage')) {
+              this.store.setIn('userpage', ['userpage'], user);
+            } else {
+              this.store.add('userpage', { userpage: user }, true);
+            }
+          });
+        })
+      )
+      .subscribe();
   }
 }
