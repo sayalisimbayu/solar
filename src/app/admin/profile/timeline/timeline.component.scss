@@ -2,10 +2,10 @@ $black: #202020;
 $white: #fff;
 $dark-grey: #808080;
 $light-grey: #d9d9d9;
-$purple: #B97CFC;
-$pink: #F93B69;
-$green: #B0E8E2;
-$orange: #EB8B6E;
+$purple: #b97cfc;
+$pink: #f93b69;
+$green: #b0e8e2;
+$orange: #eb8b6e;
 
 body {
   //background: radial-gradient(circle, $white , lighten($dark-grey, 40));
@@ -16,8 +16,8 @@ body {
   max-height: 630px;
   overflow: hidden;
   margin: 30px auto 0;
-//   box-shadow: 0 0 40px lighten($black, 50);
-  font-family: 'Open Sans', sans-serif;
+  //   box-shadow: 0 0 40px lighten($black, 50);
+  font-family: "Open Sans", sans-serif;
 }
 
 .navbar {
@@ -73,7 +73,7 @@ body {
 .color-overlay {
   padding: 3em 2em;
   box-sizing: border-box;
-  background: rgba(123, 94, 155, 0.5) ;
+  background: rgba(123, 94, 155, 0.5);
 }
 
 .actionbutton {
@@ -115,7 +115,6 @@ body {
 }
 
 .timeline {
-
   ul {
     padding: 1em 0 0 2em;
     margin: 0;
@@ -123,18 +122,18 @@ body {
     position: relative;
 
     &::after {
-      content: ' ';
+      content: " ";
       height: 100%;
       width: 1px;
       background-color: $light-grey;
       position: absolute;
       top: 0;
       left: 2.5em;
-    //   z-index: 1;
+      //   z-index: 1;
     }
   }
 
-  li div{
+  li div {
     display: inline-block;
     margin: 1em 0;
     vertical-align: top;
@@ -185,16 +184,17 @@ body {
     color: $dark-grey;
   }
 
-  .people img{
+  .people img {
     width: 30px;
     height: 30px;
     border-radius: 50%;
   }
 }
 
-.credits, .video{
+.credits,
+.video {
   position: absolute;
-  bottom:10px;
+  bottom: 10px;
   color: $dark-grey;
   font-size: 100%;
   text-decoration: underline;
@@ -204,6 +204,6 @@ body {
   left: 10px;
 }
 
-.video{
+.video {
   right: 10px;
 }
