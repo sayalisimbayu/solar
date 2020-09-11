@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { TimelineItem } from 'ngx-vertical-timeline';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 
 @Component({
@@ -9,7 +8,7 @@ import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager
   encapsulation: ViewEncapsulation.None
 })
 export class TimeLineComponent {
-  items: TimelineItem[] = [];
+  items: any[] = [];
   externalVariable = 'hello';
   timeline: any = [];
   constructor(private store: SimpleStoreManagerService) {}

@@ -1,59 +1,14 @@
-<!-- <lib-ngx-vertical-timeline [(items)]="items"></lib-ngx-vertical-timeline> -->
-<div class="row">
-    <div class="col-md-12">
-      <!-- <div class="page-header">
-        <h1>Timeline</h1>
-      </div> -->
-      <ul class="timeline">
-        <li class="timeline-item" *ngFor="let item of items">
-          <div class="timeline-badge"><i class="fa fa-calendar-plus-o"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">{{item.title}}</h4>
-              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i>{{item.content}}</small></p>
-            </div>
-          </div>
-          <!-- <div class="timeline-panel-right"> Hello </div> -->
-        </li>
-        <!-- <li class="timeline-item">
-          <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
-          <div class="timeline-panel-right"> Hello </div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">Mussum ipsum cacilds 2</h4>
-              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-            </div>
-            <div class="timeline-body">
-              <p>Test</p>
-            </div>
-          </div>
-        </li> -->
-        <!-- <li class="timeline-item">
-          <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">Mussum ipsum cacilds 3</h4>
-              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-            </div>
-            <div class="timeline-body">
-              <p>Test Content 1 </p>
-              <p>Test Content 2 </p>
-
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item">
-          <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">Mussum ipsum cacilds 4</h4>
-              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-            </div>
-            <div class="timeline-body">
-              <p>Test </p>
-            </div>
-          </div>
-        </li> -->
-      </ul>
-    </div>
+<span>Timeline</span>
+<div class="container">
+  <div class="timeline">
+    <ul>
+      <li *ngFor="let item of items">
+        <div class="bullet pink"></div>
+        <div class="desc">
+          <h3>{{ item.title }}</h3>
+          <h4>{{ item.content }}</h4>
+        </div>
+      </li>
+    </ul>
   </div>
+</div>
