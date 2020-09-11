@@ -66,7 +66,7 @@ export class UserRepoService {
     );
   }
   getAppPermissionsById(userId: number): Observable<AppPermission[]> {
-    return this.http.get<DataResponse>('user/' + userId + '/permissionsbyid').pipe(
+    return this.http.get<DataResponse>('user/' + userId + '/permissionsbyid/1').pipe(
       map((el: DataResponse) => {
         let response: AppPermission[];
         if (el.code === 0) {

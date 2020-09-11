@@ -5,6 +5,7 @@ import { ProfileComponent } from './profile.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ImageUploaderComponent } from './image-uploader.component';
 import { RightPanelComponent } from './right-panel/right-panel.component';
+import { UserListComponent } from './user-list/user-list.component';
 const routes: Routes = [
   {
     path: '',

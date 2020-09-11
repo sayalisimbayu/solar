@@ -1,1 +1,14 @@
-<lib-ngx-vertical-timeline [(items)]="items"></lib-ngx-vertical-timeline>
+<span>Timeline</span>
+<div class="container">
+  <div class="timeline">
+    <ul>
+      <li *ngFor="let item of items">
+        <div class="bullet pink"></div>
+        <div class="desc">
+          <h3>{{ item.title }}</h3>
+          <h4>{{ item.content }}</h4>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,33 +1,30 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { TimelineItem } from 'ngx-vertical-timeline';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 
 @Component({
   selector: 'app-timelineChart',
   templateUrl: './timeline.component.html',
-  styleUrls: [ './timeline.component.scss' ],
+  styleUrls: ['./timeline.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TimeLineComponent  {
-  items: TimelineItem[] = [];
- externalVariable = 'hello';
- timeline: any =[];
- constructor(
-  private store: SimpleStoreManagerService,
- ){}
-ngOnInit() {
-  const self = this;
-  this.timeline = this.store.getByKey('timelineconfig').timeline;
+export class TimeLineComponent {
+  items: any[] = [];
+  externalVariable = 'hello';
+  timeline: any = [];
+  constructor(private store: SimpleStoreManagerService) {}
+  ngOnInit() {
+    const self = this;
+    this.timeline = this.store.getByKey('timelineconfig').timeline;
 
-  this.timeline.item1.forEach((timel:any) => {
-    this.items.push({
-      label: '',
-      icon: 'fa fa-calendar-plus-o',
-      styleClass: 'teste',
-      content: `${timel.message}`,
-      title: `${timel.type}`
-    })
-  });
+    this.timeline.item1.forEach((timel: any) => {
+      this.items.push({
+        label: '',
+        icon: 'fa fa-calendar-plus-o',
+        styleClass: 'teste',
+        content: `${timel.message}`,
+        title: `${timel.type}`
+      });
+    });
 
     // this.items.push({
     //   label: 'Action',
@@ -77,5 +74,4 @@ ngOnInit() {
     //   }
     // });
   }
-
 }

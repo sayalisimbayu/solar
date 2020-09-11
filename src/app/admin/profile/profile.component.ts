@@ -12,7 +12,7 @@ import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 import { IPageTitleConfig } from '@app/core/layout/page-title/model/page-title.config.interface';
 import { AuthService } from '@app/shell/auth/auth.service';
-import { User, UserProfile, AppPermission } from '@app/shell/models/user.model';
+import { User, UserProfile, AppPermission, UserPage } from '@app/shell/models/user.model';
 import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
 import { UserInfo } from '@app/shell/models/user.info.model';
 import { UserSetting } from '@app/shell/models/user.setting.model';
@@ -43,6 +43,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   // OverView
   @ViewChild('timelineGrid', { read: ViewContainerRef, static: true })
   timelineGrid: ViewContainerRef;
+
+  @ViewChild('userList', { read: ViewContainerRef, static: true })
+  userList: ViewContainerRef;
 
   constructor(
     private lazyLoader: LazyLoaderService,
@@ -75,6 +78,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     //Add 'implements OnDestroy' to the class.
   }
   ngOnInit() {
+    this.getUserPage();
     // set empty user info as on load user info is undefine or implement resolver
     this.userInfo = this.setEmptyUserInfo();
 
@@ -238,7 +242,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       that.store.add('profile_page_title', that.pageTitleConfig, true);
     });
   }
-
   onSubmit(data: any) {
     this.submitted = true;
     if (this.basicInformation.invalid) {
@@ -340,7 +343,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe();
   }
-
   getPermissions() {
     if (this.user.id !== 0) {
       this.userRepoService.getAppPermissionsById(this.user.id).subscribe((sel: AppPermission[]) => {
@@ -348,5 +350,29 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.cdRef.detectChanges();
       });
     }
+  }
+
+  getUserPage() {
+    let payload = {
+      pageNumber: 0,
+      pageSize: 10,
+      search: '',
+      orderby: ''
+    };
+    this.userRepoService
+      .getPaged(payload)
+      .pipe(
+        map((user: UserPage) => {
+          this.userList.clear();
+          this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {
+            if (this.store.has('userpage')) {
+              this.store.setIn('userpage', ['userpage'], user);
+            } else {
+              this.store.add('userpage', { userpage: user }, true);
+            }
+          });
+        })
+      )
+      .subscribe();
   }
 }
