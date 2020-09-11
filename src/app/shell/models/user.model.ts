@@ -19,6 +19,7 @@ export interface User {
   otp: string;
   password: string;
   permissions: AppPermission[];
+  addonconfig: any;
   lastLoggin: string;
   profileimg?: string;
   confirmPassword: string;

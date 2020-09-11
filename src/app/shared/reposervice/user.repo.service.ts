@@ -10,6 +10,7 @@ import { IPagedConfig } from '@app/shell/models/paged.model';
 import { NotificationRepoService } from './noti.repo.service';
 import { INotification } from '@app/shell/models/noti.model';
 import { UserPage, AppPermission } from '@app/shell/models/user.model';
+import { AppTheme } from '@app/shell/models/appsetting.model';
 
 export class UserRepoService {
   public timelineConfig: INotification[];
@@ -165,10 +166,10 @@ export class UserRepoService {
   public getTimeLineConfig(): Observable<INotification[]> {
     return this.http
       .post<DataResponse>(`communi/page`, {
-        "pageNumber": 1,
-        "pageSize":10,
-        "search":"",
-        "orderby":""
+        pageNumber: 1,
+        pageSize: 10,
+        search: '',
+        orderby: ''
       })
       .pipe(
         map((el: DataResponse) => {
@@ -235,6 +236,17 @@ export class UserRepoService {
         }
         userInfoResponse = el.data;
         return userInfoResponse;
+      })
+    );
+  }
+  public setThemeForUser(data: AppTheme){
+    return this.http.post<DataResponse>(`user/setThemeForUser`, data).pipe(
+      map((el: DataResponse) => {
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
+        return el.data;
       })
     );
   }
