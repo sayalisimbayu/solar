@@ -48,7 +48,6 @@
     "highcharts": "^8.0.0",
     "leaflet": "^1.6.0",
     "moment": "^2.24.0",
-    "ngx-vertical-timeline": "^0.0.1",
     "ng5-slider": "^1.2.4",
     "ngx-chips": "2.0.2",
     "ngx-echarts": "^4.1.0",
