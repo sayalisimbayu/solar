@@ -4,7 +4,7 @@
   infiniteScroll
   [infiniteScrollDistance]="scrollDistance"
   [infiniteScrollThrottle]="throttle"
-  (scrolled)="onScroll($event)"
+  (scrolled)="onScroll(pageGridConfig.page)"
   [scrollWindow]="true"
 >
   <ul class="right_chat list-unstyled">

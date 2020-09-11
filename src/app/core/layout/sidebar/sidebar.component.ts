@@ -32,7 +32,6 @@ export class SidebarComponent implements OnDestroy {
     this.themeService.darkClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((darkClass: string) => {
       this.darkClass = darkClass;
     });
-    debugger;
     const userData = this.authSrv.getSysUserData();
     if (userData.addonconfig && userData.addonconfig) {
       this.themeClass = userData.addonconfig.theme != '' ? userData.addonconfig.theme : this.themeClass;
