@@ -46,6 +46,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('userList', { read: ViewContainerRef, static: true })
   userList: ViewContainerRef;
+  public userMapUrl ="";
 
   constructor(
     private lazyLoader: LazyLoaderService,
@@ -148,6 +149,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.store.has('userInfo') && this.store.remove('userInfo');
       this.store.add('userInfo', this.userInfo, true);
+      this.userRepoService.getLatitudeAndLogitude(this.userInfo).subscribe((response: any) =>{
+        this.userMapUrl = response;
+        this.cdRef.detectChanges();
+      })
       this.getPermissions();
     });
   }
@@ -281,13 +286,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         )
       )
       .subscribe();
-    // forkJoin(
-    //   this.userRepoService.saveUserInfo(data),
-    //   this.userRepoService.saveUserinfo(data)
-    // ).pipe(map(([appUser, userInfo]) => {
-    //   alert('Passowrd Change successfully, mobile name updated successfully');
-    // })
-    // ).subscribe();
   }
   onGeneralInformationSubmit(data: any) {
     this.userRepoService
@@ -326,7 +324,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // OverView
   loadOverView() {
-    // get all notification
     this.userRepoService
       .getTimeLineConfig()
       .pipe(
@@ -353,7 +350,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getUserPage() {
-    this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {
-    });
+    this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {});
   }
 }

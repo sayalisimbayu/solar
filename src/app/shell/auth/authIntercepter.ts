@@ -12,10 +12,19 @@ export class AuthInterceptor implements HttpInterceptor {
     const idToken = localStorage.getItem('id_token');
 
     if (idToken) {
-      const cloned = req.clone({
-        url: environment.serverUrl + '/api/' + req.url,
-        headers: req.headers.set('Authorization', 'Bearer ' + idToken)
-      });
+      let cloned
+      if(req.url.includes('mapquestapi') ) {
+        cloned = req.clone({
+          url: req.url,
+          headers: req.headers.delete('Referer')
+        });
+      } else {
+        cloned = req.clone({
+          url: environment.serverUrl + '/api/' + req.url,
+          headers: req.headers.set('Authorization', 'Bearer ' + idToken)
+        });
+      }
+
 
       return next.handle(cloned).pipe(
         tap(
@@ -37,9 +46,16 @@ export class AuthInterceptor implements HttpInterceptor {
         )
       );
     } else {
-      const cloned = req.clone({
-        url: environment.serverUrl + '/api/' + req.url
-      });
+      let cloned
+      if(req.url.includes('mapquestapi') ) {
+        cloned = req.clone({
+          url: req.url
+        });
+      } else {
+        cloned = req.clone({
+          url: environment.serverUrl + '/api/' + req.url
+        });
+      }
       return next.handle(cloned);
     }
   }

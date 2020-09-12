@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ImageUploaderComponent } from './image-uploader.component';
 import { RightPanelComponent } from './right-panel/right-panel.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { SafePipe } from './safe.pipe';
 const routes: Routes = [
   {
     path: '',
@@ -15,7 +16,7 @@ const routes: Routes = [
 export const routing = RouterModule.forChild(routes);
 @NgModule({
   imports: [CommonModule, routing, ReactiveFormsModule, FormsModule],
-  declarations: [ProfileComponent, ImageUploaderComponent, RightPanelComponent],
+  declarations: [ProfileComponent, ImageUploaderComponent, RightPanelComponent, SafePipe],
   entryComponents: [ProfileComponent],
   exports: [ProfileComponent]
 })
