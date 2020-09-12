@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     //Add 'implements OnDestroy' to the class.
   }
   ngOnInit() {
-    this.getUserPage();
+    // this.getUserPage();
     // set empty user info as on load user info is undefine or implement resolver
     this.userInfo = this.setEmptyUserInfo();
 
@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.basicInformation = this.setBasicInformationFormBuilder();
     this.accountData = this.setaccountDataFormBuilder();
     this.generalInformationFormGroup = this.setGeneralInformationFormGroup();
-    this.loadOverView();
+    // this.loadOverView();
   }
   ngAfterViewInit(): void {
     this.loadPageTitle();
@@ -324,21 +324,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // OverView
   loadOverView() {
-    this.userRepoService
-      .getTimeLineConfig()
-      .pipe(
-        map((timeline: INotification[]) => {
-          this.timelineGrid.clear();
-          this.lazyLoader.load('app-timelineChart', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {
-            if (this.store.has('timelineconfig')) {
-              this.store.setIn('timelineconfig', ['timeline'], timeline);
-            } else {
-              this.store.add('timelineconfig', { timeline: timeline }, true);
-            }
-          });
-        })
-      )
-      .subscribe();
+    this.lazyLoader.load('app-timelineChart', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {});
   }
   getPermissions() {
     if (this.user.id !== 0) {

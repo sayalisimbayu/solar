@@ -161,7 +161,7 @@ export class UserRepoService {
       })
     );
   }
-  public getTimeLineConfig(): Observable<INotification[]> {
+  public getTimeLineConfig(payload: any): Observable<INotification[]> {
     return this.http
       .post<DataResponse>(`communi/page`, {
         pageNumber: 1,
