@@ -92,7 +92,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.basicInformation = this.setBasicInformationFormBuilder();
     this.accountData = this.setaccountDataFormBuilder();
     this.generalInformationFormGroup = this.setGeneralInformationFormGroup();
-    // this.loadOverView();
+    this.loadOverView();
   }
   ngAfterViewInit(): void {
     this.loadPageTitle();

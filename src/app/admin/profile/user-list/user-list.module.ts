@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserListComponent } from './user-list.component';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 const routes: Routes = [
   {
     path: '',
@@ -12,7 +10,7 @@ const routes: Routes = [
 ];
 export const routing = RouterModule.forChild(routes);
 @NgModule({
-  imports: [CommonModule, routing, ReactiveFormsModule, FormsModule, InfiniteScrollModule],
+  imports: [CommonModule, routing],
   declarations: [UserListComponent],
   entryComponents: [UserListComponent],
   exports: [UserListComponent]

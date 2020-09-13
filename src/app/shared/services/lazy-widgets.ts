@@ -72,11 +72,11 @@ export const lazyWidgets: {
     loadChildren: () => import('./../switch/switch.module').then(m => m.SwitchModule),
     data: { preload: true }
   },
-  // {
-  //   path: 'app-timelineChart',
-  //   loadChildren: () => import('./../../admin/profile/timeline/timeline.module').then(m => m.TimeLineModule),
-  //   data: { preload: true }
-  // },
+  {
+    path: 'app-timelineChart',
+    loadChildren: () => import('./../../admin/profile/timeline/timeline.module').then(m => m.TimeLineModule),
+    data: { preload: true }
+  },
   {
     path: 'app-user-list',
     loadChildren: () => import('./../../admin/profile/user-list/user-list.module').then(m => m.UserListModule),
