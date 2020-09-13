@@ -51,7 +51,7 @@ export class ImageUploaderComponent implements OnInit {
   ngOnInit() {
     this.profileImageSubscription();
     let userInfo = this.store.getByKey('userInfo');
-    this.imageSrc = userInfo && userInfo.profileimg ? userInfo.profileimg : '';
+    this.imageSrc = userInfo && userInfo.profileimg ? userInfo.profileimg : "assets/images/user_default.png"
   }
   handleDragEnter() {
     this.dragging = true;
@@ -118,7 +118,7 @@ export class ImageUploaderComponent implements OnInit {
       .pipe(
         map((el: StoreEvent) => {
           let userInfo = el.store.value;
-          this.imageSrc = userInfo && userInfo.profileimg ? userInfo.profileimg : '';
+          this.imageSrc = userInfo && userInfo.profileimg ? userInfo.profileimg : 'assets/images/user_default.png';
         })
       )
       .subscribe();

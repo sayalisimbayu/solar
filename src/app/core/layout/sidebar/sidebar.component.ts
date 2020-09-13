@@ -11,7 +11,7 @@ import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnDestroy {
+export class SidebarComponent implements OnDestroy, OnDestroy {
   @Input() sidebarVisible: boolean = true;
   @Input() navTab: string = 'menu';
   @Input() currentActiveMenu: any;
@@ -21,7 +21,7 @@ export class SidebarComponent implements OnDestroy {
   public themeClass: string = 'theme-cyan';
   public darkClass: string = '';
   public username: string = '';
-  public profileImage: string = 'assets/images/user.png';
+  public profileImage: string = 'assets/images/user_default.png';
   public displayImage: string = '';
   private ngUnsubscribe = new Subject();
   private appTheme: AppTheme;
@@ -58,7 +58,7 @@ export class SidebarComponent implements OnDestroy {
     }
     this.username = this.userData.displayname;
     if (this.userData.profileimg != undefined && this.userData.profileimg != '') {
-      this.profileImage = this.userData.profileimg;
+      this.profileImage = this.userData.profileimg ? this.userData.profileimg: 'assets/images/user_default.png';
     }
   }
 
