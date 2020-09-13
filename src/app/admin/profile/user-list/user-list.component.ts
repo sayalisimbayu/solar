@@ -46,6 +46,7 @@ export class UserListComponent implements OnInit, OnDestroy {
           onScroll: this.onScroll.bind(this)
         }
       };
+      this.userInfo = [];
     }
   ngOnInit() {
     this.profileImageSubscription();

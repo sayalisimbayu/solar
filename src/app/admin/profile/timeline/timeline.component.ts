@@ -1,5 +1,8 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
+import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
+import { map } from 'rxjs/operators';
+import { INotification } from '@app/shell/models/noti.model';
 
 @Component({
   selector: 'app-timelineChart',
@@ -10,68 +13,65 @@ import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager
 export class TimeLineComponent {
   items: any[] = [];
   externalVariable = 'hello';
-  timeline: any = [];
-  constructor(private store: SimpleStoreManagerService) {}
+  timeline: any ={
+    item1: []
+  };
+  scrollDistance: number = 1;
+  throttle: number = 50;
+  private totalRows: number = 0;
+  public page = {
+    pagesize: 30,
+    currentPage: 0,
+    throttle: 50,
+    scrollDistance: 1,
+    scrollUpDistance: 2
+  }
+  constructor(
+    private store: SimpleStoreManagerService,
+    private userRepoService: UserRepoService,
+    private cdRef: ChangeDetectorRef
+    ) {}
   ngOnInit() {
-    const self = this;
-    this.timeline = this.store.getByKey('timelineconfig').timeline;
-
-    this.timeline.item1.forEach((timel: any) => {
-      this.items.push({
-        label: '',
-        icon: 'fa fa-calendar-plus-o',
-        styleClass: 'teste',
-        content: `${timel.message}`,
-        title: `${timel.type}`
-      });
+    this.timeline.item1 = [];
+    this.loadOverView({
+      pagesize: 30,
+      currentPage: 0,
+      throttle: 50,
+      scrollDistance: 1,
+      scrollUpDistance: 2
     });
-
-    // this.items.push({
-    //   label: 'Action',
-    //   icon: 'fa fa-calendar-plus-o',
-    //   styleClass: 'teste',
-    //   content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-    //   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-    //   title: '18 de June, 2019, 10:12',
-    //   command() {
-    //     alert(`test: ${self.externalVariable}`);
-    //   }
-    // });
-
-    // this.items.push({
-    //   label: 'Action',
-    //   icon: 'fa fa-plus',
-    //   styleClass: 'teste',
-    //   content: `Ut enim ad minim veniam, quis nostrud exercitation ullamco
-    //   laboris nisi ut aliquip ex ea commodo consequat.`,
-    //   title: '11 de November, 2019, 12:00',
-    //   command() {
-    //     alert('Action!');
-    //   }
-    // });
-
-    // this.items.push({
-    //   label: 'Action',
-    //   icon: 'fa fa-user-circle-o',
-    //   styleClass: 'teste',
-    //   content: `Duis aute irure dolor in reprehenderit in voluptate velit
-    //    esse cillum dolore eu fugiat nulla pariatur.`,
-    //   title: '01 de December, 2019, 10:12',
-    //   command() {
-    //     alert('Action!');
-    //   }
-    // });
-
-    // this.items.push({
-    //   label: 'Action',
-    //   icon: 'fa fa-handshake-o',
-    //   styleClass: 'teste',
-    //   content: `Excepteur sint occaecat cupidatat non proident,
-    //   sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-    //   title: '27 de January, 2020, 10:35',
-    //   command() {
-    //     alert('Action!');
-    //   }
-    // });
+  }
+  onTimeLineScroll(event: any) {
+    this.loadOverView(event);
+  }
+  loadOverView(event: any) {
+    const that = this;
+    let payload = {
+      pageNumber: event.currentPage,
+      pageSize: 10,
+      search: '',
+      orderby: ''
+    };
+    if (this.totalRows >= this.timeline.item1.length) {
+    this.userRepoService
+      .getTimeLineConfig(payload)
+      .pipe(
+        map((timeline: any) => {
+          this.timeline.item1 = timeline.item1;
+          this.timeline.item1.forEach((timel: any) => {
+            this.items.push({
+              label: '',
+              icon: 'fa fa-calendar-plus-o',
+              styleClass: 'teste',
+              content: `${timel.message}`,
+              title: `${timel.type}`
+            });
+          });
+          that.totalRows = timeline.item2;
+          that.page.currentPage++;
+          this.cdRef.detectChanges();
+        })
+      ).subscribe();
+    }
   }
 }

@@ -1,4 +1,13 @@
-<span>Timeline</span>
+<h2>Timeline</h2>
+<div class="container-fluid file_manager">
+  <div
+    class="row clearfix"
+    infiniteScroll
+    [infiniteScrollDistance]="scrollDistance"
+    [infiniteScrollThrottle]="throttle"
+    (scrolled)="onTimeLineScroll(page)"
+    [scrollWindow]="true"
+  >
 <div class="container">
   <div class="timeline">
     <ul>
@@ -11,4 +20,6 @@
       </li>
     </ul>
   </div>
+</div>
+</div>
 </div>

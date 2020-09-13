@@ -117,7 +117,6 @@ export class UserRepoService {
       })
     );
   }
-
   saveAppUserinfo(userInfo: any): Observable<any> {
     return this.http.post<DataResponse>(`user/saveappuseraddonconfig`, userInfo).pipe(
       map((el: DataResponse) => {
@@ -162,8 +161,7 @@ export class UserRepoService {
       })
     );
   }
-
-  public getTimeLineConfig(): Observable<INotification[]> {
+  public getTimeLineConfig(payload: any): Observable<INotification[]> {
     return this.http
       .post<DataResponse>(`communi/page`, {
         pageNumber: 1,
@@ -250,4 +248,17 @@ export class UserRepoService {
       })
     );
   }
+  getLatitudeAndLogitude(user: any){
+    let userEncodedAddress = `${user.city}+${user.countrycode}`;
+    return this.http.get<any>(
+        `https://www.mapquestapi.com/geocoding/v1/address?key=yzgefOayv6ttyk36AAN3hBvI3utHRRzL&inFormat=kvp&outFormat=json&location=${userEncodedAddress}&thumbMaps=true`, {headers: {}}).pipe(
+        map((response: any) => {
+          let mapUrl: string = '';
+          if(response && Object.keys(response).length > 0) {
+            mapUrl = response.results[0].locations[0].mapUrl
+          }
+          return mapUrl;
+        })
+      );
+}
 }
