@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     //Add 'implements OnDestroy' to the class.
   }
   ngOnInit() {
-    // this.getUserPage();
+    this.getUserPage();
     // set empty user info as on load user info is undefine or implement resolver
     this.userInfo = this.setEmptyUserInfo();
 
