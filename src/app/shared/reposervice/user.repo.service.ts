@@ -237,7 +237,7 @@ export class UserRepoService {
       })
     );
   }
-  public setThemeForUser(data: AppTheme){
+  public setThemeForUser(data: AppTheme) {
     return this.http.post<DataResponse>(`user/setThemeForUser`, data).pipe(
       map((el: DataResponse) => {
         if (el.code === 0) {

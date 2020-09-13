@@ -315,7 +315,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
           notificationid: 0
         }
       ],
-      addonconfig: {},
+      addOnConfig: {},
       lastLoggin: '',
       confirmPassword: '',
       notificationid: 0
