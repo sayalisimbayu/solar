@@ -46,6 +46,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('userList', { read: ViewContainerRef, static: true })
   userList: ViewContainerRef;
+  public userMapUrl ="";
 
   constructor(
     private lazyLoader: LazyLoaderService,
@@ -78,7 +79,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     //Add 'implements OnDestroy' to the class.
   }
   ngOnInit() {
-    this.getUserPage();
+    // this.getUserPage();
     // set empty user info as on load user info is undefine or implement resolver
     this.userInfo = this.setEmptyUserInfo();
 
@@ -89,7 +90,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.basicInformation = this.setBasicInformationFormBuilder();
     this.accountData = this.setaccountDataFormBuilder();
     this.generalInformationFormGroup = this.setGeneralInformationFormGroup();
-    this.loadOverView();
+    // this.loadOverView();
   }
   ngAfterViewInit(): void {
     this.loadPageTitle();
@@ -148,6 +149,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.store.has('userInfo') && this.store.remove('userInfo');
       this.store.add('userInfo', this.userInfo, true);
+      this.userRepoService.getLatitudeAndLogitude(this.userInfo).subscribe((response: any) =>{
+        this.userMapUrl = response;
+        this.cdRef.detectChanges();
+      })
       this.getPermissions();
     });
   }
@@ -281,13 +286,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         )
       )
       .subscribe();
-    // forkJoin(
-    //   this.userRepoService.saveUserInfo(data),
-    //   this.userRepoService.saveUserinfo(data)
-    // ).pipe(map(([appUser, userInfo]) => {
-    //   alert('Passowrd Change successfully, mobile name updated successfully');
-    // })
-    // ).subscribe();
   }
   onGeneralInformationSubmit(data: any) {
     this.userRepoService
@@ -326,22 +324,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // OverView
   loadOverView() {
-    // get all notification
-    this.userRepoService
-      .getTimeLineConfig()
-      .pipe(
-        map((timeline: INotification[]) => {
-          this.timelineGrid.clear();
-          this.lazyLoader.load('app-timelineChart', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {
-            if (this.store.has('timelineconfig')) {
-              this.store.setIn('timelineconfig', ['timeline'], timeline);
-            } else {
-              this.store.add('timelineconfig', { timeline: timeline }, true);
-            }
-          });
-        })
-      )
-      .subscribe();
+    this.lazyLoader.load('app-timelineChart', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {});
   }
   getPermissions() {
     if (this.user.id !== 0) {
@@ -353,26 +336,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getUserPage() {
-    let payload = {
-      pageNumber: 0,
-      pageSize: 10,
-      search: '',
-      orderby: ''
-    };
-    this.userRepoService
-      .getPaged(payload)
-      .pipe(
-        map((user: UserPage) => {
-          this.userList.clear();
-          this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {
-            if (this.store.has('userpage')) {
-              this.store.setIn('userpage', ['userpage'], user);
-            } else {
-              this.store.add('userpage', { userpage: user }, true);
-            }
-          });
-        })
-      )
-      .subscribe();
+    this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {});
   }
 }

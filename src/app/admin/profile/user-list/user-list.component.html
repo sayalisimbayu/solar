@@ -1,22 +1,21 @@
 <div class="container-fluid file_manager">
-  <div
-    class="row clearfix"
-    infiniteScroll
-    [infiniteScrollDistance]="scrollDistance"
-    [infiniteScrollThrottle]="throttle"
-    (scrolled)="onScroll($event)"
-    [scrollWindow]="true"
-  >
-    <ul class="right_chat list-unstyled">
-      <li class="online" *ngFor="let user of userInfo; index as i; trackBy: trackByFn">
-        <a href="javascript:void(0);">
-          <div class="media">
-            <img class="media-object " src="{{ user.profileimg }}" alt="" />
-            <div class="media-body">
-              <span class="name">{{ user.displayname }}</span>
-              <!-- <span class="message">{{user.lastname}}</span> -->
-              <span class="badge badge-outline status"></span>
-            </div>
+<div
+  class="row clearfix"
+  infiniteScroll
+  [infiniteScrollDistance]="scrollDistance"
+  [infiniteScrollThrottle]="throttle"
+  (scrolled)="onScroll(pageGridConfig.page)"
+  [scrollWindow]="true"
+>
+  <ul class="right_chat list-unstyled">
+    <li class="online" *ngFor="let user of userInfo; index as i; trackBy: trackByFn">
+      <a href="javascript:void(0);">
+        <div class="media">
+          <img class="media-object " src="{{ user.profileimg }}" alt="" />
+          <div class="media-body">
+            <span class="name">{{ user.displayname }}</span>
+            <!-- <span class="message">{{user.lastname}}</span> -->
+            <span class="badge badge-outline status"></span>
           </div>
         </a>
       </li>
