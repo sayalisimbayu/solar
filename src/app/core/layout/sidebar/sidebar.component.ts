@@ -26,8 +26,11 @@ export class SidebarComponent implements OnDestroy {
   private ngUnsubscribe = new Subject();
   private appTheme: AppTheme;
   private userData: any;
-  constructor(private themeService: ThemeService, private authSrv: AuthService, 
-    private userRepoService: UserRepoService) {
+  constructor(
+    private themeService: ThemeService,
+    private authSrv: AuthService,
+    private userRepoService: UserRepoService
+  ) {
     this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: string) => {
       this.themeClass = themeClass;
     });
@@ -45,8 +48,7 @@ export class SidebarComponent implements OnDestroy {
       };
       this.themeService.changeDarkMode(this.darkClass);
       this.themeService.themeChange(this.themeClass);
-    }
-    else {
+    } else {
       this.appTheme = {
         usid: this.userData.id,
         skin: this.darkClass,
@@ -76,7 +78,7 @@ export class SidebarComponent implements OnDestroy {
   changeTheme(theme: string) {
     this.themeService.themeChange(theme);
     this.appTheme.skin = theme;
-    this.userData.addOnConfig.skin=theme;
+    this.userData.addOnConfig.skin = theme;
     this.authSrv.setSysUserData(this.userData);
     this.userRepoService.setThemeForUser(this.appTheme).subscribe();
   }
@@ -84,7 +86,7 @@ export class SidebarComponent implements OnDestroy {
   changeDarkMode(darkClass: string) {
     this.themeService.changeDarkMode(darkClass);
     this.appTheme.theme = darkClass;
-    this.userData.addOnConfig.theme=this.darkClass;
+    this.userData.addOnConfig.theme = this.darkClass;
     this.authSrv.setSysUserData(this.userData);
     this.userRepoService.setThemeForUser(this.appTheme).subscribe();
   }

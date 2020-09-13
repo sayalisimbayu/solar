@@ -14,10 +14,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   public userInfo: any = [];
   scrollDistance: number = 1;
   throttle: number = 50;
-  constructor(
-    private store: SimpleStoreManagerService,
-    private userRepoService: UserRepoService,
-    ) {}
+  constructor(private store: SimpleStoreManagerService, private userRepoService: UserRepoService) {}
   ngOnInit() {
     this.profileImageSubscription();
   }
