@@ -18,7 +18,7 @@ const routes: Routes = [
 export const routing = RouterModule.forChild(routes);
 @NgModule({
   imports: [CommonModule, routing, ReactiveFormsModule, FormsModule, InfiniteScrollModule],
-  declarations: [ProfileComponent, ImageUploaderComponent, RightPanelComponent, SafePipe, UserListComponent, TimeLineComponent],
+  declarations: [ProfileComponent, ImageUploaderComponent, RightPanelComponent, SafePipe, TimeLineComponent],
   entryComponents: [ProfileComponent],
   exports: [ProfileComponent]
 })

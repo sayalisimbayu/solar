@@ -49,7 +49,6 @@ export class UserListComponent implements OnInit, OnDestroy {
       this.userInfo = [];
     }
   ngOnInit() {
-    this.profileImageSubscription();
     this.getUserPage({
       pagesize: 30,
       currentPage: 0,
@@ -57,28 +56,13 @@ export class UserListComponent implements OnInit, OnDestroy {
       scrollDistance: 1,
       scrollUpDistance: 2
     })
-    // this.profileImageSubscription();
   }
   trackByFn(index: number) {
     return index;
   }
-
-  public profileImageSubscription() {
-    this.store.$store
-      .pipe(filter((se: { key: string }) => se.key === 'userpage'))
-      .pipe(
-        map((el: StoreEvent) => {
-          let moreUsers = [];
-          this.userInfo.push(...el.store.value.userpage.users);
-        })
-      )
-      .subscribe();
-  }
-
   onScroll(event: any) {
     this.getUserPage(event);
   }
-
   getUserPage(event: any) {
     const that = this;
     let payload = {
@@ -87,26 +71,19 @@ export class UserListComponent implements OnInit, OnDestroy {
       search: '',
       orderby: ''
     };
-    if (this.totalRows >= this.pageGridConfig.items.length) {
+    if ((this.totalRows > this.pageGridConfig.items.length) || this.totalRows === 0) {
     this.userRepoService
       .getPaged(payload)
       .pipe(
         map((user: UserPage) => {
           if(user) {
-            if (this.store.has('userpage')) {
-              this.store.setIn('userpage', ['userpage'], user);
-            } else {
-              this.store.add('userpage', { userpage: user }, true);
-            };
             that.totalRows = user.totalCount;
             that.pageGridConfig.items.push(...user.users);
-            that.store.setIn('userslistconfig', ['items'], that.pageGridConfig.items);
             that.pageGridConfig.page.currentPage++;
-            that.store.setIn('userslistconfig', ['page', 'currentPage'], that.pageGridConfig.page.currentPage);
+            this.userInfo.push(...user.users);
           }
         })
-      )
-      .subscribe();
+      ).subscribe();
     }
   }
   ngOnDestroy() {
