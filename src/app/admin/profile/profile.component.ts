@@ -48,6 +48,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   userList: ViewContainerRef;
   public userMapUrl ="";
 
+  public date: string = new Date().toISOString().split('T')[0];
+
   constructor(
     private lazyLoader: LazyLoaderService,
     private store: SimpleStoreManagerService,
