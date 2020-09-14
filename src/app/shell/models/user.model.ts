@@ -52,3 +52,8 @@ export interface UserPage {
   users: User[];
   totalCount: number;
 }
+
+export interface resetUser {
+  email: string;
+  otp: string;
+}
