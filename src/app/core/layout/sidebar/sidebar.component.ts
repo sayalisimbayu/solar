@@ -58,7 +58,7 @@ export class SidebarComponent implements OnDestroy, OnDestroy {
     }
     this.username = this.userData.displayname;
     if (this.userData.profileimg != undefined && this.userData.profileimg != '') {
-      this.profileImage = this.userData.profileimg ? this.userData.profileimg: 'assets/images/user_default.png';
+      this.profileImage = this.userData.profileimg ? this.userData.profileimg : 'assets/images/user_default.png';
     }
   }
 

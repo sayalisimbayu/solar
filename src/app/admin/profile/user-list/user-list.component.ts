@@ -16,37 +16,34 @@ export class UserListComponent implements OnInit, OnDestroy {
   throttle: number = 50;
   pageGridConfig: ICGridConfig;
   private totalRows: number = 0;
-  constructor(
-    private store: SimpleStoreManagerService,
-    private userRepoService: UserRepoService,
-    ) {
-      // this.pageGridConfig = {
-      //   itemMap: {
-      //     heading: 'name',
-      //     description: 'price',
-      //     subHeading: 'subheader'
-      //   },
-      //   itemMapDescription: {
-      //     heading: '',
-      //     description: 'Price: ',
-      //     subHeading: 'Unit: '
-      //   },
-      //   items: [],
-      //   page: {
-      //     pagesize: 30,
-      //     currentPage: 0,
-      //     throttle: 50,
-      //     scrollDistance: 1,
-      //     scrollUpDistance: 2
-      //   },
-      //   isCheckbox: false,
-      //   isDelete: true,
-      //   functions: {
-      //     onScroll: this.onScroll.bind(this)
-      //   }
-      // };
-      this.userInfo = [];
-    }
+  constructor(private store: SimpleStoreManagerService, private userRepoService: UserRepoService) {
+    // this.pageGridConfig = {
+    //   itemMap: {
+    //     heading: 'name',
+    //     description: 'price',
+    //     subHeading: 'subheader'
+    //   },
+    //   itemMapDescription: {
+    //     heading: '',
+    //     description: 'Price: ',
+    //     subHeading: 'Unit: '
+    //   },
+    //   items: [],
+    //   page: {
+    //     pagesize: 30,
+    //     currentPage: 0,
+    //     throttle: 50,
+    //     scrollDistance: 1,
+    //     scrollUpDistance: 2
+    //   },
+    //   isCheckbox: false,
+    //   isDelete: true,
+    //   functions: {
+    //     onScroll: this.onScroll.bind(this)
+    //   }
+    // };
+    this.userInfo = [];
+  }
   ngOnInit() {
     this.getUserPage({
       pagesize: 30,
@@ -54,7 +51,7 @@ export class UserListComponent implements OnInit, OnDestroy {
       throttle: 50,
       scrollDistance: 1,
       scrollUpDistance: 2
-    })
+    });
   }
   trackByFn(index: number) {
     return index;
@@ -88,7 +85,6 @@ export class UserListComponent implements OnInit, OnDestroy {
   // }
   //#endregion
 
-
   getUserPage(event: any) {
     const that = this;
     let payload = {
@@ -101,11 +97,12 @@ export class UserListComponent implements OnInit, OnDestroy {
       .getPaged(payload)
       .pipe(
         map((user: UserPage) => {
-          if(user) {
+          if (user) {
             this.userInfo.push(...user.users);
           }
         })
-      ).subscribe();
+      )
+      .subscribe();
   }
   ngOnDestroy() {
     this.userInfo = [];

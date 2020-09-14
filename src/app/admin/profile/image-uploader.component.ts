@@ -51,7 +51,7 @@ export class ImageUploaderComponent implements OnInit {
   ngOnInit() {
     this.profileImageSubscription();
     let userInfo = this.store.getByKey('userInfo');
-    this.imageSrc = userInfo && userInfo.profileimg ? userInfo.profileimg : "assets/images/user_default.png"
+    this.imageSrc = userInfo && userInfo.profileimg ? userInfo.profileimg : 'assets/images/user_default.png';
   }
   handleDragEnter() {
     this.dragging = true;
