@@ -66,10 +66,15 @@
           <p class="m-b-0">{{ userInfo.birthdate | date }}</p>
           <hr />
           <small class="text-muted">Social: </small>
-          <p><i class="fa fa-twitter m-r-5"></i> twitter.com/example</p>
+          <ul style="padding: 0px 5px;">
+            <li *ngFor="let social of userInfo.socialList; index as i; trackBy: trackByFn">
+              <p><i class="fa {{social.typeInfo.class}} m-r-5"></i> {{social.link}}</p>
+            </li>
+          </ul>
+          <!-- <p><i class="fa fa-twitter m-r-5"></i> twitter.com/example</p>
           <p><i class="fa fa-facebook  m-r-5"></i> facebook.com/example</p>
           <p><i class="fa fa-github m-r-5"></i> github.com/example</p>
-          <p><i class="fa fa-instagram m-r-5"></i> instagram.com/example</p>
+          <p><i class="fa fa-instagram m-r-5"></i> instagram.com/example</p> -->
         </div>
       </div>
 
@@ -580,9 +585,12 @@
 
           <div class="card">
             <div class="body">
-              <form
+              <!-- <form
                 [formGroup]="generalInformationFormGroup"
                 (ngSubmit)="onGeneralInformationSubmit(accountData.value)"
+              > -->
+              <form
+                [formGroup]="generalInformationFormGroup"
               >
                 <h6>General Information</h6>
                 <div class="row">
@@ -1218,6 +1226,30 @@
                         >
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label>Social</label>
+                      <select class="form-control" formControlName="socialType" placeholder>
+                        <option value="Select Type" selected disabled>--Select Type--</option>
+                        <option *ngFor="let list of socialListArray; index as i; trackBy: trackByFn" value="{{list.type.toLowerCase()}}" lang="en">{{list.type}}</option>
+                        <!-- <option value="{'type': 'twitter', 'class':'fa-twitter'}" lang="en">Twitter</option>
+                        <option value="{'type': 'facebook', 'class':'fa-facebook'}" lang="en">FaceBook</option>
+                        <option value="{'type': 'github', 'class':'fa-github'}" lang="en">Github</option>
+                        <option value="{'type': 'instagram', 'class':'fa-instagram'}" lang="en">Instagram</option> -->
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Social" formControlName="socialInput" (keyup)="OnEnter($event,generalInformationFormGroup.value)" />
+                    </div>
+                    <div>
+                      <ul style="padding: 0px 5px;">
+                        <li *ngFor="let social of socialList; index as i; trackBy: trackByFn" style="display: flex; justify-content: space-between;">
+                          <span><i class="fa {{social.typeInfo.class}} m-r-5"></i></span>
+                          <span>{{social.typeInfo.type}}</span>
+                          <span>{{social.link}}</span>
+                          <span (click)="onSocialDelete(i,social)"><i class="icon-magnifier-remove"></i></span>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                   <!-- <div class="col-lg-12 col-md-12 form-group">
                     <h6>Email from Lucid</h6>
@@ -1269,7 +1301,7 @@
                     </ul>
                   </div> -->
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button> &nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" (click)="onGeneralInformationSubmit(accountData.value)">Update</button> &nbsp;&nbsp;
                 <button class="btn btn-default">Cancel</button>
               </form>
             </div>

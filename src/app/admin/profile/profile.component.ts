@@ -49,6 +49,20 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   public userMapUrl ="";
 
   public date: string = new Date().toISOString().split('T')[0];
+  public socialList: any[] = [];
+
+  public socialListArray: any[] = [
+    {"type": 'Twitter', "class":'fa-twitter'},
+    {"type": 'FaceBook', "class":'fa-facebook'},
+    {"type": 'GitHub', "class":'fa-github'},
+    {"type": 'Instagram', "class":'fa-instagram'}
+  ]
+
+  public socialArray: any[] =
+    [
+      {"typeInfo":{"type":"facebook","class":"fa-facebook"},"link":"facebook.com"},
+      {"typeInfo":{"type":"instagram","class":"fa-instagram"},"link":"instagram.com"},
+    ]
 
   constructor(
     private lazyLoader: LazyLoaderService,
@@ -117,7 +131,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       city: '',
       ustate: '',
       countrycode: '',
-      profileimg: ''
+      profileimg: '',
+      socialList: this.socialArray
     };
   }
   getUserInfo() {
@@ -178,7 +193,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       countrycode: ['', Validators.required],
       currentpassword: [''],
       password: [''],
-      confirmnewpassword: ['']
+      confirmnewpassword: [''],
+      socialList: [[]]
     });
   }
   setaccountDataFormBuilder(): FormGroup {
@@ -201,7 +217,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       countrycode: ['', Validators.required],
       currentpassword: [''],
       password: [''],
-      confirmnewpassword: ['']
+      confirmnewpassword: [''],
+      socialList: [[]]
     });
   }
   setGeneralInformationFormGroup(): FormGroup {
@@ -211,7 +228,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       language: ['English (United States)'],
       timezone: ['Abidjan'],
       dateformat: ['May 18, 2018'],
-      lucidnotification: ["I'd like to receive the following emails"]
+      lucidnotification: ["I'd like to receive the following emails"],
+      socialInput: [''],
+      socialType:['']
     });
   }
   setUpdatedaccountData(userInfo: UserInfo, user: User) {
@@ -234,7 +253,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       countrycode: userInfo.countrycode,
       currentpassword: '',
       password: '',
-      confirmnewpassword: ''
+      confirmnewpassword: '',
+      socialList: ['']
     };
   }
   toggleTabs(tab: string) {
@@ -339,5 +359,19 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getUserPage() {
     this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {});
+  }
+
+  OnEnter(event: any,data: any) {
+    if(event.keyCode == 13){
+      this.socialList.push({typeInfo: {type: data.socialType, class: `fa-${data.socialType}`}, link: data.socialInput});
+      this.accountData.controls['socialList'].setValue(this.socialList);
+      this.generalInformationFormGroup.controls['socialInput'].setValue('');
+    }
+  }
+  trackByFn(index: number) {
+    return index;
+  }
+  onSocialDelete(index: number, social: string) {
+    this.socialList.splice(index,1);
   }
 }
