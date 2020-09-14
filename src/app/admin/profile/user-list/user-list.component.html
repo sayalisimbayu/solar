@@ -1,5 +1,5 @@
 <div class="container-fluid file_manager">
-<!-- <div
+  <!-- <div
   class="row clearfix"
   infiniteScroll
   [infiniteScrollDistance]="scrollDistance"
@@ -11,15 +11,19 @@
     <li class="online" *ngFor="let user of userInfo; index as i; trackBy: trackByFn">
       <a href="javascript:void(0);">
         <div class="media">
-          <img class="media-object " src="{{ user.profileimg ? user.profileimg : 'assets/images/user_default.png' }}" alt="" />
+          <img
+            class="media-object "
+            src="{{ user.profileimg ? user.profileimg : 'assets/images/user_default.png' }}"
+            alt=""
+          />
           <div class="media-body">
             <span class="name">{{ user.displayname }}</span>
             <!-- <span class="message">{{user.lastname}}</span> -->
             <span class="badge badge-outline status"></span>
           </div>
-          </div>
-        </a>
-      </li>
-    </ul>
+        </div>
+      </a>
+    </li>
+  </ul>
   <!-- </div> -->
 </div>

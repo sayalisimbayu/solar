@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 export class TimeLineComponent {
   items: any[] = [];
   externalVariable = 'hello';
-  timeline: any ={
+  timeline: any = {
     item1: []
   };
   scrollDistance: number = 1;
@@ -34,8 +34,8 @@ export class TimeLineComponent {
     private store: SimpleStoreManagerService,
     private userRepoService: UserRepoService,
     private cdRef: ChangeDetectorRef,
-    private themeService: ThemeService,
-    ) {}
+    private themeService: ThemeService
+  ) {}
   ngOnInit() {
     this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: any) => {
       this.themeClass = themeClass;
@@ -61,26 +61,27 @@ export class TimeLineComponent {
       orderby: ''
     };
     if (this.totalRows >= this.timeline.item1.length) {
-    this.userRepoService
-      .getTimeLineConfig(payload)
-      .pipe(
-        map((timeline: any) => {
-          this.timeline.item1 = timeline.item1;
-          this.timeline.item1.forEach((timel: any) => {
-            this.items.push({
-              label: '',
-              icon: 'fa fa-calendar-plus-o',
-              styleClass: 'teste',
-              content: `${timel.message}`,
-              title: `${timel.type}`,
-              updatedDate: `${timel.updatedDate}`
+      this.userRepoService
+        .getTimeLineConfig(payload)
+        .pipe(
+          map((timeline: any) => {
+            this.timeline.item1 = timeline.item1;
+            this.timeline.item1.forEach((timel: any) => {
+              this.items.push({
+                label: '',
+                icon: 'fa fa-calendar-plus-o',
+                styleClass: 'teste',
+                content: `${timel.message}`,
+                title: `${timel.type}`,
+                updatedDate: `${timel.updatedDate}`
+              });
             });
-          });
-          that.totalRows = timeline.item2;
-          that.page.currentPage++;
-          this.cdRef.detectChanges();
-        })
-      ).subscribe();
+            that.totalRows = timeline.item2;
+            that.page.currentPage++;
+            this.cdRef.detectChanges();
+          })
+        )
+        .subscribe();
     }
   }
 }
