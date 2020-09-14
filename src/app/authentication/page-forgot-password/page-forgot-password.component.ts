@@ -11,7 +11,9 @@ import { resetUser } from '@app/shell/models/user.model';
 export class PageForgotPasswordComponent implements OnInit {
   public user: resetUser = {
     email: '',
-    otp: ''
+    otp: '',
+    password: '',
+    confirmpassword: ''
   };
   public isForgot = true;
   constructor(private router: Router, private authSvc: AuthService) { }

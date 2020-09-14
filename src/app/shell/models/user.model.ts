@@ -56,4 +56,6 @@ export interface UserPage {
 export interface resetUser {
   email: string;
   otp: string;
+  confirmpassword: string;
+  password: string;
 }
