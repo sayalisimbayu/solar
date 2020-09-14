@@ -1,8 +1,10 @@
 import { Component, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { INotification } from '@app/shell/models/noti.model';
+import { ThemeService } from '@app/shared/services/theme.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-timelineChart',
@@ -25,13 +27,19 @@ export class TimeLineComponent {
     throttle: 50,
     scrollDistance: 1,
     scrollUpDistance: 2
-  }
+  };
+  private ngUnsubscribe = new Subject();
+  public themeClass: string = 'theme-cyan';
   constructor(
     private store: SimpleStoreManagerService,
     private userRepoService: UserRepoService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private themeService: ThemeService,
     ) {}
   ngOnInit() {
+    this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: any) => {
+      this.themeClass = themeClass;
+    });
     this.timeline.item1 = [];
     this.loadOverView({
       pagesize: 30,
@@ -64,7 +72,8 @@ export class TimeLineComponent {
               icon: 'fa fa-calendar-plus-o',
               styleClass: 'teste',
               content: `${timel.message}`,
-              title: `${timel.type}`
+              title: `${timel.type}`,
+              updatedDate: `${timel.updatedDate}`
             });
           });
           that.totalRows = timeline.item2;

@@ -14,6 +14,7 @@ export class UserInfo {
   ustate: string;
   countrycode: string;
   profileimg: string;
+  socialList: any;
 }
 
 export class UserInfoPage {
