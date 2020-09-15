@@ -32,9 +32,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   public user: User;
   public userInfo: UserInfo;
   public userSetting: UserSetting;
-
   public birthDate: Date = new Date(2020, 1, 1);
-
   basicInformation: FormGroup;
   accountData: FormGroup;
   generalInformationFormGroup: FormGroup;
@@ -300,7 +298,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     console.log('userInfo', this.basicInformation.value);
   }
-
   onSubmitAccountData(data: any) {
     this.userRepoService
       .saveUserInfo(data)
@@ -349,7 +346,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       notificationid: 0
     };
   }
-
   // OverView
   loadOverView() {
     this.lazyLoader.load('app-timelineChart', this.timelineGrid, 'timelineconfig', (cmpRef: any) => {});
@@ -362,18 +358,16 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-
   getUserPage() {
     this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {});
   }
-
   OnEnter(event: any, data: any) {
     if (event.keyCode == 13) {
       this.sociallist.push({typeInfo: {type: data.socialType, class: `fa-${data.socialType}`}, link: data.socialInput});
       this.accountData.controls['sociallist'].setValue(JSON.stringify(this.sociallist));
+      };
       this.generalInformationFormGroup.controls['socialInput'].setValue('');
     }
-  }
   trackByFn(index: number) {
     return index;
   }
