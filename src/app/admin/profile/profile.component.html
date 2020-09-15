@@ -67,7 +67,7 @@
           <hr />
           <small class="text-muted">Social: </small>
           <ul style="padding: 0px 5px;">
-            <li *ngFor="let social of userInfo.socialList; index as i; trackBy: trackByFn">
+            <li *ngFor="let social of userInfo.sociallist; index as i; trackBy: trackByFn">
               <p><i class="fa {{ social.typeInfo.class }} m-r-5"></i> {{ social.link }}</p>
             </li>
           </ul>
@@ -1228,7 +1228,7 @@
                       <label>Social</label>
                       <select class="form-control" formControlName="socialType" placeholder>
                         <option value="Select Type" selected disabled>--Select Type--</option>
-                        <option
+                        <option *ngFor="let list of sociallistArray; index as i; trackBy: trackByFn" value="{{list.type.toLowerCase()}}" lang="en">{{list.type}}</option>
                           *ngFor="let list of socialListArray; index as i; trackBy: trackByFn"
                           value="{{ list.type.toLowerCase() }}"
                           lang="en"
@@ -1251,7 +1251,7 @@
                     </div>
                     <div>
                       <ul style="padding: 0px 5px;">
-                        <li
+                        <li *ngFor="let social of sociallist; index as i; trackBy: trackByFn" style="display: flex; justify-content: space-between;">
                           *ngFor="let social of socialList; index as i; trackBy: trackByFn"
                           style="display: flex; justify-content: space-between;"
                         >

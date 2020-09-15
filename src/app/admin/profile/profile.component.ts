@@ -49,9 +49,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   public userMapUrl = '';
 
   public date: string = new Date().toISOString().split('T')[0];
-  public socialList: any[] = [];
+  public sociallist: any[] = [];
 
-  public socialListArray: any[] = [
+  public sociallistArray: any[] = [
     { type: 'Twitter', class: 'fa-twitter' },
     { type: 'FaceBook', class: 'fa-facebook' },
     { type: 'GitHub', class: 'fa-github' },
@@ -131,7 +131,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       ustate: '',
       countrycode: '',
       profileimg: '',
-      socialList: this.socialArray
+      sociallist: this.socialArray
     };
   }
   getUserInfo() {
@@ -140,6 +140,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         // alert('got info');
         console.log(el);
         this.userInfo = el;
+        this.userInfo.sociallist = JSON.parse(this.userInfo.sociallist);
         this.store.has('userInfo') && this.store.remove('userInfo');
         this.store.add('userInfo', this.userInfo, true);
         this.basicInformation.controls['id'].setValue(el.id);
@@ -150,6 +151,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
 
         // set account data
+        debugger;
         this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
       } else {
         this.userInfo = this.setEmptyUserInfo();
@@ -161,6 +163,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
 
         // set account data
+        debugger
         this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
       }
       this.store.has('userInfo') && this.store.remove('userInfo');
@@ -178,7 +181,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       usid: [],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      username: [''],
+      username: ['amar@simbayu.in'],
       displayname: [`${this.userInfo.firstname} ${this.userInfo.lastname}`],
       email: [''],
       gender: ['true', Validators.required],
@@ -193,7 +196,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       currentpassword: [''],
       password: [''],
       confirmnewpassword: [''],
-      socialList: [[]]
+      profileimg: [''],
+      sociallist: [[]]
     });
   }
   setaccountDataFormBuilder(): FormGroup {
@@ -202,7 +206,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       usid: [0],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      username: [{ value: '', disabled: true }],
+      username: [{ value: 'amar@simbayu.in', disabled: true }],
       displayname: [`${this.userInfo.firstname} ${this.userInfo.lastname}`],
       email: [''],
       gender: ['', Validators.required],
@@ -217,7 +221,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       currentpassword: [''],
       password: [''],
       confirmnewpassword: [''],
-      socialList: [[]]
+      profileimg: [''],
+      sociallist: [[]]
     });
   }
   setGeneralInformationFormGroup(): FormGroup {
@@ -253,7 +258,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       currentpassword: '',
       password: '',
       confirmnewpassword: '',
-      socialList: ['']
+      profileimg: userInfo.profileimg,
+      sociallist: [JSON.stringify(userInfo.sociallist)]
     };
   }
   toggleTabs(tab: string) {
@@ -275,6 +281,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.basicInformation.value['gender'] =
       this.basicInformation.value['gender'].toString().toLowerCase() === 'true' ? true : false;
+      data.sociallist = JSON.stringify(data.sociallist);
     // appuserinfo
     this.userRepoService.saveUserinfo(data).subscribe(el => {
       alert('user saved successfully');
@@ -362,11 +369,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   OnEnter(event: any, data: any) {
     if (event.keyCode == 13) {
-      this.socialList.push({
-        typeInfo: { type: data.socialType, class: `fa-${data.socialType}` },
+      this.sociallist.push({typeInfo: {type: data.socialType, class: `fa-${data.socialType}`}, link: data.socialInput});
+      this.accountData.controls['sociallist'].setValue(JSON.stringify(this.sociallist));
         link: data.socialInput
       });
-      this.accountData.controls['socialList'].setValue(this.socialList);
       this.generalInformationFormGroup.controls['socialInput'].setValue('');
     }
   }
@@ -374,6 +380,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     return index;
   }
   onSocialDelete(index: number, social: string) {
-    this.socialList.splice(index, 1);
+    this.sociallist.splice(index,1);
   }
 }
