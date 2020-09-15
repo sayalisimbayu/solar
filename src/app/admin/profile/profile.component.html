@@ -1228,12 +1228,11 @@
                       <label>Social</label>
                       <select class="form-control" formControlName="socialType" placeholder>
                         <option value="Select Type" selected disabled>--Select Type--</option>
-                        <option *ngFor="let list of sociallistArray; index as i; trackBy: trackByFn" value="{{list.type.toLowerCase()}}" lang="en">{{list.type}}</option>
+                        <option 
                           *ngFor="let list of socialListArray; index as i; trackBy: trackByFn"
                           value="{{ list.type.toLowerCase() }}"
                           lang="en"
-                          >{{ list.type }}</option
-                        >
+                          >{{ list.type }}</option>
                         <!-- <option value="{'type': 'twitter', 'class':'fa-twitter'}" lang="en">Twitter</option>
                         <option value="{'type': 'facebook', 'class':'fa-facebook'}" lang="en">FaceBook</option>
                         <option value="{'type': 'github', 'class':'fa-github'}" lang="en">Github</option>
