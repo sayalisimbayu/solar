@@ -248,17 +248,21 @@ export class UserRepoService {
       })
     );
   }
-  getLatitudeAndLogitude(user: any){
+  getLatitudeAndLogitude(user: any) {
     let userEncodedAddress = `${user.city}+${user.countrycode}`;
-    return this.http.get<any>(
-        `https://www.mapquestapi.com/geocoding/v1/address?key=yzgefOayv6ttyk36AAN3hBvI3utHRRzL&inFormat=kvp&outFormat=json&location=${userEncodedAddress}&thumbMaps=true`, {headers: {}}).pipe(
+    return this.http
+      .get<any>(
+        `https://www.mapquestapi.com/geocoding/v1/address?key=yzgefOayv6ttyk36AAN3hBvI3utHRRzL&inFormat=kvp&outFormat=json&location=${userEncodedAddress}&thumbMaps=true`,
+        { headers: {} }
+      )
+      .pipe(
         map((response: any) => {
           let mapUrl: string = '';
-          if(response && Object.keys(response).length > 0) {
-            mapUrl = response.results[0].locations[0].mapUrl
+          if (response && Object.keys(response).length > 0) {
+            mapUrl = response.results[0].locations[0].mapUrl;
           }
           return mapUrl;
         })
       );
-}
+  }
 }

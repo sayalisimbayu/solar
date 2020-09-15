@@ -46,23 +46,22 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('userList', { read: ViewContainerRef, static: true })
   userList: ViewContainerRef;
-  public userMapUrl ="";
+  public userMapUrl = '';
 
   public date: string = new Date().toISOString().split('T')[0];
   public sociallist: any[] = [];
 
   public sociallistArray: any[] = [
-    {"type": 'Twitter', "class":'fa-twitter'},
-    {"type": 'FaceBook', "class":'fa-facebook'},
-    {"type": 'GitHub', "class":'fa-github'},
-    {"type": 'Instagram', "class":'fa-instagram'}
-  ]
+    { type: 'Twitter', class: 'fa-twitter' },
+    { type: 'FaceBook', class: 'fa-facebook' },
+    { type: 'GitHub', class: 'fa-github' },
+    { type: 'Instagram', class: 'fa-instagram' }
+  ];
 
-  public socialArray: any[] =
-    [
-      {"typeInfo":{"type":"facebook","class":"fa-facebook"},"link":"facebook.com"},
-      {"typeInfo":{"type":"instagram","class":"fa-instagram"},"link":"instagram.com"},
-    ]
+  public socialArray: any[] = [
+    { typeInfo: { type: 'facebook', class: 'fa-facebook' }, link: 'facebook.com' },
+    { typeInfo: { type: 'instagram', class: 'fa-instagram' }, link: 'instagram.com' }
+  ];
 
   constructor(
     private lazyLoader: LazyLoaderService,
@@ -169,10 +168,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.store.has('userInfo') && this.store.remove('userInfo');
       this.store.add('userInfo', this.userInfo, true);
-      this.userRepoService.getLatitudeAndLogitude(this.userInfo).subscribe((response: any) =>{
+      this.userRepoService.getLatitudeAndLogitude(this.userInfo).subscribe((response: any) => {
         this.userMapUrl = response;
         this.cdRef.detectChanges();
-      })
+      });
       this.getPermissions();
     });
   }
@@ -235,7 +234,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       dateformat: ['May 18, 2018'],
       lucidnotification: ["I'd like to receive the following emails"],
       socialInput: [''],
-      socialType:['']
+      socialType: ['']
     });
   }
   setUpdatedaccountData(userInfo: UserInfo, user: User) {
@@ -368,10 +367,12 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.lazyLoader.load('app-user-list', this.userList, 'userpage', (cmpRef: any) => {});
   }
 
-  OnEnter(event: any,data: any) {
-    if(event.keyCode == 13){
+  OnEnter(event: any, data: any) {
+    if (event.keyCode == 13) {
       this.sociallist.push({typeInfo: {type: data.socialType, class: `fa-${data.socialType}`}, link: data.socialInput});
       this.accountData.controls['sociallist'].setValue(JSON.stringify(this.sociallist));
+        link: data.socialInput
+      });
       this.generalInformationFormGroup.controls['socialInput'].setValue('');
     }
   }

@@ -12,7 +12,7 @@
           </div>
           <div>
             <h4 class="m-b-0">{{ user.displayname }}</h4>
-            <span>Washington, d.c.</span>
+            <span>{{userInfo.city }} {{userInfo.ustate}}</span>
           </div>
           <div class="m-t-15">
             <button class="btn btn-primary mr-1">Follow</button>
@@ -68,7 +68,7 @@
           <small class="text-muted">Social: </small>
           <ul style="padding: 0px 5px;">
             <li *ngFor="let social of userInfo.sociallist; index as i; trackBy: trackByFn">
-              <p><i class="fa {{social.typeInfo.class}} m-r-5"></i> {{social.link}}</p>
+              <p><i class="fa {{ social.typeInfo.class }} m-r-5"></i> {{ social.link }}</p>
             </li>
           </ul>
           <!-- <p><i class="fa fa-twitter m-r-5"></i> twitter.com/example</p>
@@ -83,7 +83,7 @@
           <h2>Who to follow</h2>
         </div>
         <div class="body">
-            <ng-template #userList></ng-template>
+          <ng-template #userList></ng-template>
           <!-- <app-user-list></app-user-list> -->
           <!-- <ul class="right_chat list-unstyled">
             <li class="online">
@@ -233,7 +233,7 @@
                           class="form-control"
                           placeholder="Birthdate"
                           formControlName="birthdate"
-                          max= "{{date}}"
+                          max="{{ date }}"
                         />
                       </div>
                     </div>
@@ -589,9 +589,7 @@
                 [formGroup]="generalInformationFormGroup"
                 (ngSubmit)="onGeneralInformationSubmit(accountData.value)"
               > -->
-              <form
-                [formGroup]="generalInformationFormGroup"
-              >
+              <form [formGroup]="generalInformationFormGroup">
                 <h6>General Information</h6>
                 <div class="row">
                   <div class="col-lg-12 col-md-12">
@@ -1231,6 +1229,11 @@
                       <select class="form-control" formControlName="socialType" placeholder>
                         <option value="Select Type" selected disabled>--Select Type--</option>
                         <option *ngFor="let list of sociallistArray; index as i; trackBy: trackByFn" value="{{list.type.toLowerCase()}}" lang="en">{{list.type}}</option>
+                          *ngFor="let list of socialListArray; index as i; trackBy: trackByFn"
+                          value="{{ list.type.toLowerCase() }}"
+                          lang="en"
+                          >{{ list.type }}</option
+                        >
                         <!-- <option value="{'type': 'twitter', 'class':'fa-twitter'}" lang="en">Twitter</option>
                         <option value="{'type': 'facebook', 'class':'fa-facebook'}" lang="en">FaceBook</option>
                         <option value="{'type': 'github', 'class':'fa-github'}" lang="en">Github</option>
@@ -1238,15 +1241,24 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Social" formControlName="socialInput" (keyup)="OnEnter($event,generalInformationFormGroup.value)" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Social"
+                        formControlName="socialInput"
+                        (keyup)="OnEnter($event, generalInformationFormGroup.value)"
+                      />
                     </div>
                     <div>
                       <ul style="padding: 0px 5px;">
                         <li *ngFor="let social of sociallist; index as i; trackBy: trackByFn" style="display: flex; justify-content: space-between;">
-                          <span><i class="fa {{social.typeInfo.class}} m-r-5"></i></span>
-                          <span>{{social.typeInfo.type}}</span>
-                          <span>{{social.link}}</span>
-                          <span (click)="onSocialDelete(i,social)"><i class="icon-magnifier-remove"></i></span>
+                          *ngFor="let social of socialList; index as i; trackBy: trackByFn"
+                          style="display: flex; justify-content: space-between;"
+                        >
+                          <span><i class="fa {{ social.typeInfo.class }} m-r-5"></i></span>
+                          <span>{{ social.typeInfo.type }}</span>
+                          <span>{{ social.link }}</span>
+                          <span (click)="onSocialDelete(i, social)"><i class="icon-magnifier-remove"></i></span>
                         </li>
                       </ul>
                     </div>
@@ -1301,7 +1313,10 @@
                     </ul>
                   </div> -->
                 </div>
-                <button type="button" class="btn btn-primary" (click)="onGeneralInformationSubmit(accountData.value)">Update</button> &nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" (click)="onGeneralInformationSubmit(accountData.value)">
+                  Update
+                </button>
+                &nbsp;&nbsp;
                 <button class="btn btn-default">Cancel</button>
               </form>
             </div>

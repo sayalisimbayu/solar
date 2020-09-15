@@ -16,9 +16,9 @@ export class PageForgotPasswordComponent implements OnInit {
     confirmpassword: ''
   };
   public isForgot = true;
-  constructor(private router: Router, private authSvc: AuthService) { }
+  constructor(private router: Router, private authSvc: AuthService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
   forgot() {
     this.authSvc.forgot(this.user.email).subscribe(res => {
       this.isForgot = !this.isForgot;
