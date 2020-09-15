@@ -371,8 +371,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     if (event.keyCode == 13) {
       this.sociallist.push({typeInfo: {type: data.socialType, class: `fa-${data.socialType}`}, link: data.socialInput});
       this.accountData.controls['sociallist'].setValue(JSON.stringify(this.sociallist));
-        link: data.socialInput
-      });
       this.generalInformationFormGroup.controls['socialInput'].setValue('');
     }
   }
