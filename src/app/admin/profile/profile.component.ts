@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   public date: string = new Date().toISOString().split('T')[0];
   public sociallist: any[] = [];
 
-  public sociallistArray: any[] = [
+  public socialListArray: any[] = [
     { type: 'Twitter', class: 'fa-twitter' },
     { type: 'FaceBook', class: 'fa-facebook' },
     { type: 'GitHub', class: 'fa-github' },
