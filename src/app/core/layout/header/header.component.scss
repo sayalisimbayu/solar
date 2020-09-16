@@ -1,0 +1,60 @@
+$purple: #a27ce6 !default;
+$orange: #ffce4b !default;
+$green: #50d38a !default;
+$blue: #3eacff !default;
+$blush: #e47297 !default;
+$cyan: #49c5b6 !default;
+
+.dropdown-menu{
+    font-size: 0.9rem;
+}
+
+.navbar-nav ul.notifications {
+    background: white !important;
+}
+.navbar-nav .dropdown-menu {
+    padding: 20px 0px !important;
+}
+
+.navbar-nav ul.notifications li.header {
+    padding-left: 5px !important;
+}
+
+.content-li {
+    // border-top: 5px solid red;
+    border-bottom: .0625rem solid #e4e9f2 !important;
+    border-right: .0625rem solid #e4e9f2 !important;
+    border-left: .0625rem solid #e4e9f2 !important;
+    border-radius: 5px !important;
+    margin-bottom: 10px !important;
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+
+    &.theme-cyan {
+        border-top: 5px solid $cyan;
+      }
+      &.theme-purple {
+        border-top: 5px solid $purple;
+      }
+      &.theme-blue {
+        border-top: 5px solid $blue;
+      }
+      &.theme-green {
+        border-top: 5px solid $green;
+      }
+      &.theme-orange {
+        border-top: 5px solid $orange;
+      }
+      &.theme-blush {
+        border-top: 5px solid $blush;
+      }
+}
+.navbar-nav ul.notifications li {
+    border-bottom: 0px;
+}
+.media-left {
+    margin-top: 10px !important;
+}
+.footer {
+    margin-left: 10px !important;
+}
