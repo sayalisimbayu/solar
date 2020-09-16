@@ -116,11 +116,11 @@ body {
 
 .timeline {
   ul {
-    padding: 1em 0 0 2em;
+    padding: 1em 0 0 1em;
     margin: 0;
     list-style: none;
     position: relative;
-
+    z-index: 0;
     &::after {
       content: " ";
       height: 100%;
@@ -128,8 +128,11 @@ body {
       background-color: $light-grey;
       position: absolute;
       top: 0;
-      left: 2.5em;
-      //   z-index: 1;
+      left: 1.5em;
+      z-index: -1;
+    }
+    li{
+      z-index: 2;
     }
   }
 
@@ -180,7 +183,7 @@ body {
   }
 
   .time {
-    width: 35%;
+    width: 25%;
     font-size: 0.75em;
     padding-top: 0.25em;
   }
