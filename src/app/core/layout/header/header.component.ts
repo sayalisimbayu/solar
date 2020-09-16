@@ -3,11 +3,13 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeService } from '@app/shared/services/theme.service';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/shell/auth/auth.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  styleUrls: ['./header.component.scss'],
   providers: [NgbDropdownConfig]
 })
 export class HeaderComponent implements OnInit {
@@ -19,6 +21,10 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSettingDropMenuEvent = new EventEmitter();
   @Output() toggleNotificationDropMenuEvent = new EventEmitter();
 
+  // theme
+  private ngUnsubscribe = new Subject();
+  public themeClass: string = 'theme-cyan';
+
   constructor(
     private config: NgbDropdownConfig,
     private themeService: ThemeService,
@@ -26,6 +32,10 @@ export class HeaderComponent implements OnInit {
     private authSvc: AuthService
   ) {
     config.placement = 'bottom-right';
+
+    this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: any) => {
+      this.themeClass = themeClass;
+    });
   }
 
   ngOnInit() {}
