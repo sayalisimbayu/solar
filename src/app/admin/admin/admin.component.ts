@@ -9,6 +9,7 @@ import { ThemeService } from '@app/shared/services/theme.service';
 import { AuthService } from '@app/shell/auth/auth.service';
 import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 import { UserIdleService } from 'angular-user-idle';
+import {NotificationPaneService} from '@app/shared/services/notificationPaneService'
 
 @Component({
   selector: 'app-admin',
@@ -36,7 +37,8 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
     private themeService: ThemeService,
     private titleService: Title,
     private authSrv: AuthService,
-    private userIdle: UserIdleService
+    private userIdle: UserIdleService,
+    public NotificationPaneService: NotificationPaneService
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {
       this.isStopLoading = false;
