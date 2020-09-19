@@ -11,7 +11,7 @@ $cyan: #49c5b6 !default;
     -ms-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    width: 300px;
+    width: 345px;
     height: calc(100% - 65px);
     float: right !important;
     margin-top: 61px;
@@ -97,6 +97,11 @@ $cyan: #49c5b6 !default;
 }
 .media-left {
     margin-top: 10px !important;
+}
+.media .media-body {
+  color: #666;
+  font-size: 14px;
+  padding: 0px 5px;
 }
 .footer {
     margin-left: 10px !important;
