@@ -57,8 +57,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   public socialArray: any[] = [
-    { typeInfo: { type: 'facebook', class: 'fa-facebook' }, link: 'facebook.com' },
-    { typeInfo: { type: 'instagram', class: 'fa-instagram' }, link: 'instagram.com' }
+    // { typeInfo: { type: 'facebook', class: 'fa-facebook' }, link: 'facebook.com' },
+    // { typeInfo: { type: 'instagram', class: 'fa-instagram' }, link: 'instagram.com' }
   ];
 
   constructor(
@@ -139,6 +139,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(el);
         this.userInfo = el;
         this.userInfo.sociallist = JSON.parse(this.userInfo.sociallist);
+        this.socialArray = this.userInfo.sociallist;
         this.store.has('userInfo') && this.store.remove('userInfo');
         this.store.add('userInfo', this.userInfo, true);
         this.basicInformation.controls['id'].setValue(el.id);
