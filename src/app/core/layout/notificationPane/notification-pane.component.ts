@@ -1,32 +1,36 @@
-import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { ThemeService } from '@app/shared/services/theme.service';
-import { AuthService } from '@app/shell/auth/auth.service';
-import { AppTheme } from '@app/shell/models/appsetting.model';
-import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
+import { Component, Input, OnDestroy, ChangeDetectorRef, ViewContainerRef, ViewChild, OnChanges, AfterViewInit } from '@angular/core';
+import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 
 @Component({
   selector: 'app-notification-pane',
   templateUrl: './notification-pane.component.html',
   styleUrls: ['./notification-pane.component.scss']
 })
-export class NotificationPaneComponent implements OnDestroy {
+export class NotificationPaneComponent implements OnDestroy, OnChanges, AfterViewInit {
   @Input() sidebarVisible: boolean = false;
-  public themeClass: string = 'theme-cyan';
-  private ngUnsubscribe = new Subject();
-  constructor(
-    private themeService: ThemeService,
-    private authSrv: AuthService,
-    private userRepoService: UserRepoService
-  ) {
-    this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: string) => {
-      this.themeClass = themeClass;
-    });
-  }
+  @ViewChild('appbellnotificationpane', { read: ViewContainerRef, static: true })
+  appbellnotificationpane: ViewContainerRef;
+  constructor(private lazyLoader: LazyLoaderService) {}
 
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+  ngOnChanges() {
+    if(this.sidebarVisible){
+    this.appbellnotificationpane.clear();
+    this.lazyLoader.load('app-bell-notification-pane', this.appbellnotificationpane, 'profile_page_title', (_cdRef: any) => {
+    });
+    } else {
+      this.appbellnotificationpane.clear();
+    }
   }
+  ngOnInit() {}
+  ngAfterViewInit(): void {
+    if(this.sidebarVisible){
+      this.appbellnotificationpane.clear();
+      this.lazyLoader.load('app-bell-notification-pane', this.appbellnotificationpane, 'profile_page_title', (_cdRef: any) => {
+      });
+      } else {
+        this.appbellnotificationpane.clear();
+      }
+
+  }
+  ngOnDestroy() {}
 }

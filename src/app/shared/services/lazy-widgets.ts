@@ -81,13 +81,12 @@ export const lazyWidgets: {
     path: 'app-user-list',
     loadChildren: () => import('./../../admin/profile/user-list/user-list.module').then(m => m.UserListModule),
     data: { preload: true }
+  },
+  {
+    path: 'app-bell-notification-pane',
+    loadChildren: () => import('./../../core/layout/bell-notification/bell-notification.module').then(m => m.BellNotificationModule),
+    data: { preload: true }
   }
-  // {
-  //   path: 'category-grid',
-  //   loadChildren: () =>
-  //     import('./../pages/page-category-grid/category-grid/category-grid.module').then(m => m.CategoryGridModule),
-  //   data: { preload: true }
-  // }
 ];
 
 export function lazyArrayToObj() {
