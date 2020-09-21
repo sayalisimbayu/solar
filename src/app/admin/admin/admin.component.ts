@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy, ViewContainerRef, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { takeUntil, filter, map, mergeMap } from 'rxjs/operators';
@@ -9,6 +9,8 @@ import { ThemeService } from '@app/shared/services/theme.service';
 import { AuthService } from '@app/shell/auth/auth.service';
 import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 import { UserIdleService } from 'angular-user-idle';
+import {NotificationPaneService} from '@app/shared/services/notificationPaneService'
+import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 
 @Component({
   selector: 'app-admin',
@@ -29,6 +31,9 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
   private ngUnsubscribe = new Subject();
   private subScription = new Subscription();
 
+  @ViewChild('notification', { read: ViewContainerRef, static: true })
+  notification: ViewContainerRef;
+
   constructor(
     public sidebarService: SidebarService,
     private router: Router,
@@ -36,7 +41,9 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
     private themeService: ThemeService,
     private titleService: Title,
     private authSrv: AuthService,
-    private userIdle: UserIdleService
+    private userIdle: UserIdleService,
+    public NotificationPaneService: NotificationPaneService,
+    private lazyLoader: LazyLoaderService,
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {
       this.isStopLoading = false;
@@ -83,6 +90,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
         this.userIdle.stopWatching();
       })
     );
+
   }
 
   ngOnDestroy() {

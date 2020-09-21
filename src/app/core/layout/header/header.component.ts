@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeService } from '@app/shared/services/theme.service';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/shell/auth/auth.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { NotificationPaneService } from '@app/shared/services/notificationPaneService';
+import { SidebarService } from '@app/shared/services/sidebar.service';
 
 @Component({
   selector: 'app-header',
@@ -14,12 +16,12 @@ import { Subject } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
   // Properties
-
   @Input() showNotifMenu: boolean = false;
   @Input() showToggleMenu: boolean = false;
   @Input() darkClass: string = '';
   @Output() toggleSettingDropMenuEvent = new EventEmitter();
   @Output() toggleNotificationDropMenuEvent = new EventEmitter();
+  public notificationPaneVisible: boolean = false;
 
   // theme
   private ngUnsubscribe = new Subject();
@@ -29,7 +31,9 @@ export class HeaderComponent implements OnInit {
     private config: NgbDropdownConfig,
     private themeService: ThemeService,
     private router: Router,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private notificationPaneService: NotificationPaneService,
+    private cdr: ChangeDetectorRef,
   ) {
     config.placement = 'bottom-right';
 
@@ -55,4 +59,11 @@ export class HeaderComponent implements OnInit {
   toggleSideMenu() {
     this.themeService.showHideMenu();
   }
+
+  toggleNotificationFullWidth() {
+    this.notificationPaneService.toggle();
+    this.notificationPaneVisible = this.notificationPaneService.getStatus();
+    this.cdr.detectChanges();
+  }
+
 }

@@ -24,9 +24,41 @@
   }
 }
 
+#right-sidebar {
+  @include transition(all 0.3s ease-in-out);
+  width: $sidebar-width;
+  height: calc(100% - 65px);
+  float: right;
+  margin-top: 61px;
+  position: fixed;
+  right: 0px;
+  background-color: $grey-50;
+  z-index: 9;
+
+  @include max-screen($break-large) {
+    @include box-shadow(0 5px 10px 0px rgba(0, 0, 0, 0.2));
+    left: -$sidebar-width;
+  }
+
+  .nav-tabs {
+    .nav-link.active {
+      background-color: transparent;
+      border-color: #dee2e6 #dee2e6 #f4f7f6;
+    }
+  }
+}
+
 .layout-fullwidth {
   &#left-sidebar {
     left: -$sidebar-width;
+
+    &.ps {
+      overflow: visible !important;
+    }
+  }
+
+  &#right-sidebar {
+    right: -$sidebar-width;
 
     &.ps {
       overflow: visible !important;
@@ -41,6 +73,9 @@
 .offcanvas-active {
   #left-sidebar {
     left: 5px;
+  }
+  #right-sidebar {
+    right: 5px;
   }
 }
 
