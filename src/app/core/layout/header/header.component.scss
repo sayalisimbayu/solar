@@ -1,0 +1,66 @@
+$purple: #a27ce6 !default;
+$orange: #ffce4b !default;
+$green: #50d38a !default;
+$blue: #3eacff !default;
+$blush: #e47297 !default;
+$cyan: #49c5b6 !default;
+
+[data-badge] {
+    position:relative;
+    &:after {
+      position:absolute;
+      right:-10px;
+      top:-10px;
+      min-width:10px;
+      min-height:10px;
+      line-height:10px;
+      padding:5px;
+      color:#fff;
+      background-color:#bf1f1f;
+      font-size:10px;
+      border-radius:20px;
+      content:attr(data-badge);
+      border:solid 1px #c93a3a;
+    }
+  }
+
+  .notification-dot {
+    -webkit-border-radius: 0px !important;
+    border-radius: 0px !important;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 0px !important;
+    right: 9px !important;
+    background-color: white !important;
+    font-weight: 900;
+    font-size: 20px;
+    &.theme-cyan {
+        color: $cyan !important;
+      }
+      &.theme-purple {
+        color: $purple !important;
+      }
+      &.theme-blue {
+        color: $blue !important;
+      }
+      &.theme-green {
+        color: $green !important;
+      }
+      &.theme-orange {
+        color: $orange !important;
+      }
+      &.theme-blush {
+        color: $blush !important;
+      }
+}
+
+.blink_me {
+    animation: blinker 1s linear infinite;
+  }
+
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }

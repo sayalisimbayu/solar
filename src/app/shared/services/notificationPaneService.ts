@@ -5,7 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class NotificationPaneService {
   public sidebarVisible: boolean = false;
-
+  public notificationBadge: number = 0;
+  public notificationBadgeBlink: string = '';
   constructor() {}
 
   toggle() {
