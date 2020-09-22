@@ -549,7 +549,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   updateDashboardGrid(){
-    debugger
     this.lazyLoader.load('app-dashboard-grid', this.appDashboardGrid, 'dashboard_chart_tiles', (_cdRef: any) => {
     });
   }

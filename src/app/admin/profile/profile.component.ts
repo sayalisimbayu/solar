@@ -151,7 +151,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
 
         // set account data
-        debugger;
         this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
       } else {
         this.userInfo = this.setEmptyUserInfo();
@@ -163,7 +162,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
 
         // set account data
-        debugger
         this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
       }
       this.store.has('userInfo') && this.store.remove('userInfo');

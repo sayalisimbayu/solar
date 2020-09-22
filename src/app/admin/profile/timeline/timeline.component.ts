@@ -54,7 +54,6 @@ export class TimeLineComponent {
   }
   loadOverView(event: any) {
     const that = this;
-    debugger;
     let payload = {
       pageNumber: event.currentPage,
       pageSize: 10,
