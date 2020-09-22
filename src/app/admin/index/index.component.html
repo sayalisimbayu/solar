@@ -1,17 +1,30 @@
 <div class="container-fluid">
   <ng-template #pagetitle></ng-template>
+  <ng-template #dashboardGrid></ng-template>
   <div class="row clearfix">
-    <div class="col-lg-3 col-md-6 col-sm-6"></div>
-    <div class="col-lg-3 col-md-6 col-sm-6">T</div>
-    <div class="col-lg-3 col-md-6 col-sm-6">T</div>
-    <div class="col-lg-3 col-md-6 col-sm-6">T</div>
+    <div class="col-lg-3 col-md-6 col-sm-6"><ng-template #appDetailTile></ng-template></div>
+    <div class="col-lg-3 col-md-6">T</div>
+    <div class="col-lg-3 col-md-6">T</div>
   </div>
 
   <div class="row clearfix">
-    <div class="col-lg-6 col-md-12">T</div>
-    <div class="col-lg-3 col-md-6">T</div>
-    <div class="col-lg-3 col-md-6">T</div>
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="card">
+        <div class="header">
+            <h2>Top Products</h2>
+        </div>
+        <div class="body">
+            <div id="chart-top-products" class="chartist">
+                <div echarts [options]="stackedBarChart" [autoResize]="true" class="fix-h-292"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <ng-template #appChartTile></ng-template>
+    </div>
   </div>
+
 
   <div class="row clearfix">
     <div class="col-lg-4 col-md-12"></div>

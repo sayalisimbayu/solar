@@ -6,12 +6,6 @@ export const lazyWidgets: {
   data: any;
 }[] = [
   {
-    path: 'app-detail-tiles',
-    loadChildren: () =>
-      import('./../../admin/assosiates/detail-tiles/detail-tiles.module').then(m => m.DetailTilesModule),
-    data: { preload: true }
-  },
-  {
     path: 'page-header-chart',
     loadChildren: () => import('./../../core/layout/page-title/general-component/gc.module').then(m => m.GCModule),
     data: { preload: true }
@@ -81,7 +75,20 @@ export const lazyWidgets: {
     path: 'app-user-list',
     loadChildren: () => import('./../../admin/profile/user-list/user-list.module').then(m => m.UserListModule),
     data: { preload: true }
+  },
+  {
+    path: 'app-detail-titles',
+    loadChildren: () => 
+    import('./../../admin/index/dashboard-widgets/detail-tiles/detail-tiles.module').then(m => m.DetailTilesModule),
+    data: { preload: true }
+  },
+  {
+    path: 'app-chart-tiles',
+    loadChildren: () => 
+    import('./../../admin/index/dashboard-widgets/chart-tiles/chart-tiles.module').then(m => m.ChartTilesModule),
+    data: { preload: true }
   }
+  
   // {
   //   path: 'category-grid',
   //   loadChildren: () =>

@@ -54,11 +54,12 @@ export class TimeLineComponent {
   }
   loadOverView(event: any) {
     const that = this;
+    debugger;
     let payload = {
       pageNumber: event.currentPage,
       pageSize: 10,
       search: '',
-      orderby: ''
+      orderby: 'UpdatedDate desc'
     };
     if (this.totalRows >= this.timeline.item1.length) {
       this.userRepoService

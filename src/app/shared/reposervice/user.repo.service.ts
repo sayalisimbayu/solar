@@ -163,12 +163,7 @@ export class UserRepoService {
   }
   public getTimeLineConfig(payload: any): Observable<INotification[]> {
     return this.http
-      .post<DataResponse>(`communi/page`, {
-        pageNumber: 1,
-        pageSize: 10,
-        search: '',
-        orderby: ''
-      })
+      .post<DataResponse>(`communi/page`, payload)
       .pipe(
         map((el: DataResponse) => {
           if (el.code === 0) {

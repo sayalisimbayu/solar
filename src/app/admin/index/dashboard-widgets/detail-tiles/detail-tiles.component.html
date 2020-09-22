@@ -1,0 +1,10 @@
+<div class="card overflowhidden number-chart" [hidden]="!(config.title!='')">
+  <div class="body">
+    <div class="number">
+      <h6>{{ config.title | uppercase }}</h6>
+      <span>{{ config.value }}</span>
+    </div>
+    <small class="text-muted">{{ config.details }}</small>
+  </div>
+  <div echarts [options]="config.chartoptions" class="echart-line-chart-area" [autoResize]="autoResize"></div>
+</div>

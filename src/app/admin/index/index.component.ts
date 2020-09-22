@@ -26,6 +26,10 @@ import { IPageTitleConfig } from '@app/core/layout/page-title/model/page-title.c
 export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('pagetitle', { read: ViewContainerRef, static: true })
   pageTitle: ViewContainerRef;
+  @ViewChild('appDetailTile', { read: ViewContainerRef, static: true })
+  appDetailTile: ViewContainerRef;
+  @ViewChild('appChartTile', { read: ViewContainerRef, static: true })
+  appChartTile: ViewContainerRef;
   public totalEarningSubscriber$: any;
   public sidebarVisible = true;
   public isResizing = false;
@@ -36,6 +40,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   public visitsAreaOptions: EChartOption = {};
   public LikesOptions: EChartOption = {};
   public stackedBarChart: EChartOption = {};
+  public spendAnalysis: EChartOption = {};
   public dataManagedBarChart: EChartOption = {};
 
   public earningOptionsSeries: Array<number> = [1, 4, 1, 3, 7, 1];
@@ -65,6 +70,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     this.visitsAreaOptions = this.loadLineAreaChartOptions([1, 4, 2, 3, 1, 5], '#4aacc5', '#92cddc');
     this.LikesOptions = this.loadLineAreaChartOptions([1, 3, 5, 1, 4, 2], '#4f81bc', '#95b3d7');
     this.dataManagedBarChart = this.getDataManagedChartOptions();
+    this.stackedBarChart = this.getTopProductChartOptions();
+    this.spendAnalysis=this.getSpendAnalysis();
     this.pageTitleConfig = {
       breadCrumb: [
         {
@@ -80,21 +87,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     const that = this;
-    setTimeout(function() {
+    setTimeout(function () {
       that.showToastr();
     }, 1000);
-    this.chartIntervals();
-    this.totalEarningSubscriber$ = this.store.$store
-      .pipe(filter((se: { key: string }) => se.key === 'totalEarnings'))
-      .pipe(
-        map((el: StoreEvent) => {
-          // this.toastr.info('Hello, Total Earnings are changed to:' + el.store.value, undefined, {
-          //   closeButton: true,
-          //   positionClass: 'toast-top-right'
-          // });
-        })
-      )
-      .subscribe();
   }
 
   ngOnDestroy() {
@@ -106,6 +101,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     // Add 'implements AfterViewInit' to the class.
     this.updatePagetTitle();
+    this.updateAppDetailTile();
+    this.updateAppChartTile();
+
   }
   showToastr() {
     this.toastr.info('Hello, welcome to Simbayu.', undefined, {
@@ -114,58 +112,12 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  chartIntervals() {
-    const that = this;
-    this.interval = setInterval(() => {
-      that.earningOptionsSeries.shift();
-      let rand = Math.floor(Math.random() * 11);
-      if (!rand) {
-        rand = 1;
-      }
-      that.earningOptionsSeries.push(rand);
-      that.earningOptions = that.loadLineAreaChartOptions(that.earningOptionsSeries, '#f79647', '#fac091');
-      that.earnings = '$' + (that.earningOptionsSeries.reduce((a, b) => a + b, 0) * 1000).toLocaleString();
-      if (that.store.has('totalEarnings')) {
-        that.store.set('totalEarnings', that.earnings);
-      } else {
-        that.store.add('totalEarnings', that.earnings);
-      }
-      that.salesOptionsSeries.shift();
-      rand = Math.floor(Math.random() * 11);
-      if (!rand) {
-        rand = 1;
-      }
-      that.salesOptionsSeries.push(rand);
-      that.salesOptions = that.loadLineAreaChartOptions(that.salesOptionsSeries, '#604a7b', '#a092b0');
-      that.sales = '$' + (that.salesOptionsSeries.reduce((a, b) => a + b, 0) * 10000).toLocaleString();
-
-      that.visitsAreaOptionsSeries.shift();
-      rand = Math.floor(Math.random() * 11);
-      if (!rand) {
-        rand = 1;
-      }
-      that.visitsAreaOptionsSeries.push(rand);
-      that.visits += rand;
-      that.visitsAreaOptions = that.loadLineAreaChartOptions(that.visitsAreaOptionsSeries, '#4aacc5', '#92cddc');
-
-      that.LikesOptionsSeries.shift();
-      rand = Math.floor(Math.random() * 11);
-      if (!rand) {
-        rand = 1;
-      }
-      that.LikesOptionsSeries.push(rand);
-      that.likes += rand;
-      that.LikesOptions = that.loadLineAreaChartOptions(that.LikesOptionsSeries, '#4f81bc', '#95b3d7');
-      that.cdr.markForCheck();
-    }, 3000);
-  }
-
   toggleFullWidth() {
     this.isResizing = true;
     this.sidebarService.toggle();
     this.sidebarVisible = this.sidebarService.getStatus();
     const that = this;
-    setTimeout(function() {
+    setTimeout(function () {
       that.isResizing = false;
       that.cdr.detectChanges();
     }, 400);
@@ -334,5 +286,262 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.setIn('dashboard_page_title', [], this.pageTitleConfig);
       }
     });
+  }
+
+  private updateAppDetailTile() {
+    const that = this;
+    if (this.appDetailTile !== undefined) {
+      this.appDetailTile.clear();
+    }
+    this.lazyLoader.load('app-detail-titles', this.appDetailTile, 'dashboard_app_detail_title', (_cdRef: any) => {
+      this.interval = setInterval(() => {
+        that.earningOptionsSeries.shift();
+        let rand = Math.floor(Math.random() * 11);
+        if (!rand) {
+          rand = 1;
+        }
+        that.earningOptionsSeries.push(rand);
+        that.earningOptions = that.loadLineAreaChartOptions(that.earningOptionsSeries, '#f79647', '#fac091');
+        
+        that.earnings = '$' + (that.earningOptionsSeries.reduce((a, b) => a + b, 0) * 1000).toLocaleString();
+        if (that.store.has('totalEarnings')) {
+          that.store.set('totalEarnings', that.earnings);
+        } else {
+          that.store.add('totalEarnings', that.earnings);
+        }
+        if (!that.store.has('dashboard_app_detail_title')) {
+          that.store.add('dashboard_app_detail_title', {
+            title: "EARNINGS",
+            value: that.earnings,
+            details: "19% compared to last week",
+            chartoptions: that.earningOptions
+          }, true);
+        } else {
+          that.store.setIn('dashboard_app_detail_title', [], {
+            title: "EARNINGS",
+            value: that.earnings,
+            details: "19% compared to last week",
+            chartoptions: that.earningOptions
+          });
+        }
+        that.salesOptionsSeries.shift();
+        rand = Math.floor(Math.random() * 11);
+        if (!rand) {
+          rand = 1;
+        }
+        that.salesOptionsSeries.push(rand);
+        that.salesOptions = that.loadLineAreaChartOptions(that.salesOptionsSeries, '#604a7b', '#a092b0');
+        that.sales = '$' + (that.salesOptionsSeries.reduce((a, b) => a + b, 0) * 10000).toLocaleString();
+  
+        that.visitsAreaOptionsSeries.shift();
+        rand = Math.floor(Math.random() * 11);
+        if (!rand) {
+          rand = 1;
+        }
+        that.visitsAreaOptionsSeries.push(rand);
+        that.visits += rand;
+        that.visitsAreaOptions = that.loadLineAreaChartOptions(that.visitsAreaOptionsSeries, '#4aacc5', '#92cddc');
+  
+        that.LikesOptionsSeries.shift();
+        rand = Math.floor(Math.random() * 11);
+        if (!rand) {
+          rand = 1;
+        }
+        that.LikesOptionsSeries.push(rand);
+        that.likes += rand;
+        that.LikesOptions = that.loadLineAreaChartOptions(that.LikesOptionsSeries, '#4f81bc', '#95b3d7');
+        that.cdr.markForCheck();
+      }, 3000);
+      that.cdr.detectChanges();
+    });
+  }
+
+  private updateAppChartTile(){
+    const that = this;
+    if (this.appChartTile !== undefined) {
+      this.appChartTile.clear();
+    }
+    this.lazyLoader.load('app-chart-tiles', this.appChartTile, 'dashboard_chart_tiles', (_cdRef: any) => {
+      if (!that.store.has('dashboard_chart_tiles')) {
+        that.store.add('dashboard_chart_tiles', {
+          title:'Spend Analysis',
+          chartoptions: that.getSpendAnalysis()
+        }, true);
+      } else {
+        that.store.setIn('dashboard_chart_tiles', [], {
+          title:'Spend Analysis',
+          chartoptions: that.getSpendAnalysis()
+        });
+      }
+    });
+  }
+
+  private getTopProductChartOptions() {
+    let options: any = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        data: ['Mobile', 'Laptop', 'Computer'],
+        right: '4%',
+        textStyle: {
+          color: "#C2C2C2",
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'],
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            textStyle: {
+              color: "#C2C2C2",
+            },
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          minInterval: 2500,
+          splitLine: {
+            lineStyle: {
+              type: 'dotted'
+            }
+          },
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            formatter: function (value: any, index: any) {
+              if (value > 0) {
+                return (value / 1000) + ' K';
+              } else {
+                return 0;
+              }
+            },
+            textStyle: {
+              color: "#C2C2C2",
+            }
+          }
+        }
+      ],
+      series: [
+        {
+          name: 'Mobile',
+          type: 'bar',
+          stack: 'Gedgets',
+          data: [2350, 3205, 4520, 2351, 5632],
+          itemStyle: {
+            color: "#6ebdd1"
+          },
+          barWidth: "40px"
+        },
+        {
+          name: 'Laptop',
+          type: 'bar',
+          stack: 'Gedgets',
+          data: [2341, 2583, 1592, 2674, 2323],
+          itemStyle: {
+            color: "#f9ab6c"
+          },
+          barWidth: "40px"
+        },
+        {
+          name: 'Computer',
+          type: 'bar',
+          stack: 'Gedgets',
+          data: [1212, 5214, 2325, 4235, 2519],
+          itemStyle: {
+            color: "#afc979"
+          },
+          barWidth: "40px"
+        }
+      ]
+    };
+
+    return options;
+  }
+
+  private getSpendAnalysis() {
+    var labelOption = {
+      show: true,
+      position: 'insideBottom',
+      distance: 15,
+      align: 'left',
+      verticalAlign: 'middle',
+      rotate: '90',
+      formatter: '{c}  {name|{a}}',
+      fontSize: 16,
+      rich: {
+        name: {
+          textBorderColor: '#fff'
+        }
+      }
+    };
+    let options: any = {
+      color: ['#821752', '#de4463'],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        data: ['Forest', 'Steppe', 'Desert', 'Wetland']
+      },
+      toolbox: {
+        show: false,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      xAxis: [
+        {
+          type: 'category',
+          axisTick: { show: false },
+          data: ['2012', '2013', '2014', '2015', '2016']
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: 'Forest',
+          type: 'bar',
+          barGap: 0,
+          label: labelOption,
+          data: [320, 332, 301, 334, 390]
+        },
+        {
+          name: 'Steppe',
+          type: 'bar',
+          label: labelOption,
+          data: [220, 182, 191, 234, 290]
+        }
+      ]
+    };
+    return options;
   }
 }
