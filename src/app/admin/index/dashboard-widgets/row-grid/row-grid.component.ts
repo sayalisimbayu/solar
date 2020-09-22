@@ -5,12 +5,12 @@ declare var require: any;
 import { EChartOption } from 'echarts';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { IAppChartTileConfig } from './models/chart-tiles.model.interface';
+import { IAppChartTileConfig } from './models/row-grid.model.interface';
 
 @Component({
     selector: 'app-chart-tiles',
-    templateUrl: './chart-tiles.component.html',
-    styleUrls: ['./chart-tiles.component.css']
+    templateUrl: './row-grid.component.html',
+    styleUrls: ['./row-grid.component.css']
 })
 export class ChartTilesComponent implements OnInit {
 

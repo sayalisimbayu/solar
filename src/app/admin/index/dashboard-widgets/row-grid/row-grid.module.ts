@@ -4,7 +4,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LayoutModule } from '@app/core/layout/layout.module';
 import { Routes, RouterModule } from '@angular/router';
-import { ChartTilesComponent } from './chart-tiles.component';
+import { ChartTilesComponent } from './row-grid.component';
 const routes: Routes = [
   {
     path: '',

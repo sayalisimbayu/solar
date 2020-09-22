@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { StoreEvent } from '@app/shared/storemanager/models/storeEvent.model';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 import { title } from 'process';
@@ -7,16 +7,19 @@ import { filter, map } from 'rxjs/operators';
 import { IDashboardGridConfig } from './models/dashboard-grid.model.interface';
 
 @Component({
-  selector: 'app-chart-tiles',
+  selector: 'app-dashboard-grid',
   templateUrl: './dashboard-grid.component.html',
-  styleUrls: ['./dashboard-grid.component.css']
+  styleUrls: ['./dashboard-grid.component.scss']
 })
-export class DashboardGridComponent implements OnInit {
+export class DashboardGridComponent implements OnInit, AfterViewInit {
 
   @Input() storeId: string;
   @Input() scope: any;
   public config: IDashboardGridConfig;
   public subScription: Subscription;
+
+  @ViewChild('rowContainer', { read: ViewContainerRef, static: true }) rowContainer: ViewContainerRef;
+  @ViewChild('rowTemplate', { static: true }) rowTemplate: TemplateRef<any>;
 
   constructor(
     private store: SimpleStoreManagerService
@@ -26,6 +29,10 @@ export class DashboardGridComponent implements OnInit {
       row: []
     };
     this.config = this.generateConfig();
+    debugger
+    // this.config.row.forEach((element: any) => {
+    //   this.rowContainer.createEmbeddedView(this.rowTemplate, {config: element});
+    // });
   }
 
   ngOnInit() {
@@ -43,6 +50,12 @@ export class DashboardGridComponent implements OnInit {
         )
         .subscribe()
     );
+  };
+  ngAfterViewInit(): void {
+    this.config = this.generateConfig();
+    this.config.row.forEach((element: any) => {
+      this.rowContainer.createEmbeddedView(this.rowTemplate, {config: element});
+    });
   }
   generateConfig() {
     let rowConfig: IDashboardGridConfig = {
@@ -50,31 +63,35 @@ export class DashboardGridComponent implements OnInit {
         {
           tiles: [
             {
-              config: null
+              config: "config loaded"
             },
             {
-              config: null
+              config: "config loaded1"
             },
             {
-              config: null
+              config: "config loaded2"
             }
           ]
         },
         {
           tiles: [
             {
-              config: null
+              config: "config loaded11"
             },
             {
-              config: null
+              config: "config loaded12"
             },
             {
-              config: null
+              config: "config loaded13"
             }
           ]
         }
       ]
     }
     return rowConfig;
+  }
+
+  trackbyFn(index: number, a: any, b: any){
+    return index
   }
 }

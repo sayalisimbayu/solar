@@ -78,17 +78,23 @@ export const lazyWidgets: {
   },
   {
     path: 'app-detail-titles',
-    loadChildren: () => 
+    loadChildren: () =>
     import('./../../admin/index/dashboard-widgets/detail-tiles/detail-tiles.module').then(m => m.DetailTilesModule),
     data: { preload: true }
   },
   {
     path: 'app-chart-tiles',
-    loadChildren: () => 
+    loadChildren: () =>
     import('./../../admin/index/dashboard-widgets/chart-tiles/chart-tiles.module').then(m => m.ChartTilesModule),
     data: { preload: true }
+  },
+  {
+    path: 'app-dashboard-grid',
+    loadChildren: () =>
+    import('./../../admin/index/dashboard-widgets/dashboard-grid/dashboard-grid.module').then(m => m.DashboardGridModule),
+    data: { preload: true }
   }
-  
+
   // {
   //   path: 'category-grid',
   //   loadChildren: () =>

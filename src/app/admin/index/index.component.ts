@@ -30,6 +30,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   appDetailTile: ViewContainerRef;
   @ViewChild('appChartTile', { read: ViewContainerRef, static: true })
   appChartTile: ViewContainerRef;
+  @ViewChild('appDashboardGrid', { read: ViewContainerRef, static: true })
+  appDashboardGrid: ViewContainerRef;
   public totalEarningSubscriber$: any;
   public sidebarVisible = true;
   public isResizing = false;
@@ -103,6 +105,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updatePagetTitle();
     this.updateAppDetailTile();
     this.updateAppChartTile();
+    this.updateDashboardGrid();
 
   }
   showToastr() {
@@ -302,7 +305,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         that.earningOptionsSeries.push(rand);
         that.earningOptions = that.loadLineAreaChartOptions(that.earningOptionsSeries, '#f79647', '#fac091');
-        
+
         that.earnings = '$' + (that.earningOptionsSeries.reduce((a, b) => a + b, 0) * 1000).toLocaleString();
         if (that.store.has('totalEarnings')) {
           that.store.set('totalEarnings', that.earnings);
@@ -332,7 +335,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.salesOptionsSeries.push(rand);
         that.salesOptions = that.loadLineAreaChartOptions(that.salesOptionsSeries, '#604a7b', '#a092b0');
         that.sales = '$' + (that.salesOptionsSeries.reduce((a, b) => a + b, 0) * 10000).toLocaleString();
-  
+
         that.visitsAreaOptionsSeries.shift();
         rand = Math.floor(Math.random() * 11);
         if (!rand) {
@@ -341,7 +344,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.visitsAreaOptionsSeries.push(rand);
         that.visits += rand;
         that.visitsAreaOptions = that.loadLineAreaChartOptions(that.visitsAreaOptionsSeries, '#4aacc5', '#92cddc');
-  
+
         that.LikesOptionsSeries.shift();
         rand = Math.floor(Math.random() * 11);
         if (!rand) {
@@ -543,5 +546,11 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       ]
     };
     return options;
+  };
+
+  updateDashboardGrid(){
+    debugger
+    this.lazyLoader.load('app-dashboard-grid', this.appDashboardGrid, 'dashboard_chart_tiles', (_cdRef: any) => {
+    });
   }
 }
