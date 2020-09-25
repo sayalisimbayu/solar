@@ -58,7 +58,7 @@ export class TimeLineComponent {
       pageNumber: event.currentPage,
       pageSize: 10,
       search: '',
-      orderby: ''
+      orderby: 'UpdatedDate desc'
     };
     if (this.totalRows >= this.timeline.item1.length) {
       this.userRepoService

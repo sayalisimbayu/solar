@@ -1,0 +1,13 @@
+<!-- <div class="row clearfix">
+    <div class="col-lg-3 col-md-6">T</div>
+</div> -->
+<div>
+    <ng-container #rowContainer></ng-container>
+    <ng-template #rowTemplate let-config="config">
+    <div class="row clearfix">
+        <div [ngClass]="tiles.class" *ngFor="let tiles of config.tiles; trackBy:trackbyFn">
+              <app-dynamic-tile [config]="tiles.config" [scope]="Componentscope"></app-dynamic-tile>
+        </div>
+    </div>
+    </ng-template>
+</div>
