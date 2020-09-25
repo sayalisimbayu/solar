@@ -13,8 +13,6 @@ import { SidebarService } from '@app/shared/services/sidebar.service';
 import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
-import { filter, map } from 'rxjs/operators';
-import { StoreEvent } from '@app/shared/storemanager/models/storeEvent.model';
 import { IPageTitleConfig } from '@app/core/layout/page-title/model/page-title.config.interface';
 
 @Component({
@@ -26,33 +24,25 @@ import { IPageTitleConfig } from '@app/core/layout/page-title/model/page-title.c
 export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('pagetitle', { read: ViewContainerRef, static: true })
   pageTitle: ViewContainerRef;
-  @ViewChild('appDetailTile', { read: ViewContainerRef, static: true })
-  appDetailTile: ViewContainerRef;
-  @ViewChild('appChartTile', { read: ViewContainerRef, static: true })
-  appChartTile: ViewContainerRef;
   @ViewChild('appDashboardGrid', { read: ViewContainerRef, static: true })
   appDashboardGrid: ViewContainerRef;
   public totalEarningSubscriber$: any;
   public sidebarVisible = true;
   public isResizing = false;
-  public visitorsOptions: EChartOption = {};
-  public visitsOptions: EChartOption = {};
   public earningOptions: EChartOption = {};
   public salesOptions: EChartOption = {};
-  public visitsAreaOptions: EChartOption = {};
-  public LikesOptions: EChartOption = {};
-  public stackedBarChart: EChartOption = {};
+  public profitOptions: EChartOption = {};
+  public yieldOptions: EChartOption = {};
   public spendAnalysis: EChartOption = {};
-  public dataManagedBarChart: EChartOption = {};
 
   public earningOptionsSeries: Array<number> = [1, 4, 1, 3, 7, 1];
   public earnings: string = '$' + (this.earningOptionsSeries.reduce((a, b) => a + b, 0) * 1000).toLocaleString();
   public salesOptionsSeries: Array<number> = [1, 4, 2, 3, 6, 2];
   public sales: string = '$' + (this.salesOptionsSeries.reduce((a, b) => a + b, 0) * 10000).toLocaleString();
-  public visitsAreaOptionsSeries: Array<number> = [1, 4, 2, 3, 1, 5];
-  public visits: number = this.visitsAreaOptionsSeries.reduce((a, b) => a + b, 0);
-  public LikesOptionsSeries: Array<number> = [1, 3, 5, 1, 4, 2];
-  public likes: number = this.LikesOptionsSeries.reduce((a, b) => a + b, 0);
+  public profitOptionsSeries: Array<number> = [1, 4, 2, 3, 6, 2];
+  public profit: string = '$' + (this.profitOptionsSeries.reduce((a, b) => a + b, 0) * 10000).toLocaleString();
+  public yieldOptionsSeries: Array<number> = [1, 4, 2, 3, 6, 2];
+  public yield: string = '$' + (this.yieldOptionsSeries.reduce((a, b) => a + b, 0) * 10000).toLocaleString();
 
   public interval: any = {};
 
@@ -65,15 +55,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     private store: SimpleStoreManagerService,
     private lazyLoader: LazyLoaderService
   ) {
-    this.visitorsOptions = this.loadLineChartOptions([3, 5, 1, 6, 5, 4, 8, 3], '#49c5b6');
-    this.visitsOptions = this.loadLineChartOptions([4, 6, 3, 2, 5, 6, 5, 4], '#f4516c');
-    this.earningOptions = this.loadLineAreaChartOptions([1, 4, 1, 3, 7, 1], '#f79647', '#fac091');
-    this.salesOptions = this.loadLineAreaChartOptions([1, 4, 2, 3, 6, 2], '#604a7b', '#a092b0');
-    this.visitsAreaOptions = this.loadLineAreaChartOptions([1, 4, 2, 3, 1, 5], '#4aacc5', '#92cddc');
-    this.LikesOptions = this.loadLineAreaChartOptions([1, 3, 5, 1, 4, 2], '#4f81bc', '#95b3d7');
-    this.dataManagedBarChart = this.getDataManagedChartOptions();
-    this.stackedBarChart = this.getTopProductChartOptions();
-    this.spendAnalysis=this.getSpendAnalysis();
     this.pageTitleConfig = {
       breadCrumb: [
         {
@@ -103,8 +84,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     // Add 'implements AfterViewInit' to the class.
     this.updatePagetTitle();
-    this.updateAppDetailTile();
-    this.updateAppChartTile();
     this.updateDashboardGrid();
 
   }
@@ -234,49 +213,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  getDataManagedChartOptions() {
-    const options: EChartOption = {
-      tooltip: {
-        trigger: 'item'
-      },
-      grid: {
-        borderWidth: 0
-      },
-      xAxis: [
-        {
-          type: 'category',
-          show: false
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value',
-          show: false
-        }
-      ],
-      series: [
-        {
-          type: 'bar',
-          stack: 'Gedgets',
-          data: [2, 0, 5, 0, 4, 0, 8, 0, 3, 0, 9, 0, 1, 0, 5],
-          itemStyle: {
-            color: '#7460ee'
-          }
-        },
-        {
-          type: 'bar',
-          stack: 'Gedgets',
-          data: [0, -5, 0, -1, 0, -9, 0, -3, 0, -8, 0, -4, 0, -5, 0],
-          itemStyle: {
-            color: '#afc979'
-          }
-        }
-      ]
-    };
-
-    return options;
-  }
-
   private updatePagetTitle() {
     const that = this;
     if (this.pageTitle !== undefined) {
@@ -290,193 +226,101 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-
-  private updateAppDetailTile() {
-    const that = this;
-    if (this.appDetailTile !== undefined) {
-      this.appDetailTile.clear();
-    }
-    this.lazyLoader.load('app-detail-titles', this.appDetailTile, 'dashboard_app_detail_title', (_cdRef: any) => {
-      this.interval = setInterval(() => {
-        that.earningOptionsSeries.shift();
-        let rand = Math.floor(Math.random() * 11);
-        if (!rand) {
-          rand = 1;
-        }
-        that.earningOptionsSeries.push(rand);
-        that.earningOptions = that.loadLineAreaChartOptions(that.earningOptionsSeries, '#f79647', '#fac091');
-
-        that.earnings = '$' + (that.earningOptionsSeries.reduce((a, b) => a + b, 0) * 1000).toLocaleString();
-        if (that.store.has('totalEarnings')) {
-          that.store.set('totalEarnings', that.earnings);
-        } else {
-          that.store.add('totalEarnings', that.earnings);
-        }
-        if (!that.store.has('dashboard_app_detail_title')) {
-          that.store.add('dashboard_app_detail_title', {
-            title: "EARNINGS",
-            value: that.earnings,
-            details: "19% compared to last week",
-            chartoptions: that.earningOptions
-          }, true);
-        } else {
-          that.store.setIn('dashboard_app_detail_title', [], {
-            title: "EARNINGS",
-            value: that.earnings,
-            details: "19% compared to last week",
-            chartoptions: that.earningOptions
-          });
-        }
-        that.salesOptionsSeries.shift();
-        rand = Math.floor(Math.random() * 11);
-        if (!rand) {
-          rand = 1;
-        }
-        that.salesOptionsSeries.push(rand);
-        that.salesOptions = that.loadLineAreaChartOptions(that.salesOptionsSeries, '#604a7b', '#a092b0');
-        that.sales = '$' + (that.salesOptionsSeries.reduce((a, b) => a + b, 0) * 10000).toLocaleString();
-
-        that.visitsAreaOptionsSeries.shift();
-        rand = Math.floor(Math.random() * 11);
-        if (!rand) {
-          rand = 1;
-        }
-        that.visitsAreaOptionsSeries.push(rand);
-        that.visits += rand;
-        that.visitsAreaOptions = that.loadLineAreaChartOptions(that.visitsAreaOptionsSeries, '#4aacc5', '#92cddc');
-
-        that.LikesOptionsSeries.shift();
-        rand = Math.floor(Math.random() * 11);
-        if (!rand) {
-          rand = 1;
-        }
-        that.LikesOptionsSeries.push(rand);
-        that.likes += rand;
-        that.LikesOptions = that.loadLineAreaChartOptions(that.LikesOptionsSeries, '#4f81bc', '#95b3d7');
-        that.cdr.markForCheck();
-      }, 3000);
-      that.cdr.detectChanges();
-    });
-  }
-
-  private updateAppChartTile(){
-    const that = this;
-    if (this.appChartTile !== undefined) {
-      this.appChartTile.clear();
-    }
-    this.lazyLoader.load('app-chart-tiles', this.appChartTile, 'dashboard_chart_tiles', (_cdRef: any) => {
-      if (!that.store.has('dashboard_chart_tiles')) {
-        that.store.add('dashboard_chart_tiles', {
-          title:'Spend Analysis',
-          chartoptions: that.getSpendAnalysis()
-        }, true);
+  private updateDashboardGrid() {
+    let that = this;
+    this.lazyLoader.load('app-dashboard-grid', this.appDashboardGrid, 'dashboard_grid_config', (_cdRef: any) => {
+      if (!that.store.has('dashboard_grid_config')) {
+        that.store.add('dashboard_grid_config', this.generateGridConfig(), true);
       } else {
-        that.store.setIn('dashboard_chart_tiles', [], {
-          title:'Spend Analysis',
-          chartoptions: that.getSpendAnalysis()
-        });
+        that.store.setIn('dashboard_grid_config', [], this.generateGridConfig());
       }
     });
   }
+  private generateGridConfig() {
+    let rowConfig = {
+      row: [
+        {
+          tiles: [
+            {
+              config: {
+                connector: 'app-detail-titles',
+                config: 'dashboard_earning_tile',
+                callbackFunction: this.earningCallbackFunction.bind(this)
+              },
+              class: "col-lg-3 col-md-6 col-sm-12"
+            },
+            {
+              config: {
+                connector: 'app-detail-titles',
+                config: 'dashboard_sales_tile',
+                callbackFunction:this.salesCallbackFunction.bind(this)
+              },
+              class: "col-lg-3 col-md-6 col-sm-12"
+            },
+            {
+              config: {
+                connector: 'app-detail-titles',
+                config: 'dashboard_yield_tile',
+                callbackFunction:this.yieldCallbackFunction.bind(this)
+              },
+              class: "col-lg-3 col-md-6 col-sm-12"
+            },
+            {
+              config: {
+                connector: 'app-detail-titles',
+                config: 'dashboard_profit_tile',
+                callbackFunction:this.profitCallbackFunction.bind(this)
+              },
+              class: "col-lg-3 col-md-6 col-sm-12"
+            }
 
-  private getTopProductChartOptions() {
-    let options: any = {
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
-      },
-      legend: {
-        data: ['Mobile', 'Laptop', 'Computer'],
-        right: '4%',
-        textStyle: {
-          color: "#C2C2C2",
-        }
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: [
-        {
-          type: 'category',
-          data: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'],
-          axisLine: {
-            show: false
-          },
-          axisLabel: {
-            textStyle: {
-              color: "#C2C2C2",
-            },
-          }
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value',
-          minInterval: 2500,
-          splitLine: {
-            lineStyle: {
-              type: 'dotted'
-            }
-          },
-          axisLine: {
-            show: false
-          },
-          axisLabel: {
-            formatter: function (value: any, index: any) {
-              if (value > 0) {
-                return (value / 1000) + ' K';
-              } else {
-                return 0;
-              }
-            },
-            textStyle: {
-              color: "#C2C2C2",
-            }
-          }
-        }
-      ],
-      series: [
-        {
-          name: 'Mobile',
-          type: 'bar',
-          stack: 'Gedgets',
-          data: [2350, 3205, 4520, 2351, 5632],
-          itemStyle: {
-            color: "#6ebdd1"
-          },
-          barWidth: "40px"
+          ]
         },
         {
-          name: 'Laptop',
-          type: 'bar',
-          stack: 'Gedgets',
-          data: [2341, 2583, 1592, 2674, 2323],
-          itemStyle: {
-            color: "#f9ab6c"
-          },
-          barWidth: "40px"
-        },
-        {
-          name: 'Computer',
-          type: 'bar',
-          stack: 'Gedgets',
-          data: [1212, 5214, 2325, 4235, 2519],
-          itemStyle: {
-            color: "#afc979"
-          },
-          barWidth: "40px"
+          tiles: [
+            {
+              config: {
+                connector: 'app-chart-tiles',
+                config: 'dashboard_chart_tiles',
+                callbackFunction: this.appChartCallBack.bind(this)
+              },
+              class: "col-lg-6 col-md-12 col-sm-12"
+            },
+            {
+              config: {
+                connector: 'app-chart-tiles',
+                config: 'dashboard_chart_tiles',
+                callbackFunction: this.appChartCallBack.bind(this)
+              },
+              class: "col-lg-6 col-md-12 col-sm-12"
+            },
+            {
+              config: {
+                connector: 'app-chart-tiles',
+                config: 'dashboard_chart_tiles',
+                callbackFunction: this.appChartCallBack.bind(this)
+              },
+              class: "col-lg-6 col-md-12 col-sm-12"
+            }
+          ]
         }
       ]
-    };
-
-    return options;
+    }
+    return rowConfig;
   }
-
+  private appChartCallBack(cdref: any) {
+    if (!this.store.has('dashboard_chart_tiles')) {
+      this.store.add('dashboard_chart_tiles', {
+        title: 'Spend Analysis',
+        chartoptions: this.getSpendAnalysis()
+      }, true);
+    } else {
+      this.store.setIn('dashboard_chart_tiles', [], {
+        title: 'Spend Analysis',
+        chartoptions: this.getSpendAnalysis()
+      });
+    }
+  }
   private getSpendAnalysis() {
     var labelOption = {
       show: true,
@@ -547,9 +391,152 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     return options;
   };
+  private earningCallbackFunction() {
+    const that = this;
 
-  updateDashboardGrid(){
-    this.lazyLoader.load('app-dashboard-grid', this.appDashboardGrid, 'dashboard_chart_tiles', (_cdRef: any) => {
-    });
+    this.interval = setInterval(() => {
+      that.earningOptionsSeries.shift();
+      let rand = Math.floor(Math.random() * 11);
+      if (!rand) {
+        rand = 1;
+      }
+      that.earningOptionsSeries.push(rand);
+      that.earningOptions = that.loadLineAreaChartOptions(that.earningOptionsSeries, '#f79647', '#fac091');
+
+      that.earnings = '$' + (that.earningOptionsSeries.reduce((a, b) => a + b, 0) * 1000).toLocaleString();
+      if (that.store.has('totalEarnings')) {
+        that.store.set('totalEarnings', that.earnings);
+      } else {
+        that.store.add('totalEarnings', that.earnings);
+      }
+      if (!that.store.has('dashboard_earning_tile')) {
+        that.store.add('dashboard_earning_tile', {
+          title: "Orders",
+          value: that.earnings,
+          details: "19% compared to last week",
+          chartoptions: that.earningOptions
+        }, true);
+      } else {
+        that.store.setIn('dashboard_earning_tile', [], {
+          title: "Orders",
+          value: that.earnings,
+          details: "19% compared to last week",
+          chartoptions: that.earningOptions
+        });
+      }
+      that.cdr.markForCheck();
+    }, 2000);
+    that.cdr.detectChanges();
+  }
+  private salesCallbackFunction() {
+    const that = this;
+
+    this.interval = setInterval(() => {
+      that.salesOptionsSeries.shift();
+      let rand = Math.floor(Math.random() * 11);
+      if (!rand) {
+        rand = 1;
+      }
+      that.salesOptionsSeries.push(rand);
+      that.salesOptions = that.loadLineAreaChartOptions(that.salesOptionsSeries, '#821752', '#de4463');
+
+      that.sales = '$' + (that.earningOptionsSeries.reduce((a, b) => a + b, 0) * 1000).toLocaleString();
+      if (that.store.has('totalSales')) {
+        that.store.set('totalSales', that.sales);
+      } else {
+        that.store.add('totalSales', that.sales);
+      }
+      if (!that.store.has('dashboard_sales_tile')) {
+        that.store.add('dashboard_sales_tile', {
+          title: "SALES",
+          value: that.sales,
+          details: "34% compared to last week",
+          chartoptions: that.salesOptions
+        }, true);
+      } else {
+        that.store.setIn('dashboard_sales_tile', [], {
+          title: "SALES",
+          value: that.sales,
+          details: "34% compared to last week",
+          chartoptions: that.salesOptions
+        });
+      }
+      that.cdr.markForCheck();
+    }, 3000);
+    that.cdr.detectChanges();
+  }
+  private profitCallbackFunction() {
+    const that = this;
+
+    this.interval = setInterval(() => {
+      that.profitOptionsSeries.shift();
+      let rand = Math.floor(Math.random() * 11);
+      if (!rand) {
+        rand = 1;
+      }
+      that.profitOptionsSeries.push(rand);
+      that.profitOptions = that.loadLineAreaChartOptions(that.profitOptionsSeries, '#a0c1b8', '#f4ebc1');
+
+      that.profit = '$' + (that.profitOptionsSeries.reduce((a, b) => a + b, 0) * 1000).toLocaleString();
+      if (that.store.has('totalProfit')) {
+        that.store.set('totalProfit', that.sales);
+      } else {
+        that.store.add('totalProfit', that.sales);
+      }
+      if (!that.store.has('dashboard_profit_tile')) {
+        that.store.add('dashboard_profit_tile', {
+          title: "PROFIT",
+          value: that.profit,
+          details: "34% compared to last week",
+          chartoptions: that.profitOptions
+        }, true);
+      } else {
+        that.store.setIn('dashboard_profit_tile', [], {
+          title: "PROFIT",
+          value: that.profit,
+          details: "34% compared to last week",
+          chartoptions: that.profitOptions
+        });
+      }
+      that.cdr.markForCheck();
+    }, 3000);
+    that.cdr.detectChanges();
+  }
+  private yieldCallbackFunction() {
+    const that = this;
+
+    this.interval = setInterval(() => {
+      that.yieldOptionsSeries.shift();
+      let rand = Math.floor(Math.random() * 11);
+      if (!rand) {
+        rand = 1;
+      }
+      that.yieldOptionsSeries.push(rand);
+      that.yieldOptions = that.loadLineAreaChartOptions(that.yieldOptionsSeries, '#726a95', '#709fb0');
+
+      that.yield = '$' + (that.yieldOptionsSeries.reduce((a, b) => a + b, 0) * 1000).toLocaleString();
+      if (that.store.has('totalYield')) {
+        that.store.set('totalYield', that.sales);
+      } else {
+        that.store.add('totalYield', that.sales);
+      }
+      if (!that.store.has('dashboard_yield_tile')) {
+        that.store.add('dashboard_yield_tile', {
+          title: "Yield",
+          value: that.yield,
+          details: "34% compared to last week",
+          chartoptions: that.yieldOptions
+        }, true);
+      } else {
+        that.store.setIn('dashboard_yield_tile', [], {
+          title: "Yeild",
+          value: that.yield,
+          details: "34% compared to last week",
+          chartoptions: that.yieldOptions
+        });
+      }
+      that.cdr.markForCheck();
+    }, 3000);
+    that.cdr.detectChanges();
   }
 }
