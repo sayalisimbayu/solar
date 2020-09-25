@@ -217,6 +217,17 @@ body {
         }
       }
     }
+    #right-sidebar {
+      background: $theme-dark;
+      .nav-tabs {
+        border-color: $theme-darkline;
+        .nav-link {
+          &.active {
+            border-color: $theme-darkline $theme-darkline $theme-dark;
+          }
+        }
+      }
+    }
     .sidebar-nav {
       .metismenu {
         a {

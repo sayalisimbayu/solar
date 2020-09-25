@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { AuthService } from '@app/shell/auth/auth.service';
 import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 import { UserIdleService } from 'angular-user-idle';
+import { NotificationPaneService } from '@app/shared/services/notificationPaneService';
 
 @Component({
   selector: 'app-mercury',
@@ -34,7 +35,8 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private themeService: ThemeService,
     private titleService: Title,
-    private userIdle: UserIdleService
+    private userIdle: UserIdleService,
+    public NotificationPaneService: NotificationPaneService,
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {
       this.isStopLoading = false;
