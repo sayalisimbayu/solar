@@ -114,7 +114,8 @@
             <input type="text" class="form-control" placeholder="Search..." />
           </div>
         </form>
-        <ul class="right_chat list-unstyled">
+        <app-user-wrapper></app-user-wrapper>
+        <!-- <ul class="right_chat list-unstyled">
           <li class="online">
             <a href="javascript:void(0);">
               <div class="media">
@@ -175,7 +176,7 @@
               </div>
             </a>
           </li>
-        </ul>
+        </ul> -->
       </div>
       <div class="tab-pane p-l-15 p-r-15" id="setting" [ngClass]="{ active: navTab == 'setting' }">
         <h6>Choose Mode</h6>

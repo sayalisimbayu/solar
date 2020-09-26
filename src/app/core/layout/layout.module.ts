@@ -6,9 +6,10 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { NotificationPaneComponent } from './notificationPane/notification-pane.component';
+import { UserWrapperComponent } from '@app/admin/profile/user-list/user-wrapper.component';
 @NgModule({
   imports: [CommonModule, NgbModule, RouterModule],
-  declarations: [HeaderComponent, SidebarComponent, PageLoaderComponent, NotificationPaneComponent],
+  declarations: [HeaderComponent, SidebarComponent, PageLoaderComponent, NotificationPaneComponent, UserWrapperComponent],
   exports: [HeaderComponent, SidebarComponent, PageLoaderComponent, NotificationPaneComponent]
 })
 export class LayoutModule {}
