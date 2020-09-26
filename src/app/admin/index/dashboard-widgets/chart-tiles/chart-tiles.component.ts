@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { StoreEvent } from '@app/shared/storemanager/models/storeEvent.model';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
-declare var require: any;
-import { EChartOption } from 'echarts';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { IAppChartTileConfig } from './models/chart-tiles.model.interface';
