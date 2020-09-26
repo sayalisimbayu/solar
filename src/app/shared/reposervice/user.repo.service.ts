@@ -136,7 +136,11 @@ export class UserRepoService {
         let response: UserPage;
         if (el.code === 0) {
           console.error(el);
-          return;
+          response = {
+            users: [],
+            totalCount: 0
+          };
+          return response;
         }
         response = {
           users: el.data.item1,

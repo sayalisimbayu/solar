@@ -7,8 +7,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { NotificationPaneComponent } from './notificationPane/notification-pane.component';
 import { UserWrapperComponent } from '@app/admin/profile/user-list/user-wrapper.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
-  imports: [CommonModule, NgbModule, RouterModule],
+  imports: [CommonModule, NgbModule, RouterModule, FormsModule],
   declarations: [HeaderComponent, SidebarComponent, PageLoaderComponent, NotificationPaneComponent, UserWrapperComponent],
   exports: [HeaderComponent, SidebarComponent, PageLoaderComponent, NotificationPaneComponent]
 })
