@@ -130,6 +130,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     );
   }
   ngOnDestroy() {
+    (this.subscription) && (this.subscription.unsubscribe());
     this.userInfo = [];
   }
 }

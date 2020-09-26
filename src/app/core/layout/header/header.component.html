@@ -51,6 +51,7 @@
               <i class="icon-bell" style="cursor: pointer;"></i>
               <span class="notification-dot {{themeClass}} {{notificationPaneService.notificationBadgeBlink}}">{{notificationPaneService.notificationBadge}}</span>
             </a>
+          </li>
             <!-- <ul class="dropdown-menu notifications" ngbDropdownMenu>
               <li class="header"><strong>You have 4 new Notifications</strong></li>
               <li class="content-li {{themeClass}}">
@@ -136,6 +137,12 @@
               </li>
             </ul>
           </li> -->
+          <li class="dropdown">
+            <a class="dropdown-toggle icon-menu" (click)="toggleNotificationFullWidth()">
+              <i class="icon-bell" style="cursor: pointer;"></i>
+              <span class="notification-dot {{themeClass}} {{notificationPaneService.notificationBadgeBlink}}">{{notificationPaneService.notificationBadge}}</span>
+            </a>
+          </li>
           <li>
             <a (click)="logout()" class="icon-menu d-none d-sm-block"><i class="icon-login"></i></a>
           </li>
