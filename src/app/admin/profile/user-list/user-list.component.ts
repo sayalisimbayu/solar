@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SimpleStoreManagerService } from '@app/shared/storemanager/storemanager.service';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { UserRepoService } from '@app/shared/reposervice/user.repo.service';
 import { UserPage } from '@app/shell/models/user.model';
 import { ICGridConfig } from '@app/shared/custom.component/cgrid/config/config';
+import { Subscription } from 'rxjs';
+import { StoreEvent } from '@app/shared/storemanager/models/storeEvent.model';
 
 @Component({
   selector: 'app-user-list',
@@ -16,6 +18,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   throttle: number = 50;
   pageGridConfig: ICGridConfig;
   private totalRows: number = 0;
+  public subscription: Subscription = new Subscription();
   constructor(private store: SimpleStoreManagerService, private userRepoService: UserRepoService) {
     // this.pageGridConfig = {
     //   itemMap: {
@@ -50,8 +53,10 @@ export class UserListComponent implements OnInit, OnDestroy {
       currentPage: 0,
       throttle: 50,
       scrollDistance: 1,
-      scrollUpDistance: 2
+      scrollUpDistance: 2,
+      searchKey: ''
     });
+    this.userSearchSubscription();
   }
   trackByFn(index: number) {
     return index;
@@ -90,7 +95,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     let payload = {
       pageNumber: event.currentPage,
       pageSize: 10,
-      search: '',
+      search: event.searchKey,
       orderby: ''
     };
     this.userRepoService
@@ -103,6 +108,26 @@ export class UserListComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  };
+  userSearchSubscription() {
+    this.subscription.add(
+      this.store.$store
+        .pipe(filter((el: StoreEvent) => el.key === 'userSerchKey'))
+        .pipe(
+          map((el: StoreEvent) => {
+            let searchTerm = this.store.getByKey('userSerchKey');
+            this.userInfo = [];
+            this.getUserPage({
+              pagesize: 30,
+              currentPage: 0,
+              throttle: 50,
+              scrollDistance: 1,
+              scrollUpDistance: 2,
+              searchKey: `DISPLAYNAME LIKE '%${searchTerm.searchKey}%'`
+            });
+          })
+        ).subscribe()
+    );
   }
   ngOnDestroy() {
     this.userInfo = [];
