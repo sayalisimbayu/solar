@@ -237,7 +237,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
   private generateGridConfig() {
-    let rowConfig = {
+    const rowConfig = {
       row: [
         {
           tiles: [
@@ -247,31 +247,31 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
                 config: 'dashboard_earning_tile',
                 callbackFunction: this.earningCallbackFunction.bind(this)
               },
-              class: "col-lg-3 col-md-6 col-sm-12"
+              class: 'col-lg-3 col-md-6 col-sm-12'
             },
             {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_sales_tile',
-                callbackFunction:this.salesCallbackFunction.bind(this)
+                callbackFunction: this.salesCallbackFunction.bind(this)
               },
-              class: "col-lg-3 col-md-6 col-sm-12"
+              class: 'col-lg-3 col-md-6 col-sm-12'
             },
             {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_yield_tile',
-                callbackFunction:this.yieldCallbackFunction.bind(this)
+                callbackFunction: this.yieldCallbackFunction.bind(this)
               },
-              class: "col-lg-3 col-md-6 col-sm-12"
+              class: 'col-lg-3 col-md-6 col-sm-12'
             },
             {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_profit_tile',
-                callbackFunction:this.profitCallbackFunction.bind(this)
+                callbackFunction: this.profitCallbackFunction.bind(this)
               },
-              class: "col-lg-3 col-md-6 col-sm-12"
+              class: 'col-lg-3 col-md-6 col-sm-12'
             }
 
           ]
@@ -284,23 +284,15 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
                 config: 'dashboard_chart_tiles',
                 callbackFunction: this.appChartCallBack.bind(this)
               },
-              class: "col-lg-6 col-md-12 col-sm-12"
+              class: 'col-lg-6 col-md-12 col-sm-12'
             },
             {
               config: {
                 connector: 'app-chart-tiles',
-                config: 'dashboard_chart_tiles',
-                // callbackFunction: this.appChartCallBack.bind(this)
+                config: 'dashboard_inventory_tiles',
+                callbackFunction: this.inventorySpendData.bind(this)
               },
-              class: "col-lg-6 col-md-12 col-sm-12"
-            },
-            {
-              config: {
-                connector: 'app-chart-tiles',
-                config: 'dashboard_chart_tiles',
-                // callbackFunction: this.appChartCallBack.bind(this)
-              },
-              class: "col-lg-6 col-md-12 col-sm-12"
+              class: 'col-lg-6 col-md-12 col-sm-12'
             }
           ]
         }
@@ -346,7 +338,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       },
       legend: {
-        data: ['Purchase', 'Sales','Yield']
+        data: ['Purchase', 'Sales', 'Yield']
       },
       toolbox: {
         show: false,
@@ -364,7 +356,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       xAxis: [
         {
           type: 'category',
-          boundaryGap:false,
+          boundaryGap: false,
           axisTick: { show: false },
           data: ['2012', '2013', '2014', '2015', '2016']
         }
@@ -392,6 +384,66 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     return options;
   };
+  private inventorySpendData(cdref: any) {
+    const chartOptions = {
+      title: {
+        text: ''
+      },
+      tooltip: {},
+      legend: {
+        data: ['Inventory', 'Order'],
+        right:0,
+        top:0
+      },
+      radar: {
+        // shape: 'circle',
+        name: {
+          textStyle: {
+            color: '#fff',
+            backgroundColor: '#999',
+            borderRadius: 3,
+            padding: [3, 5]
+          }
+        },
+        indicator: [
+          { name: 'Mumbai', max: 6500 },
+          { name: 'Delhi', max: 16000 },
+          { name: 'Kolkata', max: 30000 },
+          { name: 'Rajashtan', max: 38000 },
+          { name: 'Banglore', max: 52000 },
+          { name: 'Chennai', max: 25000 }
+        ]
+      },
+      series: [{
+        name: 'Inventory Vs Order Trend',
+        type: 'radar',
+        symbolSize:4,
+        // areaStyle: {normal: {}},
+        data: [
+          {
+            value: [4300, 10000, 28000, 35000, 50000, 19000],
+            name: 'Inventory'
+          },
+          {
+            value: [5000, 14000, 28000, 31000, 42000, 21000],
+            name: 'Order'
+          }
+        ]
+      }]
+    };
+    if (!this.store.has('dashboard_inventory_tiles')) {
+      this.store.add('dashboard_inventory_tiles', {
+        title: 'Inventory Vs Order Trend',
+        chartoptions: chartOptions
+      }, true);
+    } else {
+      this.store.setIn('dashboard_inventory_tiles', [], {
+        title: 'Inventory Vs Order Trend',
+        chartoptions: chartOptions
+      });
+    }
+    return chartOptions;
+  }
   private earningCallbackFunction() {
     const that = this;
 
@@ -412,16 +464,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (!that.store.has('dashboard_earning_tile')) {
         that.store.add('dashboard_earning_tile', {
-          title: "Orders",
+          title: 'Orders',
           value: that.earnings,
-          details: "19% compared to last week",
+          details: '19% compared to last week',
           chartoptions: that.earningOptions
         }, true);
       } else {
         that.store.setIn('dashboard_earning_tile', [], {
-          title: "Orders",
+          title: 'Orders',
           value: that.earnings,
-          details: "19% compared to last week",
+          details: '19% compared to last week',
           chartoptions: that.earningOptions
         });
       }
@@ -449,16 +501,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (!that.store.has('dashboard_sales_tile')) {
         that.store.add('dashboard_sales_tile', {
-          title: "SALES",
+          title: 'SALES',
           value: that.sales,
-          details: "34% compared to last week",
+          details: '34% compared to last week',
           chartoptions: that.salesOptions
         }, true);
       } else {
         that.store.setIn('dashboard_sales_tile', [], {
-          title: "SALES",
+          title: 'SALES',
           value: that.sales,
-          details: "34% compared to last week",
+          details: '34% compared to last week',
           chartoptions: that.salesOptions
         });
       }
@@ -486,16 +538,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (!that.store.has('dashboard_profit_tile')) {
         that.store.add('dashboard_profit_tile', {
-          title: "PROFIT",
+          title: 'PROFIT',
           value: that.profit,
-          details: "34% compared to last week",
+          details: '34% compared to last week',
           chartoptions: that.profitOptions
         }, true);
       } else {
         that.store.setIn('dashboard_profit_tile', [], {
-          title: "PROFIT",
+          title: 'PROFIT',
           value: that.profit,
-          details: "34% compared to last week",
+          details: '34% compared to last week',
           chartoptions: that.profitOptions
         });
       }
@@ -523,16 +575,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (!that.store.has('dashboard_yield_tile')) {
         that.store.add('dashboard_yield_tile', {
-          title: "Yield",
+          title: 'Yield',
           value: that.yield,
-          details: "34% compared to last week",
+          details: '34% compared to last week',
           chartoptions: that.yieldOptions
         }, true);
       } else {
         that.store.setIn('dashboard_yield_tile', [], {
-          title: "Yeild",
+          title: 'Yeild',
           value: that.yield,
-          details: "34% compared to last week",
+          details: '34% compared to last week',
           chartoptions: that.yieldOptions
         });
       }
