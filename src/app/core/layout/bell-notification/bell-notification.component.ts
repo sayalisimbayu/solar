@@ -85,7 +85,6 @@ export class BellNotificationPaneComponent implements OnDestroy, OnChanges, Afte
             });
             that.totalRows = timeline.item2;
             that.page.currentPage++;
-            this.cdRef.detectChanges();
           })
         )
         .subscribe();

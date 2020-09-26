@@ -35,7 +35,6 @@ export class HeaderComponent implements OnInit {
     private cdr: ChangeDetectorRef,
   ) {
     config.placement = 'bottom-right';
-
     this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: any) => {
       this.themeClass = themeClass;
     });
@@ -63,7 +62,6 @@ export class HeaderComponent implements OnInit {
     this.notificationPaneService.toggle();
     this.notificationPaneVisible = this.notificationPaneService.getStatus();
     (this.notificationPaneVisible) && (this.notificationPaneService.notificationBadge = 0, this.notificationPaneService.notificationBadgeBlink = '');
-    this.cdr.detectChanges();
   }
 
 }
