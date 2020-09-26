@@ -4,6 +4,7 @@ import { environment } from '@env/environment';
 import { SimpleStoreManagerService } from '../storemanager/storemanager.service';
 import { INotification } from '@app/shell/models/noti.model';
 import { ToastrService } from 'ngx-toastr';
+import { NotificationPaneService } from './notificationPaneService';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class SignalRService {
   };
 
   private hubConnection: signalR.HubConnection;
-  constructor(private store: SimpleStoreManagerService, private toastr: ToastrService) {}
+  constructor(private store: SimpleStoreManagerService, private toastr: ToastrService, public notificationPaneService: NotificationPaneService) {}
   public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
@@ -46,6 +47,8 @@ export class SignalRService {
       notifictions.push(noti);
     }
     this.showNotification(noti.status, noti.message);
+    this.notificationPaneService.notificationBadge = ++this.notificationPaneService.notificationBadge;
+    this.notificationPaneService.notificationBadgeBlink = 'blink_me';
     console.log(notifictions);
     this.store.add('appNotifications', notifictions, true);
   }

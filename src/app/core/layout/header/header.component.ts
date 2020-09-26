@@ -26,13 +26,12 @@ export class HeaderComponent implements OnInit {
   // theme
   private ngUnsubscribe = new Subject();
   public themeClass: string = 'theme-cyan';
-
   constructor(
     private config: NgbDropdownConfig,
     private themeService: ThemeService,
     private router: Router,
     private authSvc: AuthService,
-    private notificationPaneService: NotificationPaneService,
+    public notificationPaneService: NotificationPaneService,
     private cdr: ChangeDetectorRef,
   ) {
     config.placement = 'bottom-right';
@@ -63,6 +62,7 @@ export class HeaderComponent implements OnInit {
   toggleNotificationFullWidth() {
     this.notificationPaneService.toggle();
     this.notificationPaneVisible = this.notificationPaneService.getStatus();
+    (this.notificationPaneVisible) && (this.notificationPaneService.notificationBadge = 0, this.notificationPaneService.notificationBadgeBlink = '');
     this.cdr.detectChanges();
   }
 

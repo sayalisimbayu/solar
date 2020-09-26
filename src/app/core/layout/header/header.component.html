@@ -48,8 +48,8 @@
           </li>
           <li class="dropdown">
             <a class="dropdown-toggle icon-menu" (click)="toggleNotificationFullWidth()">
-              <i class="icon-bell"></i>
-              <span class="notification-dot"></span>
+              <i class="icon-bell" style="cursor: pointer;"></i>
+              <span class="notification-dot {{themeClass}} {{notificationPaneService.notificationBadgeBlink}}">{{notificationPaneService.notificationBadge}}</span>
             </a>
             <!-- <ul class="dropdown-menu notifications" ngbDropdownMenu>
               <li class="header"><strong>You have 4 new Notifications</strong></li>
@@ -122,7 +122,7 @@
                 <a href="javascript:void(0);"><i class="icon-lock"></i> <span>Privacy</span></a>
               </li>
               <li>
-                <a href="javascript:void(0);"><i class="icon-bell" style="cursor: pointer;"></i> <span>Notifications</span></a>
+                <a href="javascript:void(0);"><i class="icon-bell"></i> <span>Notification</span></a>
               </li>
               <li class="menu-heading">BILLING</li>
               <li>
