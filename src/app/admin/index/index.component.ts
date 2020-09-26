@@ -290,7 +290,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-chart-tiles',
                 config: 'dashboard_chart_tiles',
-                callbackFunction: this.appChartCallBack.bind(this)
+                // callbackFunction: this.appChartCallBack.bind(this)
               },
               class: "col-lg-6 col-md-12 col-sm-12"
             },
@@ -298,7 +298,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-chart-tiles',
                 config: 'dashboard_chart_tiles',
-                callbackFunction: this.appChartCallBack.bind(this)
+                // callbackFunction: this.appChartCallBack.bind(this)
               },
               class: "col-lg-6 col-md-12 col-sm-12"
             }
@@ -323,7 +323,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   private getSpendAnalysis() {
     var labelOption = {
-      show: true,
+      show: false,
       position: 'insideBottom',
       distance: 15,
       align: 'left',
@@ -333,12 +333,12 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       fontSize: 16,
       rich: {
         name: {
-          textBorderColor: '#fff'
+          textBorderColor: '#065c6f'
         }
       }
     };
     let options: any = {
-      color: ['#821752', '#de4463'],
+      color: ['#ed6663', '#ffa372'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -346,7 +346,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       },
       legend: {
-        data: ['Forest', 'Steppe', 'Desert', 'Wetland']
+        data: ['Purchase', 'Sales','Yield']
       },
       toolbox: {
         show: false,
@@ -364,6 +364,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       xAxis: [
         {
           type: 'category',
+          boundaryGap:false,
           axisTick: { show: false },
           data: ['2012', '2013', '2014', '2015', '2016']
         }
@@ -375,15 +376,15 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       ],
       series: [
         {
-          name: 'Forest',
-          type: 'bar',
+          name: 'Purchase',
+          type: 'line',
           barGap: 0,
           label: labelOption,
           data: [320, 332, 301, 334, 390]
         },
         {
-          name: 'Steppe',
-          type: 'bar',
+          name: 'Sales',
+          type: 'line',
           label: labelOption,
           data: [220, 182, 191, 234, 290]
         }
