@@ -96,13 +96,18 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     // set empty user info as on load user info is undefine or implement resolver
     this.userInfo = this.setEmptyUserInfo();
 
-    // getUserInfo
-    this.getUserInfo();
-
     // Form Builder
     this.basicInformation = this.setBasicInformationFormBuilder();
     this.accountData = this.setaccountDataFormBuilder();
     this.generalInformationFormGroup = this.setGeneralInformationFormGroup();
+
+    // getUserInfo
+    this.getUserInfo();
+
+    // // Form Builder
+    // this.basicInformation = this.setBasicInformationFormBuilder();
+    // this.accountData = this.setaccountDataFormBuilder();
+    // this.generalInformationFormGroup = this.setGeneralInformationFormGroup();
     this.loadOverView();
   }
   ngAfterViewInit(): void {
@@ -138,16 +143,18 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         // alert('got info');
         console.log(el);
         this.userInfo = el;
-        this.userInfo.sociallist = JSON.parse(this.userInfo.sociallist);
+        this.userInfo.sociallist = (this.userInfo.sociallist && this.userInfo.sociallist.length > 0) ? (JSON.parse(this.userInfo.sociallist)) : ([]);
         this.socialArray = this.userInfo.sociallist;
         this.store.has('userInfo') && this.store.remove('userInfo');
         this.store.add('userInfo', this.userInfo, true);
+        this.basicInformation = this.setBasicInformation(this.userInfo);
+        this.accountData = this.setAccountData(this.userInfo);
         this.basicInformation.controls['id'].setValue(el.id);
         this.basicInformation.controls['usid'].setValue(el.usid);
         this.user = this.setUser(this.userInfo);
         this.cdRef.detectChanges();
         // set value for mobile
-        this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
+        // this.basicInformation.controls['mobile'].setValue(this.userInfo.mobile);
 
         // set account data
         this.accountData.setValue(this.setUpdatedaccountData(this.userInfo, this.user));
@@ -244,7 +251,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       displayname: `${userInfo.firstname} ${userInfo.lastname}`,
       email: user.email,
       gender: userInfo.gender,
-      mobile: '',
+      mobile: userInfo.mobile,
       birthdate: userInfo.birthdate,
       social: userInfo.social,
       addresslinE1: userInfo.addresslinE1,
@@ -372,5 +379,60 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   onSocialDelete(index: number, social: string) {
     this.sociallist.splice(index,1);
+  }
+  setBasicInformation(userInfo: any) {
+    return this.formBuilder.group({
+      id: [],
+      usid: [],
+      firstname: [userInfo.firstname, Validators.required],
+      lastname: [userInfo.lastname, Validators.required],
+      username: ['amar@simbayu.in'],
+      displayname: [`${this.userInfo.firstname} ${this.userInfo.lastname}`],
+      email: [userInfo.email],
+      gender: ['true', Validators.required],
+      mobile: [userInfo.mobile],
+      birthdate: [userInfo.birthdate.split('T')[0], Validators.required],
+      social: [userInfo.social, Validators.required],
+      addresslinE1: [userInfo.addresslinE1, Validators.required],
+      addresslinE2: [userInfo.addresslinE2, Validators.required],
+      city: [userInfo.city, Validators.required],
+      ustate: [userInfo.ustate, Validators.required],
+      countrycode: [userInfo.countrycode, Validators.required],
+      currentpassword: [''],
+      password: [''],
+      confirmnewpassword: [''],
+      profileimg: [''],
+      sociallist: [[]]
+    });
+  };
+
+  setAccountData(userInfo: any) {
+    return this.formBuilder.group({
+      id: [0],
+      usid: [0],
+      firstname: [userInfo.firstname, Validators.required],
+      lastname: [userInfo.lastname, Validators.required],
+      username: [{ value: 'amar@simbayu.in', disabled: true }],
+      displayname: [`${this.userInfo.firstname} ${this.userInfo.lastname}`],
+      email: [userInfo.email],
+      gender: ['true', Validators.required],
+      mobile: [userInfo.mobile],
+      birthdate: [userInfo.birthdate.split('T')[0], Validators.required],
+      social: [userInfo.social, Validators.required],
+      addresslinE1: [userInfo.addresslinE1, Validators.required],
+      addresslinE2: [userInfo.addresslinE2, Validators.required],
+      city: [userInfo.city, Validators.required],
+      ustate: [userInfo.ustate, Validators.required],
+      countrycode: [userInfo.countrycode, Validators.required],
+      currentpassword: [''],
+      password: [''],
+      confirmnewpassword: [''],
+      profileimg: [''],
+      sociallist: [[]]
+    });
+  };
+
+  setBirthdate(userInfo: any) {
+
   }
 }
