@@ -1,4 +1,13 @@
-import { Component, Input, Output, EventEmitter, OnDestroy, ChangeDetectorRef, OnChanges, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy,
+  ChangeDetectorRef,
+  OnChanges,
+  AfterViewInit
+} from '@angular/core';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ThemeService } from '@app/shared/services/theme.service';
@@ -32,16 +41,14 @@ export class BellNotificationPaneComponent implements OnDestroy, OnChanges, Afte
     private themeService: ThemeService,
     private userRepoService: UserRepoService,
     private cdRef: ChangeDetectorRef,
-    private store:SimpleStoreManagerService
+    private store: SimpleStoreManagerService
   ) {
     this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: string) => {
       this.themeClass = themeClass;
     });
   }
 
-  ngOnChanges() {
-
-  }
+  ngOnChanges() {}
 
   ngOnInit() {
     this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: any) => {
@@ -92,22 +99,21 @@ export class BellNotificationPaneComponent implements OnDestroy, OnChanges, Afte
   }
 
   notificationListner() {
-
     this.store.$store
-    .pipe(filter((se: { key: string }) => se.key === 'appNotifications'))
-    .pipe(
-      map((el: StoreEvent) => {
-        alert('notificationlistner triggerd');
-        this.loadOverView({
-          pagesize: 6,
-          currentPage: 0,
-          throttle: 50,
-          scrollDistance: 1,
-          scrollUpDistance: 2
-        });
-      })
-    )
-    .subscribe();
+      .pipe(filter((se: { key: string }) => se.key === 'appNotifications'))
+      .pipe(
+        map((el: StoreEvent) => {
+          alert('notificationlistner triggerd');
+          this.loadOverView({
+            pagesize: 6,
+            currentPage: 0,
+            throttle: 50,
+            scrollDistance: 1,
+            scrollUpDistance: 2
+          });
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy() {

@@ -70,7 +70,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     const that = this;
-    setTimeout(function () {
+    setTimeout(function() {
       that.showToastr();
     }, 1000);
   }
@@ -85,7 +85,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     // Add 'implements AfterViewInit' to the class.
     this.updatePagetTitle();
     this.updateDashboardGrid();
-
   }
   showToastr() {
     this.toastr.info('Hello, welcome to Simbayu.', undefined, {
@@ -99,7 +98,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sidebarService.toggle();
     this.sidebarVisible = this.sidebarService.getStatus();
     const that = this;
-    setTimeout(function () {
+    setTimeout(function() {
       that.isResizing = false;
       that.cdr.detectChanges();
     }, 400);
@@ -273,7 +272,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               },
               class: 'col-lg-3 col-md-6 col-sm-12'
             }
-
           ]
         },
         {
@@ -297,15 +295,19 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
           ]
         }
       ]
-    }
+    };
     return rowConfig;
   }
   private appChartCallBack(cdref: any) {
     if (!this.store.has('dashboard_chart_tiles')) {
-      this.store.add('dashboard_chart_tiles', {
-        title: 'Spend Analysis',
-        chartoptions: this.getSpendAnalysis()
-      }, true);
+      this.store.add(
+        'dashboard_chart_tiles',
+        {
+          title: 'Spend Analysis',
+          chartoptions: this.getSpendAnalysis()
+        },
+        true
+      );
     } else {
       this.store.setIn('dashboard_chart_tiles', [], {
         title: 'Spend Analysis',
@@ -383,7 +385,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       ]
     };
     return options;
-  };
+  }
   private inventorySpendData(cdref: any) {
     const chartOptions = {
       title: {
@@ -392,8 +394,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       tooltip: {},
       legend: {
         data: ['Inventory', 'Order'],
-        right:0,
-        top:0
+        right: 0,
+        top: 0
       },
       radar: {
         // shape: 'circle',
@@ -414,28 +416,34 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
           { name: 'Chennai', max: 25000 }
         ]
       },
-      series: [{
-        name: 'Inventory Vs Order Trend',
-        type: 'radar',
-        symbolSize:4,
-        // areaStyle: {normal: {}},
-        data: [
-          {
-            value: [4300, 10000, 28000, 35000, 50000, 19000],
-            name: 'Inventory'
-          },
-          {
-            value: [5000, 14000, 28000, 31000, 42000, 21000],
-            name: 'Order'
-          }
-        ]
-      }]
+      series: [
+        {
+          name: 'Inventory Vs Order Trend',
+          type: 'radar',
+          symbolSize: 4,
+          // areaStyle: {normal: {}},
+          data: [
+            {
+              value: [4300, 10000, 28000, 35000, 50000, 19000],
+              name: 'Inventory'
+            },
+            {
+              value: [5000, 14000, 28000, 31000, 42000, 21000],
+              name: 'Order'
+            }
+          ]
+        }
+      ]
     };
     if (!this.store.has('dashboard_inventory_tiles')) {
-      this.store.add('dashboard_inventory_tiles', {
-        title: 'Inventory Vs Order Trend',
-        chartoptions: chartOptions
-      }, true);
+      this.store.add(
+        'dashboard_inventory_tiles',
+        {
+          title: 'Inventory Vs Order Trend',
+          chartoptions: chartOptions
+        },
+        true
+      );
     } else {
       this.store.setIn('dashboard_inventory_tiles', [], {
         title: 'Inventory Vs Order Trend',
@@ -463,12 +471,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.add('totalEarnings', that.earnings);
       }
       if (!that.store.has('dashboard_earning_tile')) {
-        that.store.add('dashboard_earning_tile', {
-          title: 'Orders',
-          value: that.earnings,
-          details: '19% compared to last week',
-          chartoptions: that.earningOptions
-        }, true);
+        that.store.add(
+          'dashboard_earning_tile',
+          {
+            title: 'Orders',
+            value: that.earnings,
+            details: '19% compared to last week',
+            chartoptions: that.earningOptions
+          },
+          true
+        );
       } else {
         that.store.setIn('dashboard_earning_tile', [], {
           title: 'Orders',
@@ -500,12 +512,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.add('totalSales', that.sales);
       }
       if (!that.store.has('dashboard_sales_tile')) {
-        that.store.add('dashboard_sales_tile', {
-          title: 'SALES',
-          value: that.sales,
-          details: '34% compared to last week',
-          chartoptions: that.salesOptions
-        }, true);
+        that.store.add(
+          'dashboard_sales_tile',
+          {
+            title: 'SALES',
+            value: that.sales,
+            details: '34% compared to last week',
+            chartoptions: that.salesOptions
+          },
+          true
+        );
       } else {
         that.store.setIn('dashboard_sales_tile', [], {
           title: 'SALES',
@@ -537,12 +553,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.add('totalProfit', that.sales);
       }
       if (!that.store.has('dashboard_profit_tile')) {
-        that.store.add('dashboard_profit_tile', {
-          title: 'PROFIT',
-          value: that.profit,
-          details: '34% compared to last week',
-          chartoptions: that.profitOptions
-        }, true);
+        that.store.add(
+          'dashboard_profit_tile',
+          {
+            title: 'PROFIT',
+            value: that.profit,
+            details: '34% compared to last week',
+            chartoptions: that.profitOptions
+          },
+          true
+        );
       } else {
         that.store.setIn('dashboard_profit_tile', [], {
           title: 'PROFIT',
@@ -574,12 +594,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.add('totalYield', that.sales);
       }
       if (!that.store.has('dashboard_yield_tile')) {
-        that.store.add('dashboard_yield_tile', {
-          title: 'Yield',
-          value: that.yield,
-          details: '34% compared to last week',
-          chartoptions: that.yieldOptions
-        }, true);
+        that.store.add(
+          'dashboard_yield_tile',
+          {
+            title: 'Yield',
+            value: that.yield,
+            details: '34% compared to last week',
+            chartoptions: that.yieldOptions
+          },
+          true
+        );
       } else {
         that.store.setIn('dashboard_yield_tile', [], {
           title: 'Yeild',

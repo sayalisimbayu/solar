@@ -1,10 +1,10 @@
 export interface IDashboardGridConfig {
-    row: IDashboardRowConfig[];
+  row: IDashboardRowConfig[];
 }
-export interface IDashboardRowConfig{
-    tiles: IDashboardTileConfig[];
+export interface IDashboardRowConfig {
+  tiles: IDashboardTileConfig[];
 }
-export interface IDashboardTileConfig{
-    class: string;
-    config: any;
+export interface IDashboardTileConfig {
+  class: string;
+  config: any;
 }

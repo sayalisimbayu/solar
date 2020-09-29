@@ -6,41 +6,38 @@ import { filter, map } from 'rxjs/operators';
 import { IAppChartTileConfig } from './models/chart-tiles.model.interface';
 
 @Component({
-    selector: 'app-chart-tiles',
-    templateUrl: './chart-tiles.component.html',
-    styleUrls: ['./chart-tiles.component.css']
+  selector: 'app-chart-tiles',
+  templateUrl: './chart-tiles.component.html',
+  styleUrls: ['./chart-tiles.component.css']
 })
 export class ChartTilesComponent implements OnInit {
+  @Input() storeId: string;
+  @Input() scope: any;
+  public config: IAppChartTileConfig;
+  public subScription: Subscription;
 
-    @Input() storeId: string;
-    @Input() scope: any;
-    public config: IAppChartTileConfig;
-    public subScription: Subscription;
+  constructor(private store: SimpleStoreManagerService) {
+    this.subScription = new Subscription();
+    this.config = {
+      chartoptions: {},
+      title: ''
+    };
+  }
 
-    constructor(
-        private store: SimpleStoreManagerService
-    ) {
-        this.subScription = new Subscription();
-        this.config = {
-          chartoptions: {},
-          title: ''
-        };
+  ngOnInit() {
+    let that = this;
+    if (this.store.has(this.storeId)) {
+      this.config = this.store.getByKey(this.storeId);
     }
-
-    ngOnInit() {
-        let that = this;
-        if (this.store.has(this.storeId)) {
-          this.config = this.store.getByKey(this.storeId);
-        }
-        this.subScription.add(
-          this.store.$store
-            .pipe(filter((el: StoreEvent) => el.key === this.storeId))
-            .pipe(
-              map((el: StoreEvent) => {
-                this.config = el.changedValue as IAppChartTileConfig;
-              })
-            )
-            .subscribe()
-        );
-    }
+    this.subScription.add(
+      this.store.$store
+        .pipe(filter((el: StoreEvent) => el.key === this.storeId))
+        .pipe(
+          map((el: StoreEvent) => {
+            this.config = el.changedValue as IAppChartTileConfig;
+          })
+        )
+        .subscribe()
+    );
+  }
 }

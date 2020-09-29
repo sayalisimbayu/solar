@@ -36,7 +36,7 @@ export class MercuryComponent implements AfterViewInit, OnInit, OnDestroy {
     private themeService: ThemeService,
     private titleService: Title,
     private userIdle: UserIdleService,
-    public NotificationPaneService: NotificationPaneService,
+    public NotificationPaneService: NotificationPaneService
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {
       this.isStopLoading = false;

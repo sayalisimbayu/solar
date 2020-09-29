@@ -79,24 +79,27 @@ export const lazyWidgets: {
   {
     path: 'app-detail-titles',
     loadChildren: () =>
-    import('./../../admin/index/dashboard-widgets/detail-tiles/detail-tiles.module').then(m => m.DetailTilesModule),
+      import('./../../admin/index/dashboard-widgets/detail-tiles/detail-tiles.module').then(m => m.DetailTilesModule),
     data: { preload: true }
   },
   {
     path: 'app-chart-tiles',
     loadChildren: () =>
-    import('./../../admin/index/dashboard-widgets/chart-tiles/chart-tiles.module').then(m => m.ChartTilesModule),
+      import('./../../admin/index/dashboard-widgets/chart-tiles/chart-tiles.module').then(m => m.ChartTilesModule),
     data: { preload: true }
   },
   {
     path: 'app-dashboard-grid',
     loadChildren: () =>
-    import('./../../admin/index/dashboard-widgets/dashboard-grid/dashboard-grid.module').then(m => m.DashboardGridModule),
+      import('./../../admin/index/dashboard-widgets/dashboard-grid/dashboard-grid.module').then(
+        m => m.DashboardGridModule
+      ),
     data: { preload: true }
   },
   {
     path: 'app-bell-notification-pane',
-    loadChildren: () => import('./../../core/layout/bell-notification/bell-notification.module').then(m => m.BellNotificationModule),
+    loadChildren: () =>
+      import('./../../core/layout/bell-notification/bell-notification.module').then(m => m.BellNotificationModule),
     data: { preload: true }
   }
 ];

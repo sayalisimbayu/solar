@@ -10,7 +10,13 @@ import { UserWrapperComponent } from '@app/admin/profile/user-list/user-wrapper.
 import { FormsModule } from '@angular/forms';
 @NgModule({
   imports: [CommonModule, NgbModule, RouterModule, FormsModule],
-  declarations: [HeaderComponent, SidebarComponent, PageLoaderComponent, NotificationPaneComponent, UserWrapperComponent],
+  declarations: [
+    HeaderComponent,
+    SidebarComponent,
+    PageLoaderComponent,
+    NotificationPaneComponent,
+    UserWrapperComponent
+  ],
   exports: [HeaderComponent, SidebarComponent, PageLoaderComponent, NotificationPaneComponent]
 })
 export class LayoutModule {}

@@ -143,7 +143,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         // alert('got info');
         console.log(el);
         this.userInfo = el;
-        this.userInfo.sociallist = (this.userInfo.sociallist && this.userInfo.sociallist.length > 0) ? (JSON.parse(this.userInfo.sociallist)) : ([]);
+        this.userInfo.sociallist =
+          this.userInfo.sociallist && this.userInfo.sociallist.length > 0 ? JSON.parse(this.userInfo.sociallist) : [];
         this.socialArray = this.userInfo.sociallist;
         this.store.has('userInfo') && this.store.remove('userInfo');
         this.store.add('userInfo', this.userInfo, true);
@@ -285,7 +286,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.basicInformation.value['gender'] =
       this.basicInformation.value['gender'].toString().toLowerCase() === 'true' ? true : false;
-      data.sociallist = JSON.stringify(data.sociallist);
+    data.sociallist = JSON.stringify(data.sociallist);
     // appuserinfo
     this.userRepoService.saveUserinfo(data).subscribe(el => {
       alert('user saved successfully');
@@ -369,16 +370,19 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   OnEnter(event: any, data: any) {
     if (event.keyCode == 13) {
-      this.sociallist.push({typeInfo: {type: data.socialType, class: `fa-${data.socialType}`}, link: data.socialInput});
+      this.sociallist.push({
+        typeInfo: { type: data.socialType, class: `fa-${data.socialType}` },
+        link: data.socialInput
+      });
       this.accountData.controls['sociallist'].setValue(JSON.stringify(this.sociallist));
-      };
-      this.generalInformationFormGroup.controls['socialInput'].setValue('');
     }
+    this.generalInformationFormGroup.controls['socialInput'].setValue('');
+  }
   trackByFn(index: number) {
     return index;
   }
   onSocialDelete(index: number, social: string) {
-    this.sociallist.splice(index,1);
+    this.sociallist.splice(index, 1);
   }
   setBasicInformation(userInfo: any) {
     return this.formBuilder.group({
@@ -404,7 +408,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       profileimg: [''],
       sociallist: [[]]
     });
-  };
+  }
 
   setAccountData(userInfo: any) {
     return this.formBuilder.group({
@@ -430,9 +434,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       profileimg: [''],
       sociallist: [[]]
     });
-  };
-
-  setBirthdate(userInfo: any) {
-
   }
+
+  setBirthdate(userInfo: any) {}
 }

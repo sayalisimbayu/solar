@@ -9,13 +9,13 @@ import { ThemeService } from '@app/shared/services/theme.service';
 import { AuthService } from '@app/shell/auth/auth.service';
 import { AutoUnsubscribe } from '@app/shared/decoraters/decorators';
 import { UserIdleService } from 'angular-user-idle';
-import {NotificationPaneService} from '@app/shared/services/notificationPaneService'
+import { NotificationPaneService } from '@app/shared/services/notificationPaneService';
 import { LazyLoaderService } from '@app/shared/services/lazy-loader.service';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
   public title = 'lucid';
@@ -43,7 +43,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
     private authSrv: AuthService,
     private userIdle: UserIdleService,
     public NotificationPaneService: NotificationPaneService,
-    private lazyLoader: LazyLoaderService,
+    private lazyLoader: LazyLoaderService
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {
       this.isStopLoading = false;
@@ -90,7 +90,6 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
         this.userIdle.stopWatching();
       })
     );
-
   }
 
   ngOnDestroy() {
