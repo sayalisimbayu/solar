@@ -12,7 +12,7 @@
           </div>
           <div>
             <h4 class="m-b-0">{{ user.displayname }}</h4>
-            <span>{{userInfo.city }} {{userInfo.ustate}}</span>
+            <span>{{ userInfo.city }} {{ userInfo.ustate }}</span>
           </div>
           <div class="m-t-15">
             <button class="btn btn-primary mr-1">Follow</button>
@@ -1228,7 +1228,9 @@
                       <label>Social</label>
                       <select class="form-control" formControlName="socialType" placeholder>
                         <option value="Select Type" selected disabled>--Select Type--</option>
-                        <option *ngFor="let list of socialListArray; index as i; trackBy: trackByFn">{{ list.type }}</option>
+                        <option *ngFor="let list of socialListArray; index as i; trackBy: trackByFn">{{
+                          list.type
+                        }}</option>
                         <!-- <option value="{'type': 'twitter', 'class':'fa-twitter'}" lang="en">Twitter</option>
                         <option value="{'type': 'facebook', 'class':'fa-facebook'}" lang="en">FaceBook</option>
                         <option value="{'type': 'github', 'class':'fa-github'}" lang="en">Github</option>
@@ -1246,10 +1248,12 @@
                     </div>
                     <div>
                       <ul style="padding: 0px 5px;">
-                        <li *ngFor="let social of sociallist; index as i; trackBy: trackByFn" style="display: flex; justify-content: space-between;">
-                          *ngFor="let social of socialList; index as i; trackBy: trackByFn"
+                        <li
+                          *ngFor="let social of sociallist; index as i; trackBy: trackByFn"
                           style="display: flex; justify-content: space-between;"
                         >
+                          *ngFor="let social of socialList; index as i; trackBy: trackByFn" style="display: flex;
+                          justify-content: space-between;" >
                           <span><i class="fa {{ social.typeInfo.class }} m-r-5"></i></span>
                           <span>{{ social.typeInfo.type }}</span>
                           <span>{{ social.link }}</span>

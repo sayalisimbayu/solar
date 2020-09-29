@@ -1,14 +1,16 @@
-<div class="sidebar notification" style="overflow-y:scroll;">
+<div id="right-sidebar" class="sidebar notification" style="overflow-y:scroll;">
   <div class="sidebar-scroll">
     <ul class="dropdown-menu-notification notifications">
-      <li *ngFor="let item of items" class="content-li {{themeClass}}">
+      <li *ngFor="let item of items" class="content-li {{ themeClass }}">
         <a href="javascript:void(0);">
           <div class="media">
             <div class="media-body">
-              <p class="text">{{item.title}}
+              <p class="text">
+                {{ item.title }}
                 <strong></strong>
-                {{item.content}}</p>
-              <span class="timestamp">{{item.updatedDate | date: 'medium'}}</span>
+                {{ item.content }}
+              </p>
+              <span class="timestamp">{{ item.updatedDate | date: 'medium' }}</span>
             </div>
           </div>
         </a>

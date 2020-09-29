@@ -140,7 +140,9 @@
           <li class="dropdown">
             <a class="dropdown-toggle icon-menu" (click)="toggleNotificationFullWidth()">
               <i class="icon-bell" style="cursor: pointer;"></i>
-              <span class="notification-dot {{themeClass}} {{notificationPaneService.notificationBadgeBlink}}">{{notificationPaneService.notificationBadge}}</span>
+              <span class="notification-dot {{ themeClass }} {{ notificationPaneService.notificationBadgeBlink }}">{{
+                notificationPaneService.notificationBadge
+              }}</span>
             </a>
           </li>
           <li>

@@ -24,8 +24,6 @@
       <router-outlet (activate)="getActiveRoutes()"></router-outlet>
     </div>
 
-    <app-notification-pane
-      [sidebarVisible]="NotificationPaneService.sidebarVisible"
-    ></app-notification-pane>
+    <app-notification-pane [sidebarVisible]="NotificationPaneService.sidebarVisible"></app-notification-pane>
   </div>
 </div>

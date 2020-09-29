@@ -16,7 +16,11 @@ export class SignalRService {
   };
 
   private hubConnection: signalR.HubConnection;
-  constructor(private store: SimpleStoreManagerService, private toastr: ToastrService, public notificationPaneService: NotificationPaneService) {}
+  constructor(
+    private store: SimpleStoreManagerService,
+    private toastr: ToastrService,
+    public notificationPaneService: NotificationPaneService
+  ) {}
   public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)

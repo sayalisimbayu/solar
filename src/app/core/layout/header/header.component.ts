@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private authSvc: AuthService,
     public notificationPaneService: NotificationPaneService,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     config.placement = 'bottom-right';
     this.themeService.themeClassChange.pipe(takeUntil(this.ngUnsubscribe)).subscribe((themeClass: any) => {
@@ -61,7 +61,8 @@ export class HeaderComponent implements OnInit {
   toggleNotificationFullWidth() {
     this.notificationPaneService.toggle();
     this.notificationPaneVisible = this.notificationPaneService.getStatus();
-    (this.notificationPaneVisible) && (this.notificationPaneService.notificationBadge = 0, this.notificationPaneService.notificationBadgeBlink = '');
+    this.notificationPaneVisible &&
+      ((this.notificationPaneService.notificationBadge = 0),
+      (this.notificationPaneService.notificationBadgeBlink = ''));
   }
-
 }

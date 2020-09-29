@@ -26,7 +26,7 @@
 
 #right-sidebar {
   @include transition(all 0.3s ease-in-out);
-  width: $sidebar-width;
+  width: $sidebar-right-width;
   height: calc(100% - 65px);
   float: right;
   margin-top: 61px;
@@ -37,7 +37,7 @@
 
   @include max-screen($break-large) {
     @include box-shadow(0 5px 10px 0px rgba(0, 0, 0, 0.2));
-    left: -$sidebar-width;
+    right: -$sidebar-right-width;
   }
 
   .nav-tabs {
@@ -58,7 +58,7 @@
   }
 
   &#right-sidebar {
-    right: -$sidebar-width;
+    right: -$sidebar-right-width;
 
     &.ps {
       overflow: visible !important;
@@ -67,6 +67,19 @@
 
   &#main-content {
     width: 100%;
+  }
+}
+
+.layout-right-side-bar {
+  &#right-sidebar {
+    right: $sidebar-right-width;
+
+    &.ps {
+      overflow: visible !important;
+    }
+  }
+  &#main-content {
+    width: calc(100% - #{$sidebar-right-width}) !important;
   }
 }
 

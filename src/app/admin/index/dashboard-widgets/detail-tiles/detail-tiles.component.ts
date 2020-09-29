@@ -18,15 +18,13 @@ export class DetailTilesComponent implements OnInit {
   public subScription: Subscription;
   public autoResize: boolean = true;
 
-  constructor(
-    private store: SimpleStoreManagerService
-  ) {
+  constructor(private store: SimpleStoreManagerService) {
     this.subScription = new Subscription();
     this.config = {
       chartoptions: {},
-      details: "",
+      details: '',
       title: '',
-      value: 0,
+      value: 0
     };
   }
 

@@ -166,18 +166,16 @@ export class UserRepoService {
     );
   }
   public getTimeLineConfig(payload: any): Observable<INotification[]> {
-    return this.http
-      .post<DataResponse>(`communi/page`, payload)
-      .pipe(
-        map((el: DataResponse) => {
-          if (el.code === 0) {
-            console.error(el);
-            return;
-          }
+    return this.http.post<DataResponse>(`communi/page`, payload).pipe(
+      map((el: DataResponse) => {
+        if (el.code === 0) {
+          console.error(el);
+          return;
+        }
 
-          return el.data;
-        })
-      );
+        return el.data;
+      })
+    );
     //   return of([{
     //       id: 0,
     //       type: 'TYPE1',

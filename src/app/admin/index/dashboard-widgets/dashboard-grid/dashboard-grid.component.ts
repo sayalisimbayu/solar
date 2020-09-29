@@ -11,7 +11,6 @@ import { IDashboardGridConfig } from './models/dashboard-grid.model.interface';
   styleUrls: ['./dashboard-grid.component.scss']
 })
 export class DashboardGridComponent implements OnInit, AfterViewInit {
-
   @Input() storeId: string;
   @Input() scope: any;
   public config: IDashboardGridConfig;
@@ -21,9 +20,7 @@ export class DashboardGridComponent implements OnInit, AfterViewInit {
   @ViewChild('rowContainer', { read: ViewContainerRef, static: true }) rowContainer: ViewContainerRef;
   @ViewChild('rowTemplate', { static: true }) rowTemplate: TemplateRef<any>;
 
-  constructor(
-    private store: SimpleStoreManagerService
-  ) {
+  constructor(private store: SimpleStoreManagerService) {
     this.subScription = new Subscription();
     this.config = {
       row: []
@@ -46,13 +43,13 @@ export class DashboardGridComponent implements OnInit, AfterViewInit {
         )
         .subscribe()
     );
-  };
+  }
   ngAfterViewInit(): void {
     this.config.row.forEach((element: any) => {
-      this.rowContainer.createEmbeddedView(this.rowTemplate, {config: element});
+      this.rowContainer.createEmbeddedView(this.rowTemplate, { config: element });
     });
   }
-  trackbyFn(index: number, a: any, b: any){
-    return index
+  trackbyFn(index: number, a: any, b: any) {
+    return index;
   }
 }

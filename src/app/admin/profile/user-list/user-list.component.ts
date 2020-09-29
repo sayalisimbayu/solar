@@ -108,7 +108,7 @@ export class UserListComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-  };
+  }
   userSearchSubscription() {
     this.subscription.add(
       this.store.$store
@@ -126,11 +126,12 @@ export class UserListComponent implements OnInit, OnDestroy {
               searchKey: `DISPLAYNAME LIKE '%${searchTerm.searchKey}%'`
             });
           })
-        ).subscribe()
+        )
+        .subscribe()
     );
   }
   ngOnDestroy() {
-    (this.subscription) && (this.subscription.unsubscribe());
+    this.subscription && this.subscription.unsubscribe();
     this.userInfo = [];
   }
 }
