@@ -27,7 +27,7 @@ steps:
     serverUrl: 'ftps://simbayu.in'
     username: 'oslabndb'
     password: 'Adage1720@#'
-    rootDirectory: '/dev.simbayu.in/'
+    rootDirectory: 'dev.simbayu.in/'
     filePatterns: '**'
     remoteDirectory: '/upload/$(Build.BuildId)/'
     clean: false
