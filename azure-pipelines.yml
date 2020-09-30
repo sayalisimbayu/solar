@@ -33,5 +33,5 @@ steps:
     remoteDirectory: 'dev.simbayu.in'
     clean: true
     cleanContents: true
-    preservePaths: true
+    preservePaths: false
     trustSSL: true
