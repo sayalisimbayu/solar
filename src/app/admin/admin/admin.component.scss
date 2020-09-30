@@ -1,12 +1,12 @@
 .layout-right-side-bar {
-    &#right-sidebar {
-      right: 345px;
+  &#right-sidebar {
+    right: 345px;
 
-      &.ps {
-        overflow: visible !important;
-      }
-    }
-    &#main-content {
-      width: calc(100% - #{345px}) !important;
+    &.ps {
+      overflow: visible !important;
     }
   }
+  &#main-content {
+    width: calc(100% - #{345px}) !important;
+  }
+}
