@@ -44,3 +44,19 @@ steps:
     preservePaths: true
     trustSSL: true
   displayName: 'Uploading and Unzip'
+
+- task: FtpUpload@2
+  inputs:
+    credentialsOption: 'inputs'
+    serverUrl: 'http://ftp.simbayu.in'
+    username: 'oslabndb'
+    password: 'Adage1720@#'
+    rootDirectory: '$(Build.ArtifactStagingDirectory)'
+    filePatterns: ''
+    remoteDirectory: 'dev.simbayu.in/'
+    clean: true
+    cleanContents: true
+    preservePaths: true
+    trustSSL: true
+    customCmds: 'unzip dev.simbayu.in/$(Build.BuildId).zip'
+  displayName: 'Uploading and Unzip'
