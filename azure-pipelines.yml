@@ -38,7 +38,7 @@ steps:
     password: 'Adage1720@#'
     rootDirectory: '$(Build.ArtifactStagingDirectory)'
     filePatterns: '$(Build.BuildId).zip'
-    remoteDirectory: 'dev.simbayu.in/'
+    remoteDirectory: 'dev.simbayu.in'
     clean: true
     cleanContents: true
     preservePaths: true
@@ -53,7 +53,7 @@ steps:
     password: 'Adage1720@#'
     rootDirectory: '$(Build.ArtifactStagingDirectory)'
     filePatterns: ''
-    remoteDirectory: 'dev.simbayu.in/'
+    remoteDirectory: 'dev.simbayu.in'
     clean: true
     cleanContents: true
     preservePaths: true
