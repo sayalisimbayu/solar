@@ -21,16 +21,17 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
+
 - task: FtpUpload@2
   inputs:
     credentialsOption: 'inputs'
-    serverUrl: 'ftps://simbayu.in'
+    serverUrl: 'http://ftp.simbayu.in'
     username: 'oslabndb'
     password: 'Adage1720@#'
-    rootDirectory: 'dev.simbayu.in/'
+    rootDirectory: 'dist/'
     filePatterns: '**'
-    remoteDirectory: '/upload/$(Build.BuildId)/'
+    remoteDirectory: 'dev.simbayu.in/'
     clean: false
-    cleanContents: false
-    preservePaths: false
+    cleanContents: true
+    preservePaths: true
     trustSSL: false
