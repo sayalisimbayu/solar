@@ -21,6 +21,14 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '/dist'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Archiving Files'
 
 - task: FtpUpload@2
   inputs:
@@ -29,9 +37,11 @@ steps:
     username: 'oslabndb'
     password: 'Adage1720@#'
     rootDirectory: 'dist/'
-    filePatterns: '**'
+    filePatterns: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     remoteDirectory: 'dev.simbayu.in/'
     clean: true
     cleanContents: true
     preservePaths: true
     trustSSL: true
+    customCmds: 'unzip $(Build.BuildId).zip'
+  displayName: 'Uploading and Unzip'
