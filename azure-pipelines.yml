@@ -43,5 +43,4 @@ steps:
     cleanContents: true
     preservePaths: true
     trustSSL: true
-    customCmds: 'unzip $(Build.BuildId).zip'
   displayName: 'Uploading and Unzip'
