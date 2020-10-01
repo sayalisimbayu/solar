@@ -36,7 +36,7 @@ steps:
     serverUrl: 'http://ftp.simbayu.in'
     username: 'oslabndb'
     password: 'Adage1720@#'
-    rootDirectory: '/dist'
+    rootDirectory: 'dist'
     filePatterns: '**'
     remoteDirectory: '/dev.simbayu.in/'
     clean: true
