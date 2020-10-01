@@ -36,43 +36,11 @@ steps:
     serverUrl: 'http://ftp.simbayu.in'
     username: 'oslabndb'
     password: 'Adage1720@#'
-    rootDirectory: '$(Build.ArtifactStagingDirectory)'
-    filePatterns: '$(Build.BuildId).zip'
-    remoteDirectory: '/dev.simbayu.in'
+    rootDirectory: '/dist'
+    filePatterns: '**'
+    remoteDirectory: '/dev.simbayu.in/'
     clean: true
     cleanContents: true
     preservePaths: true
     trustSSL: true
   displayName: 'Uploading'
-
-- task: FtpUpload@2
-  inputs:
-    credentialsOption: 'inputs'
-    serverUrl: 'http://ftp.simbayu.in'
-    username: 'oslabndb'
-    password: 'Adage1720@#'
-    rootDirectory: '$(Build.ArtifactStagingDirectory)'
-    filePatterns: ''
-    remoteDirectory: ''
-    clean: true
-    cleanContents: true
-    preservePaths: true
-    trustSSL: true
-    customCmds: 'unzip /dev.simbayu.in/$(Build.BuildId).zip'
-  displayName: 'Unzip'
-
-- task: FtpUpload@2
-  inputs:
-    credentialsOption: 'inputs'
-    serverUrl: 'http://ftp.simbayu.in'
-    username: 'oslabndb'
-    password: 'Adage1720@#'
-    rootDirectory: '$(Build.ArtifactStagingDirectory)'
-    filePatterns: ''
-    remoteDirectory: ''
-    clean: true
-    cleanContents: true
-    preservePaths: true
-    trustSSL: true
-    customCmds: 'delete /dev.simbayu.in/$(Build.BuildId).zip'
-  displayName: 'Deleting zip'
