@@ -24,7 +24,7 @@ steps:
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: 'dist'
-    includeRootFolder: true
+    includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
@@ -38,12 +38,12 @@ steps:
     password: 'Adage1720@#'
     rootDirectory: '$(Build.ArtifactStagingDirectory)'
     filePatterns: '$(Build.BuildId).zip'
-    remoteDirectory: 'dev.simbayu.in'
+    remoteDirectory: '/dev.simbayu.in'
     clean: true
     cleanContents: true
     preservePaths: true
     trustSSL: true
-  displayName: 'Uploading and Unzip'
+  displayName: 'Uploading'
 
 - task: FtpUpload@2
   inputs:
@@ -58,8 +58,8 @@ steps:
     cleanContents: true
     preservePaths: true
     trustSSL: true
-    customCmds: 'unzip dev.simbayu.in/$(Build.BuildId).zip'
-  displayName: 'Uploading and Unzip'
+    customCmds: 'unzip /dev.simbayu.in/$(Build.BuildId).zip'
+  displayName: 'Unzip'
 
 - task: FtpUpload@2
   inputs:
@@ -74,5 +74,5 @@ steps:
     cleanContents: true
     preservePaths: true
     trustSSL: true
-    customCmds: 'delete dev.simbayu.in/$(Build.BuildId).zip'
+    customCmds: 'delete /dev.simbayu.in/$(Build.BuildId).zip'
   displayName: 'Deleting zip'
