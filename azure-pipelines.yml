@@ -30,7 +30,7 @@ steps:
     rootDirectory: 'dist'
     filePatterns: '**'
     remoteDirectory: '/dev.simbayu.in/'
-    clean: true
+    clean: false
     cleanContents: true
     preservePaths: true
     trustSSL: true
