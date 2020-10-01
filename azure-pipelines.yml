@@ -21,15 +21,6 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: 'dist'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-  displayName: 'Archiving Files'
-
 - task: FtpUpload@2
   inputs:
     credentialsOption: 'inputs'
