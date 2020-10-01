@@ -70,7 +70,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     const that = this;
-    setTimeout(function() {
+    setTimeout(function () {
       that.showToastr();
     }, 1000);
   }
@@ -98,7 +98,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sidebarService.toggle();
     this.sidebarVisible = this.sidebarService.getStatus();
     const that = this;
-    setTimeout(function() {
+    setTimeout(function () {
       that.isResizing = false;
       that.cdr.detectChanges();
     }, 400);
@@ -244,7 +244,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_earning_tile',
-                callbackFunction: this.earningCallbackFunction.bind(this)
+                callbackFunction: this.earningCallbackFunction.bind(this,2000)
               },
               class: 'col-lg-3 col-md-6 col-sm-12'
             },
@@ -252,7 +252,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_sales_tile',
-                callbackFunction: this.salesCallbackFunction.bind(this)
+                callbackFunction: this.salesCallbackFunction.bind(this,3000)
               },
               class: 'col-lg-3 col-md-6 col-sm-12'
             },
@@ -260,7 +260,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_yield_tile',
-                callbackFunction: this.yieldCallbackFunction.bind(this)
+                callbackFunction: this.yieldCallbackFunction.bind(this,2500)
               },
               class: 'col-lg-3 col-md-6 col-sm-12'
             },
@@ -268,7 +268,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_profit_tile',
-                callbackFunction: this.profitCallbackFunction.bind(this)
+                callbackFunction: this.profitCallbackFunction.bind(this,4000)
               },
               class: 'col-lg-3 col-md-6 col-sm-12'
             }
@@ -452,7 +452,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return chartOptions;
   }
-  private earningCallbackFunction() {
+  private earningCallbackFunction(tout: number) {
     const that = this;
 
     this.interval = setInterval(() => {
@@ -470,13 +470,15 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         that.store.add('totalEarnings', that.earnings);
       }
+      const arrLen = that.earningOptionsSeries.length;
       if (!that.store.has('dashboard_earning_tile')) {
         that.store.add(
           'dashboard_earning_tile',
           {
             title: 'Orders',
             value: that.earnings,
-            details: '19% compared to last week',
+            details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
+              + '% compared to last week',
             chartoptions: that.earningOptions
           },
           true
@@ -485,15 +487,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.setIn('dashboard_earning_tile', [], {
           title: 'Orders',
           value: that.earnings,
-          details: '19% compared to last week',
+          details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
+            + '% compared to last week',
           chartoptions: that.earningOptions
         });
       }
       that.cdr.markForCheck();
-    }, 2000);
+    }, tout);
     that.cdr.detectChanges();
   }
-  private salesCallbackFunction() {
+  private salesCallbackFunction(tout: number) {
     const that = this;
 
     this.interval = setInterval(() => {
@@ -511,13 +514,15 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         that.store.add('totalSales', that.sales);
       }
+      const arrLen = that.earningOptionsSeries.length;
       if (!that.store.has('dashboard_sales_tile')) {
         that.store.add(
           'dashboard_sales_tile',
           {
             title: 'SALES',
             value: that.sales,
-            details: '34% compared to last week',
+            details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
+              + '% compared to last week',
             chartoptions: that.salesOptions
           },
           true
@@ -526,15 +531,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.setIn('dashboard_sales_tile', [], {
           title: 'SALES',
           value: that.sales,
-          details: '34% compared to last week',
+          details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
+            + '% compared to last week',
           chartoptions: that.salesOptions
         });
       }
       that.cdr.markForCheck();
-    }, 3000);
+    }, tout);
     that.cdr.detectChanges();
   }
-  private profitCallbackFunction() {
+  private profitCallbackFunction(tout: number) {
     const that = this;
 
     this.interval = setInterval(() => {
@@ -552,13 +558,15 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         that.store.add('totalProfit', that.sales);
       }
+      const arrLen = that.earningOptionsSeries.length;
       if (!that.store.has('dashboard_profit_tile')) {
         that.store.add(
           'dashboard_profit_tile',
           {
             title: 'PROFIT',
             value: that.profit,
-            details: '34% compared to last week',
+            details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
+              + '% compared to last week',
             chartoptions: that.profitOptions
           },
           true
@@ -567,15 +575,16 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.setIn('dashboard_profit_tile', [], {
           title: 'PROFIT',
           value: that.profit,
-          details: '34% compared to last week',
+          details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
+            + '% compared to last week',
           chartoptions: that.profitOptions
         });
       }
       that.cdr.markForCheck();
-    }, 3000);
+    }, tout);
     that.cdr.detectChanges();
   }
-  private yieldCallbackFunction() {
+  private yieldCallbackFunction(tout: number) {
     const that = this;
 
     this.interval = setInterval(() => {
@@ -593,13 +602,15 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         that.store.add('totalYield', that.sales);
       }
+      const arrLen = that.earningOptionsSeries.length;
       if (!that.store.has('dashboard_yield_tile')) {
         that.store.add(
           'dashboard_yield_tile',
           {
             title: 'Yield',
             value: that.yield,
-            details: '34% compared to last week',
+            details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
+              + '% compared to last week',
             chartoptions: that.yieldOptions
           },
           true
@@ -608,12 +619,13 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.setIn('dashboard_yield_tile', [], {
           title: 'Yeild',
           value: that.yield,
-          details: '34% compared to last week',
+          details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
+            + '% compared to last week',
           chartoptions: that.yieldOptions
         });
       }
       that.cdr.markForCheck();
-    }, 3000);
+    }, tout);
     that.cdr.detectChanges();
   }
 }
