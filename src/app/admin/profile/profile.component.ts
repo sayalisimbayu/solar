@@ -140,8 +140,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   getUserInfo() {
     this.userRepoService.getUserInfo().subscribe(el => {
       if (el) {
-        // alert('got info');
-        console.log(el);
         this.userInfo = el;
         this.userInfo.sociallist =
           this.userInfo.sociallist && this.userInfo.sociallist.length > 0 ? JSON.parse(this.userInfo.sociallist) : [];
@@ -289,8 +287,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     data.sociallist = JSON.stringify(data.sociallist);
     // appuserinfo
     this.userRepoService.saveUserinfo(data).subscribe(el => {
-      alert('user saved successfully');
-      console.log(el);
       // set userInfo
       this.userInfo = el;
       // set user
@@ -375,8 +371,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         link: data.socialInput
       });
       this.accountData.controls['sociallist'].setValue(JSON.stringify(this.sociallist));
+      this.generalInformationFormGroup.controls['socialInput'].setValue('');
     }
-    this.generalInformationFormGroup.controls['socialInput'].setValue('');
   }
   trackByFn(index: number) {
     return index;
