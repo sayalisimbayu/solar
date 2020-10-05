@@ -78,7 +78,6 @@ export class UserPersonaGridService {
   }
   onDelete(event: any, userpersona: any) {
     console.log(userpersona);
-    // alert('deleting');
     return this.userRepSrv.delete(userpersona.id).subscribe(el => {
       return el;
     });

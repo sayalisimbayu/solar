@@ -103,7 +103,6 @@ export class BellNotificationPaneComponent implements OnDestroy, OnChanges, Afte
       .pipe(filter((se: { key: string }) => se.key === 'appNotifications'))
       .pipe(
         map((el: StoreEvent) => {
-          alert('notificationlistner triggerd');
           this.loadOverView({
             pagesize: 6,
             currentPage: 0,

@@ -67,7 +67,6 @@ export class ProductGridService {
   }
   onDelete(event: any, product: any) {
     console.log(product);
-    // alert('deleting');
     return this.productRepSrv.delete(product.id).subscribe(el => {
       return el;
     });

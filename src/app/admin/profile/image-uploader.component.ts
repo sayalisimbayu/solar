@@ -78,7 +78,6 @@ export class ImageUploaderComponent implements OnInit {
     var reader = new FileReader();
 
     if (!file.type.match(pattern)) {
-      alert('invalid format');
       return;
     }
 

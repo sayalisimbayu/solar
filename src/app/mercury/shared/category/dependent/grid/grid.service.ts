@@ -66,8 +66,6 @@ export class CategoryGridService {
     this.getLatestPage(event, this.latestSearch);
   }
   onDelete(event: any, category: any) {
-    console.log(category);
-    // alert('deleting');
     return this.categoryRepSrv.delete(category.id).subscribe(el => {
       return el;
     });
