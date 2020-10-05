@@ -371,8 +371,8 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         link: data.socialInput
       });
       this.accountData.controls['sociallist'].setValue(JSON.stringify(this.sociallist));
+      this.generalInformationFormGroup.controls['socialInput'].setValue('');
     }
-    this.generalInformationFormGroup.controls['socialInput'].setValue('');
   }
   trackByFn(index: number) {
     return index;
