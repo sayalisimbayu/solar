@@ -42,7 +42,7 @@ export class AdminComponent implements AfterViewInit, OnInit, OnDestroy {
     private titleService: Title,
     private authSrv: AuthService,
     private userIdle: UserIdleService,
-    public NotificationPaneService: NotificationPaneService,
+    public notificationPaneService: NotificationPaneService,
     private lazyLoader: LazyLoaderService
   ) {
     this.activatedRoute.url.pipe(takeUntil(this.ngUnsubscribe)).subscribe(url => {

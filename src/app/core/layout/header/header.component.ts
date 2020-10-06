@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSettingDropMenuEvent = new EventEmitter();
   @Output() toggleNotificationDropMenuEvent = new EventEmitter();
   public notificationPaneVisible: boolean = false;
+  public bellNotificationIconClick: boolean = false;
 
   // theme
   private ngUnsubscribe = new Subject();
@@ -40,7 +41,9 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.toggleNotificationOnClickOutside();
+  }
 
   public logout() {
     this.authSvc.logout();
@@ -59,10 +62,22 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleNotificationFullWidth() {
+    this.bellNotificationIconClick = true;
     this.notificationPaneService.toggle();
     this.notificationPaneVisible = this.notificationPaneService.getStatus();
     this.notificationPaneVisible &&
       ((this.notificationPaneService.notificationBadge = 0),
       (this.notificationPaneService.notificationBadgeBlink = ''));
   }
+
+  toggleNotificationOnClickOutside(){
+    document.onclick = (event: any): void => {
+      if(this.bellNotificationIconClick) {
+        this.bellNotificationIconClick = false;
+        return;
+      }
+      if(this.notificationPaneService.sidebarVisible && !this.bellNotificationIconClick) {
+        this.toggleNotificationFullWidth();
+      }
+    }}
 }
