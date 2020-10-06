@@ -285,8 +285,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.basicInformation.value['gender'] =
       this.basicInformation.value['gender'].toString().toLowerCase() === 'true' ? true : false;
     data.sociallist = JSON.stringify(data.sociallist);
+    let payload = {...data};
+    delete payload.profileimg;
+    delete payload.sociallist
     // appuserinfo
-    this.userRepoService.saveUserinfo(data).subscribe(el => {
+    this.userRepoService.saveUserinfo(payload).subscribe(el => {
       // set userInfo
       this.userInfo = el;
       // set user
@@ -401,7 +404,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       currentpassword: [''],
       password: [''],
       confirmnewpassword: [''],
-      profileimg: [''],
+      profileimg: [userInfo.profileimg],
       sociallist: [[]]
     });
   }
@@ -427,7 +430,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       currentpassword: [''],
       password: [''],
       confirmnewpassword: [''],
-      profileimg: [''],
+      profileimg: [userInfo.profileimg],
       sociallist: [[]]
     });
   }
