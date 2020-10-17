@@ -17,7 +17,12 @@ export const routes: Routes = [
   {
     path: 'authentication',
     loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
-  }
+  },
+  {
+    path: 'venus',
+    loadChildren: () => import('./venus/venus.module').then(m => m.VenusModule),
+    canActivate: [LoginActivate]
+  },
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, { useHash: true });

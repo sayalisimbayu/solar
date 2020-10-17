@@ -285,9 +285,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     this.basicInformation.value['gender'] =
       this.basicInformation.value['gender'].toString().toLowerCase() === 'true' ? true : false;
     data.sociallist = JSON.stringify(data.sociallist);
-    let payload = {...data};
+    let payload = { ...data };
     delete payload.profileimg;
-    delete payload.sociallist
+    delete payload.sociallist;
     // appuserinfo
     this.userRepoService.saveUserinfo(payload).subscribe(el => {
       // set userInfo

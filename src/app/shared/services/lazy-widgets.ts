@@ -101,6 +101,12 @@ export const lazyWidgets: {
     loadChildren: () =>
       import('./../../core/layout/bell-notification/bell-notification.module').then(m => m.BellNotificationModule),
     data: { preload: true }
+  },
+  {
+    path: 'registration',
+    loadChildren: () =>
+      import('../../venus/registration-form/registration-form.module').then(m => m.RegestrationFormModule),
+    data: { preload: true }
   }
 ];
 

@@ -70,14 +70,15 @@ export class HeaderComponent implements OnInit {
       (this.notificationPaneService.notificationBadgeBlink = ''));
   }
 
-  toggleNotificationOnClickOutside(){
+  toggleNotificationOnClickOutside() {
     document.onclick = (event: any): void => {
-      if(this.bellNotificationIconClick) {
+      if (this.bellNotificationIconClick) {
         this.bellNotificationIconClick = false;
         return;
       }
-      if(this.notificationPaneService.sidebarVisible && !this.bellNotificationIconClick) {
+      if (this.notificationPaneService.sidebarVisible && !this.bellNotificationIconClick) {
         this.toggleNotificationFullWidth();
       }
-    }}
+    };
+  }
 }
