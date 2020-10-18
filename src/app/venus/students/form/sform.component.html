@@ -1,0 +1,20 @@
+<form #categoryForm="ngForm" (ngSubmit)="onSubmit(categoryForm)">
+    <div class="form-group">
+      <label>Name</label>
+      <input
+        [(ngModel)]="category.name"
+        class="form-control"
+        name="name"
+        #name="ngModel"
+        required
+        [ngClass]="{ 'parsley-error': !name.valid && (name.touched || categoryForm.submitted) }"
+      />
+      <ul class="parsley-errors-list filled" *ngIf="!name.valid && (name.touched || categoryForm.submitted)">
+        <li class="parsley-required" *ngIf="name.hasError('required')">This value is required.</li>
+      </ul>
+    </div>
+    <div class="form-group text-right">
+      <button type="submit" class="btn btn-primary mr-1">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel($event)">Cancel</button>
+    </div>
+  </form>

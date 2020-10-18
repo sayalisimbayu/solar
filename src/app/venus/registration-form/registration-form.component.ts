@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ServiceInjector } from '../../shared/services/service-injector.service';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MustMatch } from '../shared/must-match.validator';
+import { MustMatch } from '../shared/directive/must-match.validator';
 @Component({
     selector: 'app-registration',
     templateUrl: './registration-form.component.html',
