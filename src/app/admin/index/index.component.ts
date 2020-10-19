@@ -70,7 +70,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     const that = this;
-    setTimeout(function () {
+    setTimeout(function() {
       that.showToastr();
     }, 1000);
   }
@@ -98,7 +98,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sidebarService.toggle();
     this.sidebarVisible = this.sidebarService.getStatus();
     const that = this;
-    setTimeout(function () {
+    setTimeout(function() {
       that.isResizing = false;
       that.cdr.detectChanges();
     }, 400);
@@ -244,7 +244,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_earning_tile',
-                callbackFunction: this.earningCallbackFunction.bind(this,2000)
+                callbackFunction: this.earningCallbackFunction.bind(this, 2000)
               },
               class: 'col-lg-3 col-md-6 col-sm-12'
             },
@@ -252,7 +252,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_sales_tile',
-                callbackFunction: this.salesCallbackFunction.bind(this,3000)
+                callbackFunction: this.salesCallbackFunction.bind(this, 3000)
               },
               class: 'col-lg-3 col-md-6 col-sm-12'
             },
@@ -260,7 +260,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_yield_tile',
-                callbackFunction: this.yieldCallbackFunction.bind(this,2500)
+                callbackFunction: this.yieldCallbackFunction.bind(this, 2500)
               },
               class: 'col-lg-3 col-md-6 col-sm-12'
             },
@@ -268,7 +268,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               config: {
                 connector: 'app-detail-titles',
                 config: 'dashboard_profit_tile',
-                callbackFunction: this.profitCallbackFunction.bind(this,4000)
+                callbackFunction: this.profitCallbackFunction.bind(this, 4000)
               },
               class: 'col-lg-3 col-md-6 col-sm-12'
             }
@@ -477,8 +477,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
           {
             title: 'Orders',
             value: that.earnings,
-            details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
-              + '% compared to last week',
+            details:
+              ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2) +
+              '% compared to last week',
             chartoptions: that.earningOptions
           },
           true
@@ -487,8 +488,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.setIn('dashboard_earning_tile', [], {
           title: 'Orders',
           value: that.earnings,
-          details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
-            + '% compared to last week',
+          details:
+            ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2) +
+            '% compared to last week',
           chartoptions: that.earningOptions
         });
       }
@@ -521,8 +523,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
           {
             title: 'SALES',
             value: that.sales,
-            details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
-              + '% compared to last week',
+            details:
+              ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2) +
+              '% compared to last week',
             chartoptions: that.salesOptions
           },
           true
@@ -531,8 +534,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.setIn('dashboard_sales_tile', [], {
           title: 'SALES',
           value: that.sales,
-          details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
-            + '% compared to last week',
+          details:
+            ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2) +
+            '% compared to last week',
           chartoptions: that.salesOptions
         });
       }
@@ -565,8 +569,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
           {
             title: 'PROFIT',
             value: that.profit,
-            details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
-              + '% compared to last week',
+            details:
+              ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2) +
+              '% compared to last week',
             chartoptions: that.profitOptions
           },
           true
@@ -575,8 +580,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.setIn('dashboard_profit_tile', [], {
           title: 'PROFIT',
           value: that.profit,
-          details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
-            + '% compared to last week',
+          details:
+            ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2) +
+            '% compared to last week',
           chartoptions: that.profitOptions
         });
       }
@@ -609,8 +615,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
           {
             title: 'Yield',
             value: that.yield,
-            details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
-              + '% compared to last week',
+            details:
+              ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2) +
+              '% compared to last week',
             chartoptions: that.yieldOptions
           },
           true
@@ -619,8 +626,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         that.store.setIn('dashboard_yield_tile', [], {
           title: 'Yeild',
           value: that.yield,
-          details: ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2)
-            + '% compared to last week',
+          details:
+            ((that.earningOptionsSeries[arrLen - 1] / that.earningOptionsSeries[arrLen - 2]) * 100).toFixed(2) +
+            '% compared to last week',
           chartoptions: that.yieldOptions
         });
       }

@@ -12,7 +12,7 @@ import { ExportService } from '@app/shared/services/export.service';
 export class CategoryGridComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('pageGrid', { read: ViewContainerRef, static: true })
   pageGrid: ViewContainerRef;
-
+  config: any;
   public selector = '.scrollable-container';
 
   constructor(

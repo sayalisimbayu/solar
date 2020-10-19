@@ -101,6 +101,24 @@ export const lazyWidgets: {
     loadChildren: () =>
       import('./../../core/layout/bell-notification/bell-notification.module').then(m => m.BellNotificationModule),
     data: { preload: true }
+  },
+  {
+    path: 'registration',
+    loadChildren: () =>
+      import('../../venus/registration-form/registration-form.module').then(m => m.RegestrationFormModule),
+    data: { preload: true }
+  },
+  {
+    path: 'app-sgrid',
+    loadChildren: ()=>
+    import('../../venus/students/grid/sgrid.module').then(m=>m.SGridModule),
+    data:{preload: true}
+  },
+  {
+    path: 'app-sform',
+    loadChildren: ()=>
+    import('../../venus/students/form/sform.module').then(m=>m.SFormModule),
+    data: {preload: true}
   }
 ];
 
